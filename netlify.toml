@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Redirect /admin to CMS
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
+# Identity callback (Netlify Identity widget)
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+  conditions = {Language = ["en"]}

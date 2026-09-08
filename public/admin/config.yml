@@ -1,0 +1,117 @@
+# ─────────────────────────────────────────────
+# Decap CMS Configuration
+# 사이트 주소와 GitHub repo를 아래에서 교체하세요.
+# ─────────────────────────────────────────────
+
+backend:
+  name: git-gateway
+  branch: main   # 배포 브랜치 (main 또는 master)
+
+# 미디어(이미지) 저장 경로
+media_folder: "public/images/projects"
+public_folder: "/images/projects"
+
+# Netlify Identity 활성화 (Netlify 배포 필수)
+publish_mode: editorial_workflow
+
+# ─── 콘텐츠 컬렉션 ───────────────────────────
+collections:
+  # ── Projects 컬렉션 ──────────────────────────
+  - name: "projects"
+    label: "Projects"
+    label_singular: "Project"
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    summary: "{{title}} ({{year}}) — {{category}}"
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        hint: "프로젝트 제목"
+
+      - label: "Description"
+        name: "description"
+        widget: "text"
+        hint: "프로젝트 설명 (1~2 문장)"
+
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - "Digital Art"
+          - "Photography"
+          - "Branding"
+          - "Editorial"
+          - "Concept Art"
+          - "Product Design"
+          - "Motion"
+          - "UI/UX"
+        default: "Digital Art"
+
+      - label: "Year"
+        name: "year"
+        widget: "string"
+        default: "2024"
+        pattern: ['^\d{4}$', "4자리 연도 (예: 2024)"]
+
+      - label: "Thumbnail Image"
+        name: "image"
+        widget: "image"
+        hint: "갤러리에 표시될 대표 이미지"
+        media_library:
+          config:
+            max_file_size: 10000000  # 10MB
+
+      - label: "Featured (롤링 배너 표시)"
+        name: "featured"
+        widget: "boolean"
+        default: true
+        hint: "체크하면 Hero 롤링 배너에 표시됩니다"
+
+      - label: "Body (상세 설명, 선택사항)"
+        name: "body"
+        widget: "markdown"
+        required: false
+
+  # ── Site Settings ──────────────────────────
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "Profile"
+        name: "profile"
+        file: "content/settings/profile.md"
+        fields:
+          - label: "Your Name"
+            name: "name"
+            widget: "string"
+            default: "Your Name"
+
+          - label: "Tagline (Hero 한 줄 소개)"
+            name: "tagline"
+            widget: "string"
+            default: "Visual Designer & Creative Director"
+
+          - label: "Bio"
+            name: "bio"
+            widget: "text"
+
+          - label: "Email"
+            name: "email"
+            widget: "string"
+
+          - label: "GitHub URL"
+            name: "github"
+            widget: "string"
+            required: false
+
+          - label: "Instagram URL"
+            name: "instagram"
+            widget: "string"
+            required: false
+
+          - label: "Behance URL"
+            name: "behance"
+            widget: "string"
+            required: false
