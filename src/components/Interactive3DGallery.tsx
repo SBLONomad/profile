@@ -18,7 +18,6 @@ export default function Interactive3DGallery({ projects }: Props) {
   const velocity = useRef(0)
   const offsetRef = useRef(0)
 
-  // 레퍼런스에 맞춘 카드 폭과 촘촘한 간격
   const cardWidth = 205
   const cardGap = 20
   const stride = cardWidth + cardGap
@@ -47,7 +46,6 @@ export default function Interactive3DGallery({ projects }: Props) {
       if (container) {
         const rect = container.getBoundingClientRect()
         const centerX = rect.width / 2
-        // 시야 반경
         const radius = 550
 
         const cardElements = container.querySelectorAll<HTMLElement>('.fan-card-item')
@@ -57,23 +55,16 @@ export default function Interactive3DGallery({ projects }: Props) {
           const normX = distFromCenter / radius
           const absNorm = Math.min(Math.abs(normX), 1.8)
 
-          // ── [레퍼런스와 100% 동일한 원통형 3D 파노라마 원근감 공식] ──
-          // 1. 크기 (Scale): 중앙은 0.88배, 양 끝은 1.35배로 점진적 확대
           const scale = 0.88 + absNorm * 0.32
-          // 2. 깊이 (TranslateZ): 중앙은 원통 안쪽으로 깊숙이 들어가고, 양 끝은 사용자 쪽으로 전진
           const translateZ = (absNorm * 240) - 100
-          // 3. 회전각 (RotateY): 화면 중심을 향해 정밀하게 굽어지는 부채꼴 곡면 각도
           const rotateY = -normX * 32
-          // 4. 상하 곡률 (TranslateY): 레퍼런스 특유의 완만한 U자형 곡선
           const translateY = Math.pow(normX, 2) * 18
 
           el.style.transform = `translate3d(${cardX - cardWidth / 2}px, ${translateY}px, ${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`
 
-          // 레이어링: 바깥쪽 카드가 안쪽 카드를 항상 덮음
           const dynamicZIndex = 100 + Math.round(absNorm * 1000)
           el.style.zIndex = `${dynamicZIndex}`
 
-          // 거리감에 따른 명암
           const innerShine = el.querySelector<HTMLElement>('.card-vignette')
           if (innerShine) {
             const opacity = Math.max(0, 0.35 - absNorm * 0.2)
@@ -126,9 +117,6 @@ export default function Interactive3DGallery({ projects }: Props) {
 
   return (
     <div className="relative w-full overflow-hidden select-none">
-      {/* 
-        상단과의 여백을 대폭 줄여 버튼 바로 아래 컴팩트하게 밀착 
-      */}
       <div
         ref={containerRef}
         onPointerDown={handlePointerDown}
@@ -136,7 +124,7 @@ export default function Interactive3DGallery({ projects }: Props) {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
         onWheel={handleWheel}
-        className="relative w-screen left-1/2 -translate-x-1/2 h-[420px] md:h-[480px] cursor-grab active:cursor-grabbing overflow-hidden flex items-center justify-center"
+        className="relative w-screen left-1/2 -translate-x-1/2 h-[440px] md:h-[500px] cursor-grab active:cursor-grabbing overflow-hidden flex items-center justify-center"
         style={{
           perspective: '850px',
           perspectiveOrigin: '50% 50%',
@@ -153,28 +141,61 @@ export default function Interactive3DGallery({ projects }: Props) {
         />
 
         {/* 
-          레퍼런스 이미지 동일: 중앙 카드 뒤 방사형 에메랄드 앰비언트 글로우
+          ═══════════════════════════════════════════════════════════════════
+          ✨ [네온사인 광선 — 이미지들 '뒤로' 배치 (z-0)]
+          - 가운데 중심부는 극도로 쨍하게 발광하고,
+          - 상하 위아래 끝으로 갈수록 은은하게 페이드아웃되어 자연스럽게 소멸
+          ═══════════════════════════════════════════════════════════════════
         */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[360px] rounded-full z-0 pointer-events-none"
+          className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[220px] z-0 pointer-events-none flex items-center justify-center"
           style={{
-            background: 'radial-gradient(circle at 50% 50%, rgba(57,255,20,0.22) 0%, rgba(57,255,20,0.08) 40%, transparent 70%)',
-            filter: 'blur(28px)',
+            // 상하 끝으로 갈수록 완벽하게 감쇠하여 사라지는 마스크
+            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.15) 15%, black 42%, black 58%, rgba(0,0,0,0.15) 85%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.15) 15%, black 42%, black 58%, rgba(0,0,0,0.15) 85%, transparent 100%)',
           }}
-        />
+        >
+          {/* 광역 에메랄드 앰비언트 글로우 (중앙 방사형 빛무리) */}
+          <div
+            className="absolute w-[200px] h-[340px] rounded-full"
+            style={{
+              background: 'radial-gradient(ellipse at 50% 50%, rgba(57,255,20,0.3) 0%, rgba(57,255,20,0.1) 45%, transparent 75%)',
+              filter: 'blur(28px)',
+            }}
+          />
 
-        {/* 미세 네온 스파크 파티클 효과 (레퍼런스 배경의 작은 별빛 먼지) */}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[320px] z-0 pointer-events-none opacity-40"
-          style={{
-            backgroundImage: 'radial-gradient(circle, #39FF14 1px, transparent 1px), radial-gradient(circle, #ffffff 1px, transparent 1px)',
-            backgroundSize: '48px 48px, 72px 72px',
-            backgroundPosition: '0 0, 24px 24px',
-          }}
-        />
+          {/* 중간 블룸 레이어 */}
+          <div
+            className="absolute w-[45px] h-full"
+            style={{
+              background: 'linear-gradient(to bottom, transparent, rgba(57,255,20,0.5) 30%, rgba(57,255,20,0.95) 50%, rgba(57,255,20,0.5) 70%, transparent)',
+              filter: 'blur(12px)',
+            }}
+          />
 
-        {/* 3D 카드 컨테이너 */}
-        <div className="relative w-full h-[360px]">
+          {/* 집중형 네온 그린 광선 */}
+          <div
+            className="absolute w-[10px] h-full"
+            style={{
+              background: 'linear-gradient(to bottom, transparent 5%, rgba(57,255,20,0.7) 25%, #4ade80 50%, rgba(57,255,20,0.7) 75%, transparent 95%)',
+              filter: 'blur(2.5px)',
+            }}
+          />
+
+          {/* 쨍하고 눈부신 중심 코어 (가운데 50% 지점이 가장 강렬함) */}
+          <div
+            className="absolute w-[2.5px] h-full rounded-full"
+            style={{
+              background: 'linear-gradient(to bottom, transparent 5%, rgba(255,255,255,0.7) 30%, #ffffff 50%, rgba(255,255,255,0.7) 70%, transparent 95%)',
+              boxShadow: '0 0 12px 2px #ffffff, 0 0 24px 6px #39FF14, 0 0 45px 12px rgba(57,255,20,0.6)',
+            }}
+          />
+        </div>
+
+        {/* 
+          ── 3D 카드 컨테이너 (z-10: 네온사인 위에서 렌더링되어 네온이 카드 '뒤'에 위치) ── 
+        */}
+        <div className="relative z-10 w-full h-[360px]">
           {items.map((project, idx) => (
             <div
               key={`${project.slug}-${idx}`}
@@ -210,6 +231,7 @@ export default function Interactive3DGallery({ projects }: Props) {
                   }}
                 />
 
+                {/* 네온 테두리 글로우 */}
                 <div
                   className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
@@ -231,63 +253,6 @@ export default function Interactive3DGallery({ projects }: Props) {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* 
-          ═══════════════════════════════════════════════════════════════════
-          ✨ [레퍼런스 이미지와 100% 동일한 정밀 레이저 슬라이더 광선]
-          - 길이: 중앙 카드 높이에 정확히 맞춰 상하로 18px씩만 부드럽게 삐져나옴 (총 높이 346px)
-          - 상단 & 하단: 뚝 끊기지 않고 둥글고 부드러운 렌즈 플레어 스팟(Glow Cap)으로 감싸며 소멸
-          - 중앙 카드 정면 통과 (z-[250])
-          ═══════════════════════════════════════════════════════════════════
-        */}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[346px] w-[60px] pointer-events-none flex items-center justify-center z-[250]"
-        >
-          {/* 상단 글로우 캡 (위쪽 끝을 부드럽게 맺히게 하는 플레어 스팟) */}
-          <div
-            className="absolute top-0 w-[22px] h-[22px] rounded-full -translate-y-1/2"
-            style={{
-              background: 'radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(57,255,20,0.85) 35%, rgba(57,255,20,0.2) 65%, transparent 100%)',
-              filter: 'blur(3px)',
-            }}
-          />
-
-          {/* 하단 글로우 캡 (아래쪽 끝을 부드럽게 맺히게 하는 플레어 스팟) */}
-          <div
-            className="absolute bottom-0 w-[22px] h-[22px] rounded-full translate-y-1/2"
-            style={{
-              background: 'radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(57,255,20,0.85) 35%, rgba(57,255,20,0.2) 65%, transparent 100%)',
-              filter: 'blur(3px)',
-            }}
-          />
-
-          {/* 광역 부드러운 그린 블룸 */}
-          <div
-            className="absolute w-[36px] h-full"
-            style={{
-              background: 'linear-gradient(to bottom, transparent 0%, rgba(57,255,20,0.35) 15%, rgba(57,255,20,0.7) 50%, rgba(57,255,20,0.35) 85%, transparent 100%)',
-              filter: 'blur(10px)',
-            }}
-          />
-
-          {/* 집중형 네온 그린 빔 */}
-          <div
-            className="absolute w-[6px] h-full"
-            style={{
-              background: 'linear-gradient(to bottom, transparent 0%, rgba(57,255,20,0.8) 10%, #4ade80 50%, rgba(57,255,20,0.8) 90%, transparent 100%)',
-              filter: 'blur(1.8px)',
-            }}
-          />
-
-          {/* 레이저 중심 코어 (선명한 2px 라임 화이트 라인) */}
-          <div
-            className="absolute w-[2px] h-full rounded-full"
-            style={{
-              background: 'linear-gradient(to bottom, transparent 0%, #ffffff 8%, #ffffff 92%, transparent 100%)',
-              boxShadow: '0 0 8px 1px #ffffff, 0 0 16px 3px #39FF14',
-            }}
-          />
         </div>
       </div>
 
