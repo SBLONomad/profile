@@ -55,19 +55,15 @@ export default function Interactive3DGallery({ projects }: Props) {
           const normX = distFromCenter / (halfWidth * 0.75)
           const absNorm = Math.min(Math.abs(normX), 1.6)
 
-          // ── [원근감 대폭 강화 파라미터] ──
-          // 1. 크기(Scale): 중앙은 0.72로 더 작고 멀리, 양 끝은 1.62배로 훨씬 크고 전면 돌출
+          // 3D 오목 원근감: 중앙은 0.72배, 양 끝은 1.62배
           const scale = 0.72 + absNorm * 0.58
-          // 2. 깊이(TranslateZ): 중앙은 -180px로 깊숙이 후퇴, 양 끝은 +280px로 카메라 바로 앞까지 돌출
           const translateZ = (absNorm * 300) - 180
-          // 3. 회전각(RotateY): 안쪽으로 감싸는 회전 각도를 38도로 대폭 확대하여 부채꼴 곡면 극대화
           const rotateY = -normX * 38
-          // 4. 완만한 아치 곡선 (TranslateY)
           const translateY = Math.pow(absNorm, 2) * 16
 
           el.style.transform = `translate3d(${cardX - cardWidth / 2}px, ${translateY}px, ${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`
 
-          // 좌우 레이어링: 바깥쪽 카드가 안쪽 카드를 항상 덮음
+          // 좌측: 왼쪽 끝 카드가 최상단, 우측: 오른쪽 끝 카드가 최상단
           const dynamicZIndex = 100 + Math.round(absNorm * 1000)
           el.style.zIndex = `${dynamicZIndex}`
 
@@ -130,36 +126,24 @@ export default function Interactive3DGallery({ projects }: Props) {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
         onWheel={handleWheel}
-        className="relative w-screen left-1/2 -translate-x-1/2 h-[500px] md:h-[600px] cursor-grab active:cursor-grabbing overflow-hidden flex items-center justify-center"
+        className="relative w-screen left-1/2 -translate-x-1/2 h-[520px] md:h-[620px] cursor-grab active:cursor-grabbing overflow-hidden flex items-center justify-center"
         style={{
-          // perspective를 700px로 낮춰 광각 렌즈처럼 드라마틱한 3D 입체감 연출
           perspective: '700px',
           perspectiveOrigin: '50% 50%',
         }}
       >
-        {/* 양 끝 가장자리 페이드 마스크 */}
+        {/* 좌우 가장자리 소프트 페이드아웃 마스크 */}
         <div
-          className="absolute left-0 top-0 bottom-0 w-20 md:w-36 z-[2000] pointer-events-none"
+          className="absolute left-0 top-0 bottom-0 w-20 md:w-40 z-[2000] pointer-events-none"
           style={{ background: 'linear-gradient(to right, #000000 20%, transparent 100%)' }}
         />
         <div
-          className="absolute right-0 top-0 bottom-0 w-20 md:w-36 z-[2000] pointer-events-none"
+          className="absolute right-0 top-0 bottom-0 w-20 md:w-40 z-[2000] pointer-events-none"
           style={{ background: 'linear-gradient(to left, #000000 20%, transparent 100%)' }}
         />
 
-        {/* 중앙 이미지 뒤 앰비언트 그린 글로우 */}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] rounded-full z-0 pointer-events-none opacity-70"
-          style={{
-            background: 'radial-gradient(circle, rgba(57,255,20,0.2) 0%, rgba(57,255,20,0.06) 45%, transparent 70%)',
-            filter: 'blur(30px)',
-          }}
-        />
-
-        {/* 3D 카드 컨테이너 */}
-        <div
-          className="relative w-full h-[420px]"
-        >
+        {/* ── 3D 카드 컨테이너 ── */}
+        <div className="relative w-full h-[420px]">
           {items.map((project, idx) => (
             <div
               key={`${project.slug}-${idx}`}
@@ -171,21 +155,19 @@ export default function Interactive3DGallery({ projects }: Props) {
               }}
             >
               <div
-                className="relative w-full h-full overflow-hidden rounded-2xl bg-[#111111] border border-white/10 transition-colors duration-300 group-hover:border-neon/60"
-                style={{
-                  boxShadow: '0 25px 50px -10px rgba(0,0,0,0.95), 0 0 1px rgba(255,255,255,0.15)',
-                }}
+                className="relative w-full h-full overflow-hidden rounded-2xl bg-zinc-950 border border-white/10 transition-colors duration-300 group-hover:border-neon/70 shadow-2xl"
               >
+                {/* 작품 이미지 (로드 실패 시 다크 럭셔리 사이버 아트워크 그라디언트 배경으로 매끄럽게 처리) */}
                 <img
                   src={project.image}
-                  alt={project.title}
+                  alt=""
                   draggable={false}
                   className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   onError={(e) => {
                     const target = e.currentTarget
-                    target.style.display = 'none'
+                    target.style.opacity = '0'
                     if (target.parentElement) {
-                      target.parentElement.classList.add('bg-gradient-to-br', 'from-zinc-900', 'via-zinc-800', 'to-emerald-950')
+                      target.parentElement.style.background = 'linear-gradient(135deg, #18181b 0%, #09090b 50%, #052e16 100%)'
                     }
                   }}
                 />
@@ -194,14 +176,15 @@ export default function Interactive3DGallery({ projects }: Props) {
                 <div
                   className="absolute inset-0 pointer-events-none"
                   style={{
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.25) 50%, transparent 80%)',
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.2) 50%, transparent 80%)',
                   }}
                 />
 
+                {/* 네온 테두리 글로우 */}
                 <div
                   className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
-                    boxShadow: 'inset 0 0 0 1.5px rgba(57,255,20,0.9), 0 0 30px rgba(57,255,20,0.3)',
+                    boxShadow: 'inset 0 0 0 1.5px rgba(57,255,20,0.9), 0 0 25px rgba(57,255,20,0.25)',
                   }}
                 />
 
@@ -221,22 +204,58 @@ export default function Interactive3DGallery({ projects }: Props) {
           ))}
         </div>
 
-        {/* 중앙 카드 앞으로 지나가는 네온 광선 빔 (z-250) */}
+        {/* 
+          ═══════════════════════════════════════════════════════════════════
+          💎 [15년차 UI/UX 디자이너 스펙: 하이엔드 네온 레이저 블룸 시스템]
+          - 중앙 카드 앞으로 완벽하게 돌출 (`z-[250]`)
+          - 상/하단이 뚝 잘리는 인위적 경계선 100% 박멸 (CSS Mask 부드러운 가우스 페이드)
+          - 코어(순백색 레이저) + 1차 네온 글로우 + 광역 에메랄드 블룸 3중 레이어링
+          ═══════════════════════════════════════════════════════════════════
+        */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[3px] h-[380px] z-[250] pointer-events-none"
+          className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[160px] pointer-events-none flex items-center justify-center z-[250]"
           style={{
-            background: 'linear-gradient(to bottom, transparent 0%, rgba(57,255,20,0.1) 15%, rgba(57,255,20,0.9) 40%, #ffffff 50%, rgba(57,255,20,0.9) 60%, rgba(57,255,20,0.1) 85%, transparent 100%)',
-            boxShadow: '0 0 18px 4px rgba(57,255,20,0.95), 0 0 40px 10px rgba(57,255,20,0.5)',
+            // 상/하단 0%에서 100%까지 완벽하게 안개처럼 감쇠하여 사라지게 만드는 마스크
+            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.05) 10%, rgba(0,0,0,0.9) 30%, black 50%, rgba(0,0,0,0.9) 70%, rgba(0,0,0,0.05) 90%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.05) 10%, rgba(0,0,0,0.9) 30%, black 50%, rgba(0,0,0,0.9) 70%, rgba(0,0,0,0.05) 90%, transparent 100%)',
           }}
-        />
+        >
+          {/* 3차 광역 에메랄드 앰비언트 블룸 (가장 넓게 퍼지는 공기 중 산란광) */}
+          <div
+            className="absolute w-[120px] h-full"
+            style={{
+              background: 'linear-gradient(to bottom, transparent, rgba(57,255,20,0.22) 40%, rgba(34,197,94,0.3) 50%, rgba(57,255,20,0.22) 60%, transparent)',
+              filter: 'blur(32px)',
+            }}
+          />
 
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[24px] h-[360px] z-[250] pointer-events-none"
-          style={{
-            background: 'linear-gradient(to bottom, transparent 0%, rgba(57,255,20,0.25) 30%, rgba(57,255,20,0.55) 50%, rgba(57,255,20,0.25) 70%, transparent 100%)',
-            filter: 'blur(6px)',
-          }}
-        />
+          {/* 2차 미디엄 네온 그린 글로우 */}
+          <div
+            className="absolute w-[28px] h-full"
+            style={{
+              background: 'linear-gradient(to bottom, transparent 5%, rgba(57,255,20,0.5) 35%, rgba(57,255,20,0.95) 50%, rgba(57,255,20,0.5) 65%, transparent 95%)',
+              filter: 'blur(8px)',
+            }}
+          />
+
+          {/* 1차 하이인텐시티 그린 아우라 */}
+          <div
+            className="absolute w-[8px] h-full"
+            style={{
+              background: 'linear-gradient(to bottom, transparent 10%, rgba(57,255,20,0.8) 35%, #86efac 50%, rgba(57,255,20,0.8) 65%, transparent 90%)',
+              filter: 'blur(2.5px)',
+            }}
+          />
+
+          {/* 초정밀 순백색 레이저 중심 코어 (검은 선 절대 없음, 순수한 빛의 중심선) */}
+          <div
+            className="absolute w-[1.5px] h-full"
+            style={{
+              background: 'linear-gradient(to bottom, transparent 15%, rgba(255,255,255,0.7) 35%, #ffffff 50%, rgba(255,255,255,0.7) 65%, transparent 85%)',
+              boxShadow: '0 0 10px 1px #ffffff, 0 0 20px 3px #39FF14',
+            }}
+          />
+        </div>
       </div>
 
       <div className="text-center mt-3 pointer-events-none">
