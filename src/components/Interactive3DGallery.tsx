@@ -55,24 +55,25 @@ export default function Interactive3DGallery({ projects }: Props) {
           const normX = distFromCenter / (halfWidth * 0.75)
           const absNorm = Math.min(Math.abs(normX), 1.6)
 
-          // 3D 오목 원호 원근감
-          const scale = 0.85 + absNorm * 0.45
-          const translateZ = (absNorm * 220) - 120
-          const rotateY = -normX * 28
-          const translateY = Math.pow(absNorm, 2) * 12
+          // ── [원근감 대폭 강화 파라미터] ──
+          // 1. 크기(Scale): 중앙은 0.72로 더 작고 멀리, 양 끝은 1.62배로 훨씬 크고 전면 돌출
+          const scale = 0.72 + absNorm * 0.58
+          // 2. 깊이(TranslateZ): 중앙은 -180px로 깊숙이 후퇴, 양 끝은 +280px로 카메라 바로 앞까지 돌출
+          const translateZ = (absNorm * 300) - 180
+          // 3. 회전각(RotateY): 안쪽으로 감싸는 회전 각도를 38도로 대폭 확대하여 부채꼴 곡면 극대화
+          const rotateY = -normX * 38
+          // 4. 완만한 아치 곡선 (TranslateY)
+          const translateY = Math.pow(absNorm, 2) * 16
 
           el.style.transform = `translate3d(${cardX - cardWidth / 2}px, ${translateY}px, ${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`
 
-          // ── [핵심 계층 순서 설정] ──
-          // 좌측: 더 왼쪽(바깥)으로 갈수록 더 위로 올라옴 (absNorm이 큼 -> zIndex 높음)
-          // 우측: 더 오른쪽(바깥)으로 갈수록 더 위로 올라옴 (absNorm이 큼 -> zIndex 높음)
-          // 중앙 카드는 약 100, 양 끝 카드는 최대 1700까지 배정
+          // 좌우 레이어링: 바깥쪽 카드가 안쪽 카드를 항상 덮음
           const dynamicZIndex = 100 + Math.round(absNorm * 1000)
           el.style.zIndex = `${dynamicZIndex}`
 
           const innerShine = el.querySelector<HTMLElement>('.card-vignette')
           if (innerShine) {
-            const opacity = Math.max(0, 0.4 - absNorm * 0.2)
+            const opacity = Math.max(0, 0.45 - absNorm * 0.25)
             innerShine.style.backgroundColor = `rgba(0,0,0,${opacity})`
           }
         })
@@ -121,7 +122,7 @@ export default function Interactive3DGallery({ projects }: Props) {
   }
 
   return (
-    <div className="relative w-full overflow-hidden select-none py-10 md:py-16">
+    <div className="relative w-full overflow-hidden select-none py-12 md:py-20">
       <div
         ref={containerRef}
         onPointerDown={handlePointerDown}
@@ -129,9 +130,10 @@ export default function Interactive3DGallery({ projects }: Props) {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
         onWheel={handleWheel}
-        className="relative w-screen left-1/2 -translate-x-1/2 h-[460px] md:h-[540px] cursor-grab active:cursor-grabbing overflow-hidden flex items-center justify-center"
+        className="relative w-screen left-1/2 -translate-x-1/2 h-[500px] md:h-[600px] cursor-grab active:cursor-grabbing overflow-hidden flex items-center justify-center"
         style={{
-          perspective: '1000px',
+          // perspective를 700px로 낮춰 광각 렌즈처럼 드라마틱한 3D 입체감 연출
+          perspective: '700px',
           perspectiveOrigin: '50% 50%',
         }}
       >
@@ -145,9 +147,7 @@ export default function Interactive3DGallery({ projects }: Props) {
           style={{ background: 'linear-gradient(to left, #000000 20%, transparent 100%)' }}
         />
 
-        {/* 
-          중앙 이미지 '뒤' 앰비언트 그린 글로우
-        */}
+        {/* 중앙 이미지 뒤 앰비언트 그린 글로우 */}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] rounded-full z-0 pointer-events-none opacity-70"
           style={{
@@ -156,12 +156,9 @@ export default function Interactive3DGallery({ projects }: Props) {
           }}
         />
 
-        {/* 
-          ── 3D 카드 컨테이너 ── 
-          [주의] transform-style: flat으로 두어 브라우저의 z-index 스택 정렬이 100% 작동하도록 보장!
-        */}
+        {/* 3D 카드 컨테이너 */}
         <div
-          className="relative w-full h-[380px]"
+          className="relative w-full h-[420px]"
         >
           {items.map((project, idx) => (
             <div
@@ -169,14 +166,14 @@ export default function Interactive3DGallery({ projects }: Props) {
               className="fan-card-item absolute top-0 left-0 will-change-transform group cursor-pointer"
               style={{
                 width: `${cardWidth}px`,
-                height: '310px',
+                height: '320px',
                 transformOrigin: '50% 50%',
               }}
             >
               <div
                 className="relative w-full h-full overflow-hidden rounded-2xl bg-[#111111] border border-white/10 transition-colors duration-300 group-hover:border-neon/60"
                 style={{
-                  boxShadow: '0 20px 45px -10px rgba(0,0,0,0.9), 0 0 1px rgba(255,255,255,0.1)',
+                  boxShadow: '0 25px 50px -10px rgba(0,0,0,0.95), 0 0 1px rgba(255,255,255,0.15)',
                 }}
               >
                 <img
@@ -224,19 +221,17 @@ export default function Interactive3DGallery({ projects }: Props) {
           ))}
         </div>
 
-        {/* 
-          중앙 카드 앞으로 지나가는 네온 광선 빔 (중앙 카드의 z-index인 100보다 높은 z-250으로 설정)
-        */}
+        {/* 중앙 카드 앞으로 지나가는 네온 광선 빔 (z-250) */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[3px] h-[360px] z-[250] pointer-events-none"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[3px] h-[380px] z-[250] pointer-events-none"
           style={{
             background: 'linear-gradient(to bottom, transparent 0%, rgba(57,255,20,0.1) 15%, rgba(57,255,20,0.9) 40%, #ffffff 50%, rgba(57,255,20,0.9) 60%, rgba(57,255,20,0.1) 85%, transparent 100%)',
-            boxShadow: '0 0 16px 3px rgba(57,255,20,0.9), 0 0 35px 8px rgba(57,255,20,0.5)',
+            boxShadow: '0 0 18px 4px rgba(57,255,20,0.95), 0 0 40px 10px rgba(57,255,20,0.5)',
           }}
         />
 
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[24px] h-[340px] z-[250] pointer-events-none"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[24px] h-[360px] z-[250] pointer-events-none"
           style={{
             background: 'linear-gradient(to bottom, transparent 0%, rgba(57,255,20,0.25) 30%, rgba(57,255,20,0.55) 50%, rgba(57,255,20,0.25) 70%, transparent 100%)',
             filter: 'blur(6px)',
