@@ -10,7 +10,7 @@ interface Props {
 
 export default function AnimatedNumber({ value, duration = 1.8 }: Props) {
   const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-40px' })
+  const isInView = useInView(ref, { once: false, margin: '-40px' })
 
   const numericMatch = value.match(/\d+/)
   const targetNumber = numericMatch ? parseInt(numericMatch[0], 10) : 0

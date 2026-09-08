@@ -22,7 +22,7 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
+            viewport={{ once: false, margin: '-100px' }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="relative"
           >
@@ -48,7 +48,7 @@ export default function About() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="absolute -bottom-5 -right-2 sm:-right-4 glass rounded-2xl px-5 py-3.5 text-center shadow-xl border border-neon/30"
               >
@@ -61,7 +61,7 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
+            viewport={{ once: false, margin: '-100px' }}
             transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           >
             <p className="text-neon font-mono text-xs tracking-[0.25em] uppercase mb-4">
@@ -88,7 +88,7 @@ export default function About() {
                   key={skill}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ duration: 0.4, delay: 0.2 + i * 0.04 }}
                   className="text-xs sm:text-sm font-body text-zinc-300 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full hover:border-neon/60 hover:text-neon transition-all duration-300 cursor-default"
                 >
@@ -104,7 +104,7 @@ export default function About() {
                   key={stat.label}
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
                 >
                   <div className="text-white font-display font-bold text-3xl md:text-4xl text-neon drop-shadow-[0_0_15px_rgba(57,255,20,0.3)]">

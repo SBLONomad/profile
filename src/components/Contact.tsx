@@ -29,7 +29,7 @@ export default function Contact() {
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.6 }}
           className="text-neon font-mono text-xs tracking-[0.3em] uppercase mb-5"
         >
@@ -39,7 +39,7 @@ export default function Contact() {
         <motion.h2
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="font-display font-bold text-4xl md:text-6xl lg:text-7xl text-white leading-tight mb-6"
         >
@@ -51,7 +51,7 @@ export default function Contact() {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.7, delay: 0.15 }}
           className="text-muted text-base md:text-lg leading-relaxed mb-12 max-w-md mx-auto"
         >
@@ -61,7 +61,7 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.7, delay: 0.25 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
         >
@@ -88,7 +88,7 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="flex items-center justify-center gap-6"
         >

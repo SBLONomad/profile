@@ -23,7 +23,7 @@ export default function ProjectsGrid({ projects }: Props) {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-100px' }}
+        viewport={{ once: false, margin: '-100px' }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="mb-12"
       >
@@ -45,7 +45,7 @@ export default function ProjectsGrid({ projects }: Props) {
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ duration: 0.5, delay: 0.15 }}
         className="flex flex-wrap gap-2.5 mb-12"
       >
@@ -93,7 +93,7 @@ export default function ProjectsGrid({ projects }: Props) {
       <motion.div
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
         className="mt-20 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent origin-left"
       />

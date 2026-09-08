@@ -151,7 +151,7 @@ export default function Hero({ projects }: Props) {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
+        viewport={{ once: false, margin: '-60px' }}
         transition={{ duration: 0.8, delay: 0.2 }}
         className="relative z-10 w-full max-w-5xl mx-auto px-6 md:px-10 mt-2 pb-24 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 border-t border-white/10 pt-10"
       >

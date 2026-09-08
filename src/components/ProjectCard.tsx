@@ -16,7 +16,7 @@ export default function ProjectCard({ project, index }: Props) {
     <motion.article
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
+      viewport={{ once: false, margin: '-60px' }}
       transition={{
         duration: 0.7,
         delay: (index % 3) * 0.1,

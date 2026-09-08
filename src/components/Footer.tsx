@@ -10,7 +10,7 @@ export default function Footer() {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           className="flex items-center gap-2 text-white font-display font-bold text-base"
         >
           <span className="w-2.5 h-2.5 rounded-full bg-neon shadow-[0_0_8px_#39FF14]" />
@@ -20,7 +20,7 @@ export default function Footer() {
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ delay: 0.1 }}
           className="text-muted-2 font-mono text-xs text-center"
         >
@@ -30,7 +30,7 @@ export default function Footer() {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ delay: 0.2 }}
           className="flex gap-5"
         >
