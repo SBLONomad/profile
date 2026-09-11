@@ -55,7 +55,7 @@ export const CONTENT = {
 
   // ── 5. About (소개) 영역 ──────────────────────────────────────
   about: {
-    profile_image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80", // 👈 여기에 내 사진 경로 입력 (예: "/images/profile.jpg")
+    profile_image: '/images/profile/kim-dong-hyeong.jpg', // 👈 여기에 내 사진 경로 입력 (예: "/images/profile.jpg")
     eyebrow: '✦  소개',
     headline1: '방향을 제안하는',
     headline2: '실무형',
@@ -89,13 +89,8 @@ export const CONTENT = {
   // 카테고리 탭 목록
   categories: [
     '전체',
-    '커머스 캠페인',
-    '상세페이지',
-    '광고 소재',
-    '브랜딩',
-    '모션',
-    'AI 이미지',
-    'UX/UI',
+    '이랜드월드',
+    'CTTD(G마켓)',
   ],
 
   // ── 7. Contact (연락처) 영역 ──────────────────────────────────

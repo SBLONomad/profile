@@ -47,7 +47,7 @@ export function getAllProjects(): Project[] {
           slug,
           title: data.title || 'Untitled',
           description: data.description || '',
-          category: data.category || '커머스 캠페인',
+          category: data.category || '이랜드월드',
           image: data.image || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
           fullImage: data.fullImage || data.full_image || data.image || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1400&q=80',
           images,

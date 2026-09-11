@@ -40,14 +40,9 @@ collections:
         name: "category"
         widget: "select"
         options:
-          - "커머스 캠페인"
-          - "상세페이지"
-          - "광고 소재"
-          - "브랜딩"
-          - "모션"
-          - "AI 이미지"
-          - "UI/UX"
-        default: "커머스 캠페인"
+          - "이랜드월드"
+          - "CTTD(G마켓)"
+        default: "이랜드월드"
 
       - label: "연도"
         name: "year"
