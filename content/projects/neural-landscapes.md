@@ -3,7 +3,8 @@ title: "Neural Landscapes"
 description: "AI-generated visual explorations of digital consciousness and synthetic environments"
 category: "Digital Art"
 year: "2024"
-image: "/images/projects/neural-landscapes.jpg"
+image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80"
+fullImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1400&q=80"
 featured: true
 ---
 

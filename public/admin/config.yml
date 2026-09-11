@@ -64,6 +64,26 @@ collections:
           config:
             max_file_size: 10000000  # 10MB
 
+      - label: "Full Detail Image"
+        name: "fullImage"
+        widget: "image"
+        required: false
+        hint: "상세 페이지에서 크게 보일 전체 페이지 이미지"
+        media_library:
+          config:
+            max_file_size: 20000000  # 20MB
+
+      - label: "Additional Detail Images"
+        name: "images"
+        widget: "list"
+        required: false
+        summary: "{{fields.image}}"
+        hint: "상세 페이지에 이어서 보여줄 이미지들을 추가하세요"
+        field:
+          label: "Detail Image"
+          name: "image"
+          widget: "image"
+
       - label: "Featured (롤링 배너 표시)"
         name: "featured"
         widget: "boolean"

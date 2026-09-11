@@ -1,119 +1,122 @@
 // ================================================================
-// ✏️  이 파일 하나에서 사이트의 모든 텍스트를 수정할 수 있습니다.
-//     저장하면 브라우저에 즉시 반영됩니다.
+// ✏️  이 파일 하나에서 사이트의 모든 텍스트를 자유롭게 수정할 수 있습니다.
+//     따옴표('...') 안의 글자를 바꾸고 저장(Cmd + S)하면 즉시 반영됩니다!
 // ================================================================
 
 export const CONTENT = {
 
-  // ── 헤더 ──────────────────────────────────────────────────────
+  // ── 1. 상단 헤더 ──────────────────────────────────────────────
   header: {
-    logo: 'PORTFOLIO',
+    logo: 'KIM DONG HYEONG',
     nav: {
       about: 'About',
-      projects: '작업물',
+      projects: 'Works',
       contact: 'Contact',
     },
   },
 
-  // ── Hero 섹션 (메인 화면) ──────────────────────────────────────
+  // ── 2. 메인 Hero 화면 ──────────────────────────────────────────
   hero: {
-    eyebrow: '✦  비주얼 디자이너 & 크리에이티브 디렉터',
-    headline1: '나만의 감성으로',    // ← 첫 번째 줄 (글리치 효과)
-    headline2: '세상을 담다.',       // ← 두 번째 줄 (글리치 효과)
-    subtext1: '아이디어를 고품질 비주얼로.',
-    subtext2: '타협 없이, 한계 없이.',
-    cta_primary: '작업물 보기',      // ← 흰색 버튼
-    cta_secondary: '연락하기',       // ← 테두리 버튼
+    eyebrow: '✦  Performance Creative Designer',
+    headline1: 'Designing visuals',
+    headline2: 'that move people.',
+    subtext1: 'E-commerce, beauty, campaign, and content design.',
+    subtext2: 'Creative direction shaped by data, speed, and execution.',
+    cta_primary: 'View Works',      // 버튼 글자
+    cta_secondary: '연락하기',
   },
 
-  // ── Hero 하단 3컬럼 피처 그리드 ──────────────────────────────
+  // ── 3. 3D 갤러리 바로 밑 안내 텍스트 ─────────────────────────
+  // (원치 않으시면 '' 로 비워두시면 사라집니다!)
+  gallery_hint: '✦  마우스로 드래그하여 3D 갤러리를 회전해보세요  ✦',
+
+  // ── 4. 질문하신 3컬럼 영역 (아이콘, 제목, 설명 완벽 수정 가능!) ──
   features: [
     {
+      icon: '📈',
+      title: 'Data-led\nimprovement',
+      desc: 'Microsoft Clarity and A/B tests inform layouts, copy, and conversion-focused decisions.',
+    },
+    {
+      icon: '✨',
+      title: 'AI creative\nworkflow',
+      desc: 'AI-generated staging cuts production time while keeping campaign visuals polished and scalable.',
+    },
+    {
       icon: '⚡',
-      title: '즉시 업로드',
-      desc: '관리자 패널에서 새 작업물을 추가하면 사이트에 바로 반영됩니다.',
-    },
-    {
-      icon: '🎨',
-      title: '다양한 카테고리',
-      desc: '브랜딩, 디지털 아트, 포토그래피 등 카테고리별로 작업물을 정리하세요.',
-    },
-    {
-      icon: '📐',
-      title: '고해상도 표현',
-      desc: '모든 이미지를 최신 포맷(AVIF/WebP)으로 최고 화질로 제공합니다.',
+      title: 'Fast commerce\nexecution',
+      desc: 'Large-scale promotion pages, banners, motion assets, and detail pages built with stable speed.',
     },
   ],
 
-  // ── About 섹션 ────────────────────────────────────────────────
+  // ── 5. About (소개) 영역 ──────────────────────────────────────
   about: {
-    eyebrow: '✦  소개',
-    headline1: '비주얼로 전달하는',
-    headline2: '진심 어린',
-    highlight: '이야기',             // ← 네온 그린으로 강조
-    bio1: '5년 이상의 경험을 가진 비주얼 디자이너이자 크리에이티브 디렉터입니다. 디지털 미학의 경계를 넓히는 작업을 즐깁니다.',
-    bio2: '스타트업 브랜드 아이덴티티부터 글로벌 에디토리얼 비주얼까지, 모든 프로젝트에 세심한 디테일과 탁월함을 담습니다.',
-    badge_year: '2024',
-    badge_status: '작업 가능',
+    profile_image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80", // 👈 여기에 내 사진 경로 입력 (예: "/images/profile.jpg")
+    eyebrow: '✦  About',
+    headline1: 'A designer who',
+    headline2: 'suggests',
+    highlight: 'direction',
+    bio1: '김동형은 7년 이상 이커머스, 브랜드 캠페인, 뷰티 광고 소재를 만들어 온 웹/콘텐츠 디자이너입니다. 요청받은 결과물을 구현하는 데서 멈추지 않고, 레퍼런스 분석과 브랜드 맥락을 바탕으로 더 나은 비주얼 방향을 제안합니다.',
+    bio2: '이랜드월드에서는 Microsoft Clarity 분석과 A/B 테스트를 통해 배너 클릭률 25% 상승, 이탈률 13% 감소 등 실제 지표 개선을 만들었습니다. 현재는 발렌라이프에서 LG생활건강, 도미나스, 리쥬란, 이자녹스, 글린트, CNP 등 뷰티 브랜드 광고 소재를 담당하며 AI 이미지 생성 프로세스를 실무에 적용하고 있습니다.',
+    badge_year: '7+',
+    badge_status: 'Years Experience',
     skills: [
-      '비주얼 디자인', '브랜드 아이덴티티', '디지털 아트', '모션 그래픽',
-      '타이포그래피', 'UI/UX 디자인', '포토그래피', '크리에이티브 디렉션',
+      'Web Design', 'Commerce Campaign', 'Performance Creative', 'Detail Page',
+      'Motion Banner', 'UX/UI', 'AI Image Generation', 'Creative Direction',
     ],
     stats: [
-      { value: '5+',  label: '연차' },
-      { value: '80+', label: '완료 프로젝트' },
-      { value: '30+', label: '클라이언트' },
-      { value: '12',  label: '수상 경력' },
+      { value: '7+',  label: 'Years' },
+      { value: '25%', label: 'CTR Growth' },
+      { value: '13%', label: 'Bounce Reduced' },
+      { value: '70%+',  label: 'AI-assisted Ads' },
     ],
   },
 
-  // ── 프로젝트 그리드 섹션 ──────────────────────────────────────
+  // ── 6. 프로젝트 갤러리 영역 ──────────────────────────────────
   projects: {
-    eyebrow: '✦  선택된 작업물',
-    headline1: '나의 비전을 담은',
-    highlight: '프로젝트',
-    subtext: '디지털 아트, 브랜딩, 크리에이티브 디렉션을 아우르는 선별된 작업물입니다.',
-    filter_all: '전체',
-    empty_state: '이 카테고리에는 아직 작업물이 없습니다.',
+    eyebrow: '✦  Selected Works',
+    headline1: 'Selected',
+    highlight: 'Works',
+    subtext: 'A curated archive of campaigns, digital content, visual systems, and brand experiences.',
+    filter_all: 'All',
+    empty_state: 'No works are available in this category yet.',
   },
 
-  // ── 프로젝트 카테고리 목록 ────────────────────────────────────
-  // ⚠️  Decap CMS config.yml 의 options 목록과 일치해야 합니다.
+  // 카테고리 탭 목록
   categories: [
-    '전체',
-    '디지털 아트',
-    '포토그래피',
-    '브랜딩',
-    '에디토리얼',
-    '컨셉 아트',
-    '제품 디자인',
+    'All',
+    'Digital Art',
+    'Photography',
+    'Branding',
+    'Editorial',
+    'Concept Art',
+    'Product Design',
   ],
 
-  // ── Contact 섹션 ──────────────────────────────────────────────
+  // ── 7. Contact (연락처) 영역 ──────────────────────────────────
   contact: {
-    eyebrow: '✦  함께 만들어요',
-    headline1: '새로운 프로젝트,',
-    headline2: '함께 시작할까요?',
-    subtext: '새 프로젝트, 크리에이티브 아이디어, 협업 제안이 있다면 언제든지 연락주세요.',
-    email: 'hello@yourportfolio.com',    // ← 내 이메일로 교체
+    eyebrow: '✦  Contact',
+    headline1: 'Let’s build',
+    headline2: 'better visuals.',
+    subtext: '브랜드 메시지와 성과를 함께 고려하는 캠페인, 콘텐츠, 상세페이지 디자인을 함께 만들 수 있습니다.',
+    email: 'ehdgud502@naver.com',    // 내 실제 이메일
     copied_label: '복사됨 ✓',
     send_label: '이메일 보내기',
     social: [
-      { label: 'GitHub',    href: 'https://github.com/yourusername' },
-      { label: 'Instagram', href: 'https://instagram.com/yourusername' },
-      { label: 'Behance',   href: 'https://behance.net/yourusername' },
-      { label: 'LinkedIn',  href: 'https://linkedin.com/in/yourusername' },
+      { label: 'Portfolio', href: 'https://shiny-brioche-0b8393.netlify.app' },
+      { label: 'YouTube',   href: 'https://www.youtube.com/@qwau29' },
+      { label: 'GitHub',    href: 'https://github.com/SBLONomad' },
     ],
   },
 
-  // ── Footer ────────────────────────────────────────────────────
+  // ── 8. Footer (하단) ──────────────────────────────────────────
   footer: {
-    logo: 'PORTFOLIO',
+    logo: 'KIM DONG HYEONG',
     copyright: `© ${new Date().getFullYear()} All rights reserved.`,
     social: [
-      { label: 'GitHub',    href: 'https://github.com' },
-      { label: 'Instagram', href: 'https://instagram.com' },
-      { label: 'Behance',   href: 'https://behance.net' },
+      { label: 'Portfolio', href: 'https://shiny-brioche-0b8393.netlify.app' },
+      { label: 'YouTube',   href: 'https://www.youtube.com/@qwau29' },
+      { label: 'GitHub',    href: 'https://github.com/SBLONomad' },
     ],
   },
 }

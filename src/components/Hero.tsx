@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import Interactive3DGallery from './Interactive3DGallery'
 import { CONTENT } from '@/content'
 import type { Project } from '@/lib/projects'
+import type { SiteProfile } from '@/lib/profile'
 
 function useGlitchText(text: string, startDelay = 0) {
   const [display, setDisplay] = useState(text)
@@ -37,9 +38,10 @@ function useGlitchText(text: string, startDelay = 0) {
 
 interface Props {
   projects: Project[]
+  profile?: SiteProfile
 }
 
-export default function Hero({ projects }: Props) {
+export default function Hero({ projects, profile }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -86,7 +88,7 @@ export default function Hero({ projects }: Props) {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-neon font-mono text-xs md:text-sm tracking-[0.25em] uppercase mb-4"
         >
-          {CONTENT.hero.eyebrow}
+          ✦  {profile?.tagline || CONTENT.hero.eyebrow.replace('✦  ', '')}
         </motion.p>
 
         <motion.h1
@@ -113,9 +115,9 @@ export default function Hero({ projects }: Props) {
           transition={{ duration: 0.65, delay: 0.5 }}
           className="text-muted text-sm md:text-base max-w-md mx-auto leading-relaxed mb-6"
         >
-          {CONTENT.hero.subtext1}
+          {profile?.bio || CONTENT.hero.subtext1}
           <br />
-          {CONTENT.hero.subtext2}
+          {!profile && CONTENT.hero.subtext2}
         </motion.p>
 
         {/* 

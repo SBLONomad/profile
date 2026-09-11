@@ -3,12 +3,18 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { CONTENT } from '@/content'
+import type { SiteProfile } from '@/lib/profile'
 
-export default function Contact() {
+interface Props {
+  profile?: SiteProfile
+}
+
+export default function Contact({ profile }: Props) {
   const [copied, setCopied] = useState(false)
+  const email = profile?.email || CONTENT.contact.email
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(CONTENT.contact.email)
+    navigator.clipboard.writeText(email)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -70,14 +76,14 @@ export default function Contact() {
             className="group inline-flex items-center gap-3 border border-white/10 rounded-full px-6 py-3.5 text-white font-display font-medium text-sm hover:border-neon/50 hover:text-neon transition-all duration-300 bg-white/5"
           >
             <span className="w-2 h-2 rounded-full bg-neon animate-pulse" />
-            {CONTENT.contact.email}
+            {email}
             <span className="text-muted group-hover:text-neon transition-colors text-xs font-mono ml-1">
               {copied ? CONTENT.contact.copied_label : '⎘ 복사'}
             </span>
           </button>
 
           <a
-            href={`mailto:${CONTENT.contact.email}`}
+            href={`mailto:${email}`}
             className="inline-flex items-center gap-2 bg-neon text-black font-display font-semibold text-sm px-8 py-3.5 rounded-full hover:brightness-110 transition-all duration-300 group shadow-lg shadow-neon/20"
           >
             {CONTENT.contact.send_label}

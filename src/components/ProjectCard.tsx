@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import Link from 'next/link'
 import type { Project } from '@/lib/projects'
 
 interface Props {
@@ -22,10 +23,15 @@ export default function ProjectCard({ project, index }: Props) {
         delay: (index % 3) * 0.1,
         ease: [0.16, 1, 0.3, 1],
       }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="group relative cursor-pointer"
     >
+      <Link
+        href={`/projects/${project.slug}`}
+        scroll={true}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className="group relative block cursor-pointer"
+        aria-label={`View ${project.title}`}
+      >
       <div
         className="relative overflow-hidden rounded-2xl bg-zinc-900 border border-white/10"
         style={{ aspectRatio: index % 4 === 0 ? '4/5' : '16/11' }}
@@ -92,6 +98,7 @@ export default function ProjectCard({ project, index }: Props) {
           {project.year}
         </span>
       </div>
+      </Link>
     </motion.article>
   )
 }

@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react'
+import Link from 'next/link'
+import { CONTENT } from '@/content'
 import type { Project } from '@/lib/projects'
 
 interface Props {
@@ -140,22 +142,14 @@ export default function Interactive3DGallery({ projects }: Props) {
           style={{ background: 'linear-gradient(to left, #000000 25%, transparent 100%)' }}
         />
 
-        {/* 
-          ═══════════════════════════════════════════════════════════════════
-          ✨ [네온사인 광선 — 이미지들 '뒤로' 배치 (z-0)]
-          - 가운데 중심부는 극도로 쨍하게 발광하고,
-          - 상하 위아래 끝으로 갈수록 은은하게 페이드아웃되어 자연스럽게 소멸
-          ═══════════════════════════════════════════════════════════════════
-        */}
+        {/* 네온사인 광선 — 이미지들 뒤로 배치 (z-0) */}
         <div
           className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[220px] z-0 pointer-events-none flex items-center justify-center"
           style={{
-            // 상하 끝으로 갈수록 완벽하게 감쇠하여 사라지는 마스크
             maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.15) 15%, black 42%, black 58%, rgba(0,0,0,0.15) 85%, transparent 100%)',
             WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.15) 15%, black 42%, black 58%, rgba(0,0,0,0.15) 85%, transparent 100%)',
           }}
         >
-          {/* 광역 에메랄드 앰비언트 글로우 (중앙 방사형 빛무리) */}
           <div
             className="absolute w-[200px] h-[340px] rounded-full"
             style={{
@@ -164,7 +158,6 @@ export default function Interactive3DGallery({ projects }: Props) {
             }}
           />
 
-          {/* 중간 블룸 레이어 */}
           <div
             className="absolute w-[45px] h-full"
             style={{
@@ -173,7 +166,6 @@ export default function Interactive3DGallery({ projects }: Props) {
             }}
           />
 
-          {/* 집중형 네온 그린 광선 */}
           <div
             className="absolute w-[10px] h-full"
             style={{
@@ -182,7 +174,6 @@ export default function Interactive3DGallery({ projects }: Props) {
             }}
           />
 
-          {/* 쨍하고 눈부신 중심 코어 (가운데 50% 지점이 가장 강렬함) */}
           <div
             className="absolute w-[2.5px] h-full rounded-full"
             style={{
@@ -192,19 +183,19 @@ export default function Interactive3DGallery({ projects }: Props) {
           />
         </div>
 
-        {/* 
-          ── 3D 카드 컨테이너 (z-10: 네온사인 위에서 렌더링되어 네온이 카드 '뒤'에 위치) ── 
-        */}
+        {/* 3D 카드 컨테이너 (z-10) */}
         <div className="relative z-10 w-full h-[360px]">
           {items.map((project, idx) => (
-            <div
+            <Link
               key={`${project.slug}-${idx}`}
+              href={`/projects/${project.slug}`}
               className="fan-card-item absolute top-0 left-0 will-change-transform group cursor-pointer"
               style={{
                 width: `${cardWidth}px`,
                 height: '310px',
                 transformOrigin: '50% 50%',
               }}
+              aria-label={`View ${project.title}`}
             >
               <div
                 className="relative w-full h-full overflow-hidden rounded-2xl bg-[#0e0e10] border border-white/10 transition-colors duration-300 group-hover:border-neon/70 shadow-2xl"
@@ -231,7 +222,6 @@ export default function Interactive3DGallery({ projects }: Props) {
                   }}
                 />
 
-                {/* 네온 테두리 글로우 */}
                 <div
                   className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
@@ -251,16 +241,19 @@ export default function Interactive3DGallery({ projects }: Props) {
                   </p>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
 
-      <div className="text-center mt-1 pointer-events-none">
-        <span className="text-[11px] font-mono text-muted/60 tracking-widest uppercase">
-          ✦ Drag to swing &bull; 3D perspective fan gallery ✦
-        </span>
-      </div>
+      {/* 안내 텍스트 (CONTENT.gallery_hint 연동) */}
+      {CONTENT.gallery_hint && (
+        <div className="text-center mt-1 pointer-events-none">
+          <span className="text-[11px] font-mono text-muted/60 tracking-widest uppercase">
+            {CONTENT.gallery_hint}
+          </span>
+        </div>
+      )}
     </div>
   )
 }

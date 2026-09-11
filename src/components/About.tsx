@@ -4,8 +4,13 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import AnimatedNumber from './AnimatedNumber'
 import { CONTENT } from '@/content'
+import type { SiteProfile } from '@/lib/profile'
 
-export default function About() {
+interface Props {
+  profile?: SiteProfile
+}
+
+export default function About({ profile }: Props) {
   const sectionRef = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
   const yImage = useTransform(scrollYProgress, [0, 1], [-30, 30])
@@ -32,7 +37,7 @@ export default function About() {
                 style={{ aspectRatio: '3/4' }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"
+                  src={CONTENT.about.profile_image || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"}
                   alt="Profile"
                   className="w-full h-full object-cover"
                   loading="lazy"
@@ -76,7 +81,7 @@ export default function About() {
               </span>
             </h2>
             <p className="text-muted text-base leading-relaxed mb-4">
-              {CONTENT.about.bio1}
+              {profile?.bio || CONTENT.about.bio1}
             </p>
             <p className="text-muted text-base leading-relaxed mb-8">
               {CONTENT.about.bio2}
