@@ -91,26 +91,28 @@ export default function Contact({ profile }: Props) {
           </a>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex items-center justify-center gap-6"
-        >
-          {CONTENT.contact.social.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted text-sm font-body hover:text-neon transition-colors duration-300 relative group"
-            >
-              {link.label}
-              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-neon group-hover:w-full transition-all duration-300" />
-            </a>
-          ))}
-        </motion.div>
+        {CONTENT.contact.social.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex items-center justify-center gap-6"
+          >
+            {CONTENT.contact.social.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted text-sm font-body hover:text-neon transition-colors duration-300 relative group"
+              >
+                {link.label}
+                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-neon group-hover:w-full transition-all duration-300" />
+              </a>
+            ))}
+          </motion.div>
+        )}
       </div>
     </section>
   )

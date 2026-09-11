@@ -27,25 +27,27 @@ export default function Footer() {
           {CONTENT.footer.copyright}
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
-          transition={{ delay: 0.2 }}
-          className="flex gap-5"
-        >
-          {CONTENT.footer.social.map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-2 font-body text-xs hover:text-neon transition-colors duration-300"
-            >
-              {s.label}
-            </a>
-          ))}
-        </motion.div>
+        {CONTENT.footer.social.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: false }}
+            transition={{ delay: 0.2 }}
+            className="flex gap-5"
+          >
+            {CONTENT.footer.social.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-2 font-body text-xs hover:text-neon transition-colors duration-300"
+              >
+                {s.label}
+              </a>
+            ))}
+          </motion.div>
+        )}
       </div>
     </footer>
   )

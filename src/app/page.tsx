@@ -16,7 +16,7 @@ export default function HomePage() {
       <Header />
       <main>
         {/* Hero with rolling marquee gallery */}
-        <Hero projects={projects} profile={profile} />
+        <Hero projects={projects} />
 
         {/* About section */}
         <About profile={profile} />

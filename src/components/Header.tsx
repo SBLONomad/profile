@@ -54,7 +54,7 @@ export default function Header() {
               href="/admin"
               className="text-xs font-mono px-4 py-1.5 rounded-full border border-white/15 text-muted hover:border-neon/50 hover:text-neon transition-all duration-300"
             >
-              Admin ↗
+              {CONTENT.header.nav.admin} ↗
             </a>
           </nav>
 
@@ -100,7 +100,7 @@ export default function Header() {
               className="text-sm font-mono text-muted border border-white/15 px-6 py-2 rounded-full"
               onClick={() => setMenuOpen(false)}
             >
-              Admin ↗
+              {CONTENT.header.nav.admin} ↗
             </motion.a>
           </motion.div>
         )}

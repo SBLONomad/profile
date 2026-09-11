@@ -1,6 +1,6 @@
 # ─────────────────────────────────────────────
 # Decap CMS Configuration
-# 사이트 주소와 GitHub repo를 아래에서 교체하세요.
+# 관리자 페이지 설정 파일입니다.
 # ─────────────────────────────────────────────
 
 backend:
@@ -36,27 +36,26 @@ collections:
         widget: "text"
         hint: "프로젝트 설명 (1~2 문장)"
 
-      - label: "Category"
+      - label: "카테고리"
         name: "category"
         widget: "select"
         options:
-          - "Digital Art"
-          - "Photography"
-          - "Branding"
-          - "Editorial"
-          - "Concept Art"
-          - "Product Design"
-          - "Motion"
+          - "커머스 캠페인"
+          - "상세페이지"
+          - "광고 소재"
+          - "브랜딩"
+          - "모션"
+          - "AI 이미지"
           - "UI/UX"
-        default: "Digital Art"
+        default: "커머스 캠페인"
 
-      - label: "Year"
+      - label: "연도"
         name: "year"
         widget: "string"
         default: "2024"
         pattern: ['^\d{4}$', "4자리 연도 (예: 2024)"]
 
-      - label: "Thumbnail Image"
+      - label: "대표 이미지"
         name: "image"
         widget: "image"
         hint: "갤러리에 표시될 대표 이미지"
@@ -64,7 +63,7 @@ collections:
           config:
             max_file_size: 10000000  # 10MB
 
-      - label: "Full Detail Image"
+      - label: "상세 전체 이미지"
         name: "fullImage"
         widget: "image"
         required: false
@@ -73,24 +72,24 @@ collections:
           config:
             max_file_size: 20000000  # 20MB
 
-      - label: "Additional Detail Images"
+      - label: "추가 상세 이미지"
         name: "images"
         widget: "list"
         required: false
         summary: "{{fields.image}}"
         hint: "상세 페이지에 이어서 보여줄 이미지들을 추가하세요"
         field:
-          label: "Detail Image"
+          label: "상세 이미지"
           name: "image"
           widget: "image"
 
-      - label: "Featured (롤링 배너 표시)"
+      - label: "대표 노출 여부"
         name: "featured"
         widget: "boolean"
         default: true
         hint: "체크하면 Hero 롤링 배너에 표시됩니다"
 
-      - label: "Body (상세 설명, 선택사항)"
+      - label: "상세 설명"
         name: "body"
         widget: "markdown"
         required: false
@@ -111,7 +110,7 @@ collections:
           - label: "Tagline (Hero 한 줄 소개)"
             name: "tagline"
             widget: "string"
-            default: "Visual Designer & Creative Director"
+            default: "성과를 만드는 웹·콘텐츠 디자이너"
 
           - label: "Bio"
             name: "bio"
@@ -120,18 +119,3 @@ collections:
           - label: "Email"
             name: "email"
             widget: "string"
-
-          - label: "GitHub URL"
-            name: "github"
-            widget: "string"
-            required: false
-
-          - label: "Instagram URL"
-            name: "instagram"
-            widget: "string"
-            required: false
-
-          - label: "Behance URL"
-            name: "behance"
-            widget: "string"
-            required: false

@@ -1,28 +1,32 @@
 // ================================================================
-// ✏️  이 파일 하나에서 사이트의 모든 텍스트를 자유롭게 수정할 수 있습니다.
-//     따옴표('...') 안의 글자를 바꾸고 저장(Cmd + S)하면 즉시 반영됩니다!
+// ✏️  사이트 문구를 직접 바꾸고 싶을 때 이 파일을 수정하세요.
+//     따옴표('...') 안의 글자를 바꾸고 저장(Cmd + S)하면 사이트에 반영됩니다.
+//
+//     줄바꿈이 필요한 제목은 \n 을 넣으면 됩니다.
+//     예: '데이터 기반\n디자인 개선'
 // ================================================================
 
 export const CONTENT = {
 
   // ── 1. 상단 헤더 ──────────────────────────────────────────────
   header: {
-    logo: 'KIM DONG HYEONG',
+    logo: '김동형 포트폴리오',
     nav: {
-      about: 'About',
-      projects: 'Works',
-      contact: 'Contact',
+      about: '소개',
+      projects: '작업물',
+      contact: '연락처',
+      admin: '관리자',
     },
   },
 
   // ── 2. 메인 Hero 화면 ──────────────────────────────────────────
   hero: {
-    eyebrow: '✦  Performance Creative Designer',
-    headline1: 'Designing visuals',
-    headline2: 'that move people.',
-    subtext1: 'E-commerce, beauty, campaign, and content design.',
-    subtext2: 'Creative direction shaped by data, speed, and execution.',
-    cta_primary: 'View Works',      // 버튼 글자
+    eyebrow: '✦  성과를 만드는 웹·콘텐츠 디자이너',
+    headline1: '데이터로 설계하고',
+    headline2: '비주얼로 설득합니다.',
+    subtext1: '이커머스, 뷰티 광고, 브랜드 캠페인, 상세페이지까지.',
+    subtext2: '기획과 지표를 함께 보는 실무형 디자이너 김동형입니다.',
+    cta_primary: '작업물 보기',
     cta_secondary: '연락하기',
   },
 
@@ -34,89 +38,82 @@ export const CONTENT = {
   features: [
     {
       icon: '📈',
-      title: 'Data-led\nimprovement',
-      desc: 'Microsoft Clarity and A/B tests inform layouts, copy, and conversion-focused decisions.',
+      title: '데이터 기반\n사용성 개선',
+      desc: 'Microsoft Clarity와 A/B 테스트로 사용자 행동을 분석하고, 클릭률과 이탈률을 함께 개선합니다.',
     },
     {
       icon: '✨',
-      title: 'AI creative\nworkflow',
-      desc: 'AI-generated staging cuts production time while keeping campaign visuals polished and scalable.',
+      title: 'AI 이미지\n제작 프로세스',
+      desc: 'AI 연출컷과 합성 이미지를 실무에 적용해 광고 소재 제작 속도와 완성도를 함께 높입니다.',
     },
     {
       icon: '⚡',
-      title: 'Fast commerce\nexecution',
-      desc: 'Large-scale promotion pages, banners, motion assets, and detail pages built with stable speed.',
+      title: '빠른 커머스\n실행력',
+      desc: '대형 프로모션, 배너, 모션, 상세페이지를 안정적으로 제작하며 촘촘한 실무 대응력을 쌓았습니다.',
     },
   ],
 
   // ── 5. About (소개) 영역 ──────────────────────────────────────
   about: {
     profile_image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80", // 👈 여기에 내 사진 경로 입력 (예: "/images/profile.jpg")
-    eyebrow: '✦  About',
-    headline1: 'A designer who',
-    headline2: 'suggests',
-    highlight: 'direction',
+    eyebrow: '✦  소개',
+    headline1: '방향을 제안하는',
+    headline2: '실무형',
+    highlight: '디자이너',
     bio1: '김동형은 7년 이상 이커머스, 브랜드 캠페인, 뷰티 광고 소재를 만들어 온 웹/콘텐츠 디자이너입니다. 요청받은 결과물을 구현하는 데서 멈추지 않고, 레퍼런스 분석과 브랜드 맥락을 바탕으로 더 나은 비주얼 방향을 제안합니다.',
     bio2: '이랜드월드에서는 Microsoft Clarity 분석과 A/B 테스트를 통해 배너 클릭률 25% 상승, 이탈률 13% 감소 등 실제 지표 개선을 만들었습니다. 현재는 발렌라이프에서 LG생활건강, 도미나스, 리쥬란, 이자녹스, 글린트, CNP 등 뷰티 브랜드 광고 소재를 담당하며 AI 이미지 생성 프로세스를 실무에 적용하고 있습니다.',
     badge_year: '7+',
-    badge_status: 'Years Experience',
+    badge_status: '년 경력',
     skills: [
-      'Web Design', 'Commerce Campaign', 'Performance Creative', 'Detail Page',
-      'Motion Banner', 'UX/UI', 'AI Image Generation', 'Creative Direction',
+      '웹 디자인', '커머스 캠페인', '성과형 광고 소재', '상세페이지',
+      '모션 배너', 'UX/UI', 'AI 이미지 생성', '크리에이티브 기획',
     ],
     stats: [
-      { value: '7+',  label: 'Years' },
-      { value: '25%', label: 'CTR Growth' },
-      { value: '13%', label: 'Bounce Reduced' },
-      { value: '70%+',  label: 'AI-assisted Ads' },
+      { value: '7+',  label: '실무 경력' },
+      { value: '25%', label: '클릭률 상승' },
+      { value: '13%', label: '이탈률 감소' },
+      { value: '70%+',  label: 'AI 활용 소재' },
     ],
   },
 
   // ── 6. 프로젝트 갤러리 영역 ──────────────────────────────────
   projects: {
-    eyebrow: '✦  Selected Works',
-    headline1: 'Selected',
-    highlight: 'Works',
-    subtext: 'A curated archive of campaigns, digital content, visual systems, and brand experiences.',
-    filter_all: 'All',
-    empty_state: 'No works are available in this category yet.',
+    eyebrow: '✦  주요 작업물',
+    headline1: '성과와 감도를 담은',
+    highlight: '작업물',
+    subtext: '캠페인, 상세페이지, 광고 소재, 모션, AI 이미지 제작까지 실무에서 만든 결과물을 정리했습니다.',
+    filter_all: '전체',
+    empty_state: '이 카테고리에는 아직 작업물이 없습니다.',
   },
 
   // 카테고리 탭 목록
   categories: [
-    'All',
-    'Digital Art',
-    'Photography',
-    'Branding',
-    'Editorial',
-    'Concept Art',
-    'Product Design',
+    '전체',
+    '커머스 캠페인',
+    '상세페이지',
+    '광고 소재',
+    '브랜딩',
+    '모션',
+    'AI 이미지',
+    'UX/UI',
   ],
 
   // ── 7. Contact (연락처) 영역 ──────────────────────────────────
   contact: {
-    eyebrow: '✦  Contact',
-    headline1: 'Let’s build',
-    headline2: 'better visuals.',
+    eyebrow: '✦  연락처',
+    headline1: '성과로 이어지는',
+    headline2: '비주얼을 만듭니다.',
     subtext: '브랜드 메시지와 성과를 함께 고려하는 캠페인, 콘텐츠, 상세페이지 디자인을 함께 만들 수 있습니다.',
     email: 'ehdgud502@naver.com',    // 내 실제 이메일
     copied_label: '복사됨 ✓',
     send_label: '이메일 보내기',
-    social: [
-      { label: 'Portfolio', href: 'https://shiny-brioche-0b8393.netlify.app' },
-      { label: 'YouTube',   href: 'https://www.youtube.com/@qwau29' },
-      { label: 'GitHub',    href: 'https://github.com/SBLONomad' },
-    ],
+    social: [] as { label: string; href: string }[],
   },
 
   // ── 8. Footer (하단) ──────────────────────────────────────────
   footer: {
-    logo: 'KIM DONG HYEONG',
-    copyright: `© ${new Date().getFullYear()} All rights reserved.`,
-    social: [
-      { label: 'Portfolio', href: 'https://shiny-brioche-0b8393.netlify.app' },
-      { label: 'YouTube',   href: 'https://www.youtube.com/@qwau29' },
-      { label: 'GitHub',    href: 'https://github.com/SBLONomad' },
-    ],
+    logo: '김동형 포트폴리오',
+    copyright: `© ${new Date().getFullYear()} 김동형. 모든 권리 보유.`,
+    social: [] as { label: string; href: string }[],
   },
 }

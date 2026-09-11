@@ -195,7 +195,7 @@ export default function Interactive3DGallery({ projects }: Props) {
                 height: '310px',
                 transformOrigin: '50% 50%',
               }}
-              aria-label={`View ${project.title}`}
+              aria-label={`${project.title} 자세히 보기`}
             >
               <div
                 className="relative w-full h-full overflow-hidden rounded-2xl bg-[#0e0e10] border border-white/10 transition-colors duration-300 group-hover:border-neon/70 shadow-2xl"

@@ -30,7 +30,7 @@ export default function ProjectCard({ project, index }: Props) {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         className="group relative block cursor-pointer"
-        aria-label={`View ${project.title}`}
+        aria-label={`${project.title} 자세히 보기`}
       >
       <div
         className="relative overflow-hidden rounded-2xl bg-zinc-900 border border-white/10"

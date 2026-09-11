@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Portfolio — Creative Works',
-  description: 'A curated collection of my creative and design work.',
+  title: '김동형 포트폴리오',
+  description: '웹, 커머스 캠페인, 광고 소재, 상세페이지 작업을 정리한 김동형 포트폴리오입니다.',
   metadataBase: new URL('https://yoursite.netlify.app'),
   openGraph: {
-    title: 'Portfolio — Creative Works',
-    description: 'A curated collection of my creative and design work.',
+    title: '김동형 포트폴리오',
+    description: '웹, 커머스 캠페인, 광고 소재, 상세페이지 작업을 정리한 김동형 포트폴리오입니다.',
     type: 'website',
   },
 }

@@ -21,7 +21,7 @@ export default function BackToWorksButton() {
       className="inline-flex items-center gap-2 text-sm font-mono text-muted hover:text-neon transition-colors"
     >
       <span aria-hidden="true">←</span>
-      Back to Works
+      작업물로 돌아가기
     </button>
   )
 }
