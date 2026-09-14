@@ -46,11 +46,10 @@ export default function Header() {
     <header className={`portfolio-header ${scrolled ? 'is-scrolled' : ''} ${menuOpen ? 'menu-open' : ''}`}>
       <a href={`${home}#top`} className="portfolio-wordmark" onClick={() => setMenuOpen(false)}>{CONTENT.header.logo}</a>
       <nav ref={nav} id="site-nav" aria-label="주 메뉴" className="portfolio-nav">
-        {Object.entries(CONTENT.header.nav).filter(([key]) => key !== 'admin').map(([key, label]) => (
-          <a key={key} href={`${home}#${key}`} className="liquid-button" onClick={() => setMenuOpen(false)}>{label}</a>
+        {Object.entries(CONTENT.header.nav).map(([key, label]) => (
+          <a key={key} href={key === 'admin' ? '/admin' : `${home}#${key}`} className={`liquid-button ${key === 'admin' ? 'liquid-solid' : ''}`} onClick={() => setMenuOpen(false)}>{label}</a>
         ))}
       </nav>
-      <a href="/admin" className="liquid-button liquid-solid header-admin">{CONTENT.header.nav.admin}</a>
       <button ref={toggle} className="portfolio-menu" aria-label={menuOpen ? '메뉴 닫기' : '메뉴 열기'} aria-expanded={menuOpen} aria-controls="site-nav" onClick={() => setMenuOpen(!menuOpen)}>
         <span /><span /><span />
       </button>
