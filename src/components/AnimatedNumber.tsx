@@ -8,7 +8,7 @@ interface Props {
   duration?: number
 }
 
-export default function AnimatedNumber({ value, duration = 1.8 }: Props) {
+export default function AnimatedNumber({ value, duration = 0.65 }: Props) {
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: false, margin: '-40px' })
 
@@ -30,7 +30,7 @@ export default function AnimatedNumber({ value, duration = 1.8 }: Props) {
       if (!startTime) startTime = timestamp
       const progress = Math.min((timestamp - startTime) / (duration * 1000), 1)
 
-      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress)
+      const easeProgress = 1 - Math.pow(1 - progress, 3)
       const nowVal = Math.floor(easeProgress * targetNumber)
       setCurrent(nowVal)
 

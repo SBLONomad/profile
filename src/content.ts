@@ -81,7 +81,7 @@ export const CONTENT = {
     eyebrow: '✦  주요 작업물',
     headline1: '성과와 감도를 담은',
     highlight: '작업물',
-    subtext: '캠페인, 상세페이지, 광고 소재, 모션, AI 이미지 제작까지 실무에서 만든 결과물을 정리했습니다.',
+    subtext: '캠페인, 상세페이지, 광고 소재, 모션, AI 이미지 제작까지\n실무에서 만든 결과물을 정리했습니다.',
     filter_all: '전체',
     empty_state: '이 카테고리에는 아직 작업물이 없습니다.',
     show_more: '더 보기',

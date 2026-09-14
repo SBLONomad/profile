@@ -113,7 +113,7 @@ export default function About({ profile }: Props) {
                   transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
                 >
                   <div className="text-white font-display font-bold text-3xl md:text-4xl text-neon drop-shadow-[0_0_15px_rgba(57,255,20,0.3)]">
-                    <AnimatedNumber value={stat.value} duration={1.6 + i * 0.2} />
+                    <AnimatedNumber value={stat.value} duration={0.65 + i * 0.08} />
                   </div>
                   <div className="text-muted text-xs mt-1.5 leading-tight font-medium">{stat.label}</div>
                 </motion.div>

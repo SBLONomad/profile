@@ -10,6 +10,7 @@ export default function Intro() {
   const waveFrame = useRef<number>()
   const waveDirection = useRef(1)
   const waveLast = useRef<number>()
+  const waveTime = useRef(0)
 
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -27,7 +28,7 @@ export default function Intro() {
         const elapsed = Math.min((now - (waveLast.current ?? now)) / 1000, 0.05)
         waveLast.current = now
         const duration = current.duration
-        let nextTime = current.currentTime + elapsed * waveDirection.current
+        let nextTime = waveTime.current + elapsed * waveDirection.current
         if (nextTime >= duration) {
           nextTime = duration
           waveDirection.current = -1
@@ -35,12 +36,14 @@ export default function Intro() {
           nextTime = 0
           waveDirection.current = 1
         }
+        waveTime.current = nextTime
         current.currentTime = nextTime
         waveFrame.current = requestAnimationFrame(step)
       }
 
       stopWave()
       element.pause()
+      waveTime.current = element.currentTime
       waveLast.current = undefined
       waveFrame.current = requestAnimationFrame(step)
     }
@@ -100,8 +103,8 @@ export default function Intro() {
       </div>
       <div className="intro-stats">
         {CONTENT.about.stats.slice(0, 3).map((stat, index) => (
-          <p key={stat.label} className="intro-appear intro-stat" style={{ animationDelay: `${1.12 + index * .16}s` }}>
-            <strong><AnimatedNumber value={stat.value} duration={1.4 + index * .15} /></strong><span>{stat.label}</span>
+          <p key={stat.label} className="intro-stat">
+            <strong><AnimatedNumber value={stat.value} duration={.55 + index * .06} /></strong><span>{stat.label}</span>
           </p>
         ))}
       </div>

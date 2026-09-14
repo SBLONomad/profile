@@ -48,7 +48,7 @@ export default function ProjectsGrid({ projects }: Props) {
             <br />
             <span className="text-neon">{CONTENT.projects.highlight}</span>
           </h2>
-          <p className="text-muted text-base max-w-sm leading-relaxed">
+          <p className="text-muted text-base max-w-sm leading-relaxed whitespace-pre-line">
             {CONTENT.projects.subtext}
           </p>
         </div>

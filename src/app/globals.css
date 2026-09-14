@@ -40,7 +40,7 @@ section[id] { scroll-margin-top: 100px; }
 .intro-actions .liquid-button { height: 46px; padding: 0 22px; }
 .intro-stats { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 24px; max-width: 1200px; width: 100%; margin: auto; }
 .intro-stat { display: inline-flex; align-items: center; gap: 14px; color: #c6cdc2; font-size: 14px; }
-.intro-stat strong { color: #a2ff87; font-size: 22px; font-weight: 550; }
+.intro-stat strong { color: #a2ff87; font-size: 22px; font-weight: 750; }
 .intro-appear { opacity: 1; animation: intro-soft 1.05s cubic-bezier(.16, 1, .3, 1) both; }
 .intro-pop { animation-name: intro-pop; animation-delay: .22s; }
 .intro-line { animation-name: intro-mask; animation-delay: .42s; }
@@ -131,9 +131,10 @@ body {
   }
 }
 
-.rolling-number.is-rolling { animation: number-roll-blur .14s linear infinite alternate; }
-@keyframes number-roll-blur { from { filter: blur(.25px); opacity: .78; transform: translateY(-1px); } to { filter: blur(1px); opacity: 1; transform: translateY(1px); } }
-.cursor-glow { position: fixed; top: 0; left: 0; z-index: 5000; width: 14px; height: 14px; border: 2px solid #d5ffcb; border-radius: 50%; pointer-events: none; opacity: 0; transform: translate3d(-100px, -100px, 0); translate: -50% -50%; transition: width .2s ease, height .2s ease, border-color .2s ease, opacity .2s ease; box-shadow: 0 0 4px #d5ffcb, 0 0 12px #a2ff87, 0 0 28px rgb(162 255 135 / .78); }
-.cursor-glow::before { content: ''; position: absolute; inset: -22px; border-radius: inherit; background: radial-gradient(circle, rgb(162 255 135 / .24), transparent 68%); filter: blur(7px); }
-.cursor-glow::after { content: ''; position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; border-radius: 50%; background: #fff; translate: -50% -50%; box-shadow: 0 0 7px #fff, 0 0 17px #a2ff87; }
-@media (hover: hover) and (pointer: fine) { .cursor-glow { opacity: 1; } .cursor-glow[data-active='true'] { width: 34px; height: 34px; border-color: #a2ff87; } }
+.rolling-number.is-rolling { animation: number-roll-blur .1s linear infinite alternate; }
+@keyframes number-roll-blur { from { filter: blur(.4px); opacity: .72; transform: translateY(-2px) scaleY(1.08); } to { filter: blur(1.3px); opacity: 1; transform: translateY(2px) scaleY(.92); } }
+.cursor-glow { position: fixed; top: 0; left: 0; z-index: 5000; width: 1px; height: 1px; pointer-events: none; opacity: 0; transform: translate3d(-100px, -100px, 0); translate: -50% -50%; }
+.cursor-glow::before { content: ''; position: absolute; inset: -30px; border-radius: 50%; background: radial-gradient(circle, rgb(224 255 216 / .9) 0 3%, rgb(162 255 135 / .5) 11%, rgb(162 255 135 / .16) 28%, transparent 70%); filter: blur(4px); animation: neon-flicker 1.2s steps(2, end) infinite; }
+.cursor-glow::after { content: '✦'; position: absolute; top: 50%; left: 50%; color: #efffed; font-size: 21px; line-height: 1; translate: -50% -50%; text-shadow: 0 0 4px #fff, 0 0 10px #d5ffcb, 0 0 24px #a2ff87, 0 0 42px rgb(162 255 135 / .88); animation: neon-flicker .85s steps(2, end) infinite; }
+@keyframes neon-flicker { 0%, 100% { opacity: 1; } 45% { opacity: .72; } 50% { opacity: .92; } }
+@media (hover: hover) and (pointer: fine) { .cursor-glow { opacity: 1; } .cursor-glow[data-active='true']::before { inset: -42px; } .cursor-glow[data-active='true']::after { font-size: 28px; } }
