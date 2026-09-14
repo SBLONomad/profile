@@ -6,66 +6,6 @@ import { CONTENT } from '@/content'
 
 export default function Intro() {
   const root = useRef<HTMLDivElement>(null)
-  const video = useRef<HTMLVideoElement>(null)
-  const waveFrame = useRef<number>()
-  const waveDirection = useRef(1)
-  const waveLast = useRef<number>()
-  const waveTime = useRef(0)
-
-  useEffect(() => {
-    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const stopWave = () => {
-      if (waveFrame.current) cancelAnimationFrame(waveFrame.current)
-      waveFrame.current = undefined
-    }
-    const startWave = () => {
-      const element = video.current
-      if (!element || document.hidden || preference.matches || !Number.isFinite(element.duration)) return
-
-      const step = (now: number) => {
-        const current = video.current
-        if (!current || document.hidden || preference.matches) return
-        const elapsed = Math.min((now - (waveLast.current ?? now)) / 1000, 0.05)
-        waveLast.current = now
-        const duration = current.duration
-        let nextTime = waveTime.current + elapsed * waveDirection.current
-        if (nextTime >= duration) {
-          nextTime = duration
-          waveDirection.current = -1
-        } else if (nextTime <= 0) {
-          nextTime = 0
-          waveDirection.current = 1
-        }
-        waveTime.current = nextTime
-        current.currentTime = nextTime
-        waveFrame.current = requestAnimationFrame(step)
-      }
-
-      stopWave()
-      element.pause()
-      waveTime.current = element.currentTime
-      waveLast.current = undefined
-      waveFrame.current = requestAnimationFrame(step)
-    }
-    const update = () => {
-      if (preference.matches || document.hidden) {
-        stopWave()
-        video.current?.pause()
-      } else {
-        startWave()
-      }
-    }
-    video.current?.addEventListener('loadedmetadata', startWave)
-    update()
-    preference.addEventListener('change', update)
-    document.addEventListener('visibilitychange', update)
-    return () => {
-      stopWave()
-      preference.removeEventListener('change', update)
-      document.removeEventListener('visibilitychange', update)
-      video.current?.removeEventListener('loadedmetadata', startWave)
-    }
-  }, [])
 
   useEffect(() => {
     const elements = root.current?.querySelectorAll<HTMLElement>('.intro-appear')
@@ -88,7 +28,7 @@ export default function Intro() {
 
   return (
     <div id="top" ref={root} className="portfolio-intro">
-      <video ref={video} className="intro-wave" src="/hero-wave.mp4" muted playsInline preload="auto" aria-hidden="true" />
+      <video className="intro-wave" src="/hero-wave.mp4" muted autoPlay loop playsInline preload="auto" aria-hidden="true" />
       <div className="intro-copy">
         <p className="intro-badge intro-appear intro-pop">{CONTENT.hero.eyebrow}</p>
         <h1>

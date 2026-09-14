@@ -134,7 +134,6 @@ body {
 .rolling-number.is-rolling { animation: number-roll-blur .1s linear infinite alternate; }
 @keyframes number-roll-blur { from { filter: blur(.4px); opacity: .72; transform: translateY(-2px) scaleY(1.08); } to { filter: blur(1.3px); opacity: 1; transform: translateY(2px) scaleY(.92); } }
 .cursor-glow { position: fixed; top: 0; left: 0; z-index: 5000; width: 1px; height: 1px; pointer-events: none; opacity: 0; transform: translate3d(-100px, -100px, 0); translate: -50% -50%; }
-.cursor-glow::before { content: ''; position: absolute; inset: -30px; border-radius: 50%; background: radial-gradient(circle, rgb(224 255 216 / .9) 0 3%, rgb(162 255 135 / .5) 11%, rgb(162 255 135 / .16) 28%, transparent 70%); filter: blur(4px); animation: neon-flicker 1.2s steps(2, end) infinite; }
-.cursor-glow::after { content: '✦'; position: absolute; top: 50%; left: 50%; color: #efffed; font-size: 21px; line-height: 1; translate: -50% -50%; text-shadow: 0 0 4px #fff, 0 0 10px #d5ffcb, 0 0 24px #a2ff87, 0 0 42px rgb(162 255 135 / .88); animation: neon-flicker .85s steps(2, end) infinite; }
-@keyframes neon-flicker { 0%, 100% { opacity: 1; } 45% { opacity: .72; } 50% { opacity: .92; } }
-@media (hover: hover) and (pointer: fine) { .cursor-glow { opacity: 1; } .cursor-glow[data-active='true']::before { inset: -42px; } .cursor-glow[data-active='true']::after { font-size: 28px; } }
+.cursor-glow::before { content: ''; position: absolute; inset: -34px; border-radius: 50%; background: radial-gradient(circle, rgb(224 255 216 / .76) 0, rgb(162 255 135 / .4) 13%, rgb(162 255 135 / .14) 34%, transparent 72%); filter: blur(7px); animation: neon-flicker 1.2s steps(2, end) infinite; }
+@keyframes neon-flicker { 0%, 100% { opacity: 1; } 45% { opacity: .7; } 50% { opacity: .92; } }
+@media (hover: hover) and (pointer: fine) { .cursor-glow { opacity: 1; } .cursor-glow[data-active='true']::before { inset: -50px; } }
