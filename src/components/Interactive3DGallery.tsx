@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
+import LogoBanner from './LogoBanner'
 import { CONTENT } from '@/content'
 import type { Project } from '@/lib/projects'
 
@@ -200,7 +201,7 @@ export default function Interactive3DGallery({ projects }: Props) {
               <div
                 className="relative w-full h-full overflow-hidden rounded-2xl bg-[#0e0e10] border border-white/10 transition-colors duration-300 group-hover:border-neon/70 shadow-2xl"
               >
-                <img
+                {project.thumbnailStyle === 'logo' ? <LogoBanner project={project} /> : <img
                   src={project.image}
                   alt=""
                   draggable={false}
@@ -212,7 +213,7 @@ export default function Interactive3DGallery({ projects }: Props) {
                       target.parentElement.style.background = 'linear-gradient(135deg, #18181b 0%, #09090b 50%, #052e16 100%)'
                     }
                   }}
-                />
+                />}
 
                 <div className="card-vignette absolute inset-0 pointer-events-none transition-colors duration-300" />
                 <div

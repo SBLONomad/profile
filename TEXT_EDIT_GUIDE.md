@@ -27,3 +27,23 @@ VS Code에서 아래 파일을 열어 문구를 직접 수정하시면 됩니다
 관리자 페이지에서도 작업물과 이미지를 수정할 수 있습니다.
 
 `/admin`
+
+## 상단 물결과 글꼴
+
+- 상단 문구와 버튼: `src/content.ts`의 `hero`
+- 물결 영상: `public/hero-wave.mp4`
+- 물결 색감과 밝기: `src/app/globals.css`의 `.intro-wave`에서 `filter`
+- 상단 배치와 효과: `src/components/Intro.tsx`
+- 프리텐다드: `public/PretendardVariable.woff2` (사이트에 포함되어 별도 설치 불필요)
+
+## 발렌라이프 로고 배너
+
+`content/projects/valenlife-번호.md`에서 제목, 대표 이미지, 상세 이미지 순서를 수정합니다.
+
+- `thumbnailStyle: logo`: 원본 로고를 흰색 9:16 영역에 가운데 정렬합니다.
+- `logoBounds`: 원본 이미지의 빈 여백을 제외한 로고 위치입니다. 로고 파일을 교체하면 이 항목을 삭제하거나 새 이미지에 맞게 조정하세요.
+- `fullImage`: 첫 상세 이미지, `images`: 그 뒤에 이어지는 이미지 목록입니다.
+- 로고가 아닌 사진은 일반 이미지로 표시합니다.
+- 로고 원본은 수정하지 않으며, 화면에서 일정한 크기로 배치합니다.
+
+관리자에서도 카테고리, 이미지, 썸네일 표시 방식을 편집할 수 있습니다.

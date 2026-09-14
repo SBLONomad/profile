@@ -57,7 +57,7 @@ export default function ProjectDetailPage({ params }: Props) {
 
           <header className="mt-10 mb-12">
             <p className="text-neon font-mono text-xs tracking-[0.25em] uppercase mb-4">
-              {project.category} / {project.year}
+              {project.category}{project.year && ` / ${project.year}`}
             </p>
             <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight max-w-4xl">
               {project.title}
@@ -76,8 +76,9 @@ export default function ProjectDetailPage({ params }: Props) {
                 >
                   <img
                     src={image}
-                    alt={index === 0 ? project.title : `${project.title} detail ${index + 1}`}
+                    alt={index === 0 ? project.title : `${project.title} 상세 이미지 ${index + 1}`}
                     className="w-full h-auto object-contain"
+                    loading={index === 0 ? 'eager' : 'lazy'}
                   />
                 </figure>
               ))}
@@ -96,10 +97,10 @@ export default function ProjectDetailPage({ params }: Props) {
               </div>
 
               <dl className="grid grid-cols-2 gap-4 border-t border-white/10 pt-6">
-                <div>
+                {project.year && <div>
                   <dt className="text-muted-2 text-xs font-mono uppercase mb-1">연도</dt>
                   <dd className="text-white text-sm">{project.year}</dd>
-                </div>
+                </div>}
                 <div>
                   <dt className="text-muted-2 text-xs font-mono uppercase mb-1">분류</dt>
                   <dd className="text-white text-sm">{project.category}</dd>

@@ -20,8 +20,8 @@ const config: Config = {
         'border-subtle': '#222222',
       },
       fontFamily: {
-        display: ['var(--font-space-grotesk)', 'Space Grotesk', 'sans-serif'],
-        body: ['var(--font-inter)', 'Inter', 'sans-serif'],
+        display: ['Pretendard', 'sans-serif'],
+        body: ['Pretendard', 'sans-serif'],
       },
       animation: {
         'glow-pulse': 'glow-pulse 3s ease-in-out infinite',

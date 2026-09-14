@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ProjectCard from './ProjectCard'
 import { CONTENT } from '@/content'
@@ -12,6 +12,10 @@ interface Props {
 
 export default function ProjectsGrid({ projects }: Props) {
   const [activeFilter, setActiveFilter] = useState(CONTENT.projects.filter_all)
+  useEffect(() => {
+    const saved = sessionStorage.getItem('portfolio-filter')
+    if (saved && CONTENT.categories.includes(saved)) setActiveFilter(saved)
+  }, [])
 
   const filtered =
     activeFilter === CONTENT.projects.filter_all
@@ -52,7 +56,8 @@ export default function ProjectsGrid({ projects }: Props) {
         {CONTENT.categories.map((cat) => (
           <button
             key={cat}
-            onClick={() => setActiveFilter(cat)}
+            onClick={() => { setActiveFilter(cat); sessionStorage.setItem('portfolio-filter', cat) }}
+            aria-pressed={activeFilter === cat}
             className={`px-5 py-2 rounded-full text-xs sm:text-sm font-body font-medium transition-all duration-300 ${
               activeFilter === cat
                 ? 'bg-neon text-black font-semibold shadow-[0_0_15px_rgba(57,255,20,0.4)]'

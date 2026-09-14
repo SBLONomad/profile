@@ -13,6 +13,8 @@ export interface Project {
   content: string
   year: string
   featured: boolean
+  thumbnailStyle?: 'logo'
+  logoBounds?: { x: number; y: number; width: number; height: number; sourceWidth: number; sourceHeight: number }
 }
 
 const projectsDirectory = path.join(process.cwd(), 'content/projects')
@@ -52,8 +54,10 @@ export function getAllProjects(): Project[] {
           fullImage: data.fullImage || data.full_image || data.image || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1400&q=80',
           images,
           content: content.trim(),
-          year: data.year ? String(data.year) : '2024',
+          year: data.year ? String(data.year) : '',
           featured: data.featured !== undefined ? data.featured : true,
+          thumbnailStyle: data.thumbnailStyle,
+          logoBounds: data.logoBounds,
         } as Project
       })
 

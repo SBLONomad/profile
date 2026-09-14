@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import Link from 'next/link'
+import LogoBanner from './LogoBanner'
 import type { Project } from '@/lib/projects'
 
 interface Props {
@@ -34,8 +35,9 @@ export default function ProjectCard({ project, index }: Props) {
       >
       <div
         className="relative overflow-hidden rounded-2xl bg-zinc-900 border border-white/10"
-        style={{ aspectRatio: index % 4 === 0 ? '4/5' : '16/11' }}
+        style={{ aspectRatio: project.thumbnailStyle === 'logo' ? '9/16' : index % 4 === 0 ? '4/5' : '16/11' }}
       >
+        {project.thumbnailStyle === 'logo' ? <LogoBanner project={project} /> : (
         <motion.img
           src={project.image}
           alt={project.title}
@@ -51,6 +53,7 @@ export default function ProjectCard({ project, index }: Props) {
             }
           }}
         />
+        )}
 
         <motion.div
           className="absolute inset-0 bg-black/60 flex flex-col justify-end p-5"
@@ -94,9 +97,9 @@ export default function ProjectCard({ project, index }: Props) {
           </h3>
           <p className="text-muted text-xs mt-1">{project.category}</p>
         </div>
-        <span className="text-muted-2 font-mono text-xs mt-0.5 shrink-0 bg-white/5 px-2 py-0.5 rounded border border-white/5">
+        {project.year && <span className="text-muted-2 font-mono text-xs mt-0.5 shrink-0 bg-white/5 px-2 py-0.5 rounded border border-white/5">
           {project.year}
-        </span>
+        </span>}
       </div>
       </Link>
     </motion.article>

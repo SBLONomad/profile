@@ -1,110 +1,59 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import { CONTENT } from '@/content'
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const toggle = useRef<HTMLButtonElement>(null)
+  const nav = useRef<HTMLElement>(null)
+  const home = usePathname() === '/' ? '' : '/'
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    const scroll = () => setScrolled(window.scrollY > 40)
+    const resize = () => { if (window.innerWidth >= 901) setMenuOpen(false) }
+    scroll()
+    window.addEventListener('scroll', scroll, { passive: true })
+    window.addEventListener('resize', resize)
+    return () => {
+      window.removeEventListener('scroll', scroll)
+      window.removeEventListener('resize', resize)
+    }
   }, [])
 
-  const navLinks = [
-    { href: '#about', label: CONTENT.header.nav.about },
-    { href: '#projects', label: CONTENT.header.nav.projects },
-    { href: '#contact', label: CONTENT.header.nav.contact },
-  ]
+  useEffect(() => {
+    if (!menuOpen) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    nav.current?.querySelector('a')?.focus()
+    const keydown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { setMenuOpen(false); toggle.current?.focus() }
+      if (e.key === 'Tab') {
+        const links = Array.from(nav.current?.querySelectorAll('a') || [])
+        const controls = [...links, toggle.current].filter(Boolean) as HTMLElement[]
+        const i = controls.indexOf(document.activeElement as HTMLElement)
+        e.preventDefault()
+        controls[(i + (e.shiftKey ? -1 : 1) + controls.length) % controls.length]?.focus()
+      }
+    }
+    window.addEventListener('keydown', keydown)
+    return () => { document.body.style.overflow = previous; window.removeEventListener('keydown', keydown) }
+  }, [menuOpen])
 
   return (
-    <>
-      <motion.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? 'glass border-b border-white/5' : 'bg-transparent'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 md:px-10 h-16 md:h-20 flex items-center justify-between">
-          <a
-            href="#"
-            className="text-white font-display font-bold text-xl tracking-tight group flex items-center gap-2"
-          >
-            <span className="w-2.5 h-2.5 rounded-full bg-neon inline-block shadow-[0_0_10px_#39FF14] group-hover:scale-125 transition-transform duration-300" />
-            <span>{CONTENT.header.logo}</span>
-          </a>
-
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-muted hover:text-white text-sm font-body font-medium tracking-wide transition-colors duration-300 relative group"
-              >
-                {link.label}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-neon group-hover:w-full transition-all duration-300" />
-              </a>
-            ))}
-            <a
-              href="/admin"
-              className="text-xs font-mono px-4 py-1.5 rounded-full border border-white/15 text-muted hover:border-neon/50 hover:text-neon transition-all duration-300"
-            >
-              {CONTENT.header.nav.admin} ↗
-            </a>
-          </nav>
-
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden w-10 h-10 flex flex-col justify-center items-center gap-1.5 group"
-            aria-label="Toggle menu"
-          >
-            <span className={`w-6 h-px bg-white transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-            <span className={`w-6 h-px bg-white transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`w-6 h-px bg-white transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
-          </button>
-        </div>
-      </motion.header>
-
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 glass pt-24 flex flex-col items-center justify-center gap-8 md:hidden"
-          >
-            {navLinks.map((link, i) => (
-              <motion.a
-                key={link.href}
-                href={link.href}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.08 }}
-                className="text-2xl font-display font-bold text-white hover:text-neon transition-colors duration-300"
-                onClick={() => setMenuOpen(false)}
-              >
-                {link.label}
-              </motion.a>
-            ))}
-            <motion.a
-              href="/admin"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="text-sm font-mono text-muted border border-white/15 px-6 py-2 rounded-full"
-              onClick={() => setMenuOpen(false)}
-            >
-              {CONTENT.header.nav.admin} ↗
-            </motion.a>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+    <header className={`portfolio-header ${scrolled ? 'is-scrolled' : ''} ${menuOpen ? 'menu-open' : ''}`}>
+      <a href={`${home}#top`} className="portfolio-wordmark" onClick={() => setMenuOpen(false)}>{CONTENT.header.logo}</a>
+      <nav ref={nav} id="site-nav" aria-label="주 메뉴" className="portfolio-nav">
+        {Object.entries(CONTENT.header.nav).filter(([key]) => key !== 'admin').map(([key, label]) => (
+          <a key={key} href={`${home}#${key}`} className="liquid-button" onClick={() => setMenuOpen(false)}>{label}</a>
+        ))}
+      </nav>
+      <a href="/admin" className="liquid-button liquid-solid header-admin">{CONTENT.header.nav.admin}</a>
+      <button ref={toggle} className="portfolio-menu" aria-label={menuOpen ? '메뉴 닫기' : '메뉴 열기'} aria-expanded={menuOpen} aria-controls="site-nav" onClick={() => setMenuOpen(!menuOpen)}>
+        <span /><span /><span />
+      </button>
+    </header>
   )
 }

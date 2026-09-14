@@ -18,20 +18,20 @@ publish_mode: editorial_workflow
 collections:
   # ── Projects 컬렉션 ──────────────────────────
   - name: "projects"
-    label: "Projects"
-    label_singular: "Project"
+    label: "작업물"
+    label_singular: "작업물"
     folder: "content/projects"
     create: true
     slug: "{{slug}}"
     identifier_field: title
     summary: "{{title}} ({{year}}) — {{category}}"
     fields:
-      - label: "Title"
+      - label: "제목"
         name: "title"
         widget: "string"
         hint: "프로젝트 제목"
 
-      - label: "Description"
+      - label: "설명"
         name: "description"
         widget: "text"
         hint: "프로젝트 설명 (1~2 문장)"
@@ -40,13 +40,16 @@ collections:
         name: "category"
         widget: "select"
         options:
+          - "발렌라이프"
           - "이랜드월드"
           - "CTTD(G마켓)"
+          - "데상트"
         default: "이랜드월드"
 
       - label: "연도"
         name: "year"
         widget: "string"
+        required: false
         default: "2024"
         pattern: ['^\d{4}$', "4자리 연도 (예: 2024)"]
 
@@ -57,6 +60,27 @@ collections:
         media_library:
           config:
             max_file_size: 10000000  # 10MB
+
+      - label: "썸네일 표시 방식"
+        name: "thumbnailStyle"
+        widget: "select"
+        required: false
+        options:
+          - { label: "일반 이미지", value: "image" }
+          - { label: "흰색 로고 배너 (9:16)", value: "logo" }
+      - label: "로고 여백 보정"
+        name: "logoBounds"
+        widget: "object"
+        required: false
+        collapsed: true
+        hint: "다른 로고로 교체할 때는 이 보정값을 지우면 원본 전체가 표시됩니다."
+        fields:
+          - { label: "왼쪽", name: "x", widget: "number", required: false }
+          - { label: "위쪽", name: "y", widget: "number", required: false }
+          - { label: "폭", name: "width", widget: "number", required: false }
+          - { label: "높이", name: "height", widget: "number", required: false }
+          - { label: "원본 폭", name: "sourceWidth", widget: "number", required: false }
+          - { label: "원본 높이", name: "sourceHeight", widget: "number", required: false }
 
       - label: "상세 전체 이미지"
         name: "fullImage"
@@ -91,26 +115,26 @@ collections:
 
   # ── Site Settings ──────────────────────────
   - name: "settings"
-    label: "Site Settings"
+    label: "사이트 설정"
     files:
-      - label: "Profile"
+      - label: "프로필"
         name: "profile"
         file: "content/settings/profile.md"
         fields:
-          - label: "Your Name"
+          - label: "이름"
             name: "name"
             widget: "string"
-            default: "Your Name"
+            default: "김동형"
 
-          - label: "Tagline (Hero 한 줄 소개)"
+          - label: "한 줄 소개"
             name: "tagline"
             widget: "string"
             default: "성과를 만드는 웹·콘텐츠 디자이너"
 
-          - label: "Bio"
+          - label: "소개"
             name: "bio"
             widget: "text"
 
-          - label: "Email"
+          - label: "이메일"
             name: "email"
             widget: "string"
