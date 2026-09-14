@@ -12,10 +12,10 @@ export const CONTENT = {
   header: {
     logo: '김동형 포트폴리오',
     nav: {
-      about: '소개',
-      projects: '작업물',
-      contact: '연락처',
-      admin: '관리자',
+      about: 'About',
+      projects: 'Work',
+      contact: 'Contact',
+      admin: 'Admin',
     },
   },
 
@@ -84,6 +84,8 @@ export const CONTENT = {
     subtext: '캠페인, 상세페이지, 광고 소재, 모션, AI 이미지 제작까지 실무에서 만든 결과물을 정리했습니다.',
     filter_all: '전체',
     empty_state: '이 카테고리에는 아직 작업물이 없습니다.',
+    show_more: '더 보기',
+    show_less: '접기',
   },
 
   // 카테고리 탭 목록

@@ -6,19 +6,60 @@ import { CONTENT } from '@/content'
 export default function Intro() {
   const root = useRef<HTMLDivElement>(null)
   const video = useRef<HTMLVideoElement>(null)
+  const reverseFrame = useRef<number>()
+  const reversing = useRef(false)
+  const reverseLast = useRef<number>()
 
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const stopReverse = () => {
+      if (reverseFrame.current) cancelAnimationFrame(reverseFrame.current)
+      reverseFrame.current = undefined
+    }
+    const reverse = () => {
+      const element = video.current
+      if (!element || document.hidden || preference.matches) return
+
+      const step = (now: number) => {
+        const current = video.current
+        if (!current || document.hidden || preference.matches) return
+        const elapsed = Math.min((now - (reverseLast.current ?? now)) / 1000, 0.05)
+        reverseLast.current = now
+        current.currentTime = Math.max(0, current.currentTime - elapsed)
+        if (current.currentTime <= 0.02) {
+          current.currentTime = 0
+          reversing.current = false
+          current.play().catch(() => {})
+          return
+        }
+        reverseFrame.current = requestAnimationFrame(step)
+      }
+
+      stopReverse()
+      reversing.current = true
+      element.pause()
+      reverseLast.current = undefined
+      reverseFrame.current = requestAnimationFrame(step)
+    }
     const update = () => {
-      if (preference.matches || document.hidden) video.current?.pause()
-      else video.current?.play().catch(() => {})
+      if (preference.matches || document.hidden) {
+        stopReverse()
+        video.current?.pause()
+      } else if (reversing.current) {
+        reverse()
+      } else {
+        video.current?.play().catch(() => {})
+      }
     }
     update()
     preference.addEventListener('change', update)
     document.addEventListener('visibilitychange', update)
+    video.current?.addEventListener('ended', reverse)
     return () => {
+      stopReverse()
       preference.removeEventListener('change', update)
       document.removeEventListener('visibilitychange', update)
+      video.current?.removeEventListener('ended', reverse)
     }
   }, [])
 
@@ -43,7 +84,7 @@ export default function Intro() {
 
   return (
     <div id="top" ref={root} className="portfolio-intro">
-      <video ref={video} className="intro-wave" src="/hero-wave.mp4" muted loop playsInline preload="auto" aria-hidden="true" />
+      <video ref={video} className="intro-wave" src="/hero-wave.mp4" muted playsInline preload="auto" aria-hidden="true" />
       <div className="intro-copy">
         <p className="intro-badge intro-appear intro-pop">{CONTENT.hero.eyebrow}</p>
         <h1>

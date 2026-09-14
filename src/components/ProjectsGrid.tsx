@@ -12,6 +12,7 @@ interface Props {
 
 export default function ProjectsGrid({ projects }: Props) {
   const [activeFilter, setActiveFilter] = useState(CONTENT.projects.filter_all)
+  const [showAll, setShowAll] = useState(false)
   useEffect(() => {
     const saved = sessionStorage.getItem('portfolio-filter')
     if (saved && CONTENT.categories.includes(saved)) setActiveFilter(saved)
@@ -21,6 +22,13 @@ export default function ProjectsGrid({ projects }: Props) {
     activeFilter === CONTENT.projects.filter_all
       ? projects
       : projects.filter((p) => p.category === activeFilter)
+  const visibleProjects = showAll ? filtered : filtered.slice(0, 20)
+
+  const selectFilter = (category: string) => {
+    setActiveFilter(category)
+    setShowAll(false)
+    sessionStorage.setItem('portfolio-filter', category)
+  }
 
   return (
     <section id="projects" className="relative py-28 md:py-36 px-6 md:px-10 max-w-7xl mx-auto">
@@ -56,7 +64,7 @@ export default function ProjectsGrid({ projects }: Props) {
         {CONTENT.categories.map((cat) => (
           <button
             key={cat}
-            onClick={() => { setActiveFilter(cat); sessionStorage.setItem('portfolio-filter', cat) }}
+            onClick={() => selectFilter(cat)}
             aria-pressed={activeFilter === cat}
             className={`px-5 py-2 rounded-full text-xs sm:text-sm font-body font-medium transition-all duration-300 ${
               activeFilter === cat
@@ -78,7 +86,7 @@ export default function ProjectsGrid({ projects }: Props) {
           transition={{ duration: 0.3 }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
         >
-          {filtered.map((project, i) => (
+          {visibleProjects.map((project, i) => (
             <ProjectCard key={project.slug} project={project} index={i} />
           ))}
 
@@ -94,6 +102,18 @@ export default function ProjectsGrid({ projects }: Props) {
           )}
         </motion.div>
       </AnimatePresence>
+
+      {filtered.length > 20 && (
+        <div className="mt-12 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setShowAll((current) => !current)}
+            className="liquid-button px-7"
+          >
+            {showAll ? CONTENT.projects.show_less : `${CONTENT.projects.show_more} (${filtered.length - 20})`}
+          </button>
+        </div>
+      )}
 
       <motion.div
         initial={{ scaleX: 0 }}
