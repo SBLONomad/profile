@@ -7,67 +7,60 @@ import { CONTENT } from '@/content'
 export default function Intro() {
   const root = useRef<HTMLDivElement>(null)
   const video = useRef<HTMLVideoElement>(null)
-  const reverseFrame = useRef<number>()
-  const reversing = useRef(false)
-  const reverseLast = useRef<number>()
+  const waveFrame = useRef<number>()
+  const waveDirection = useRef(1)
+  const waveLast = useRef<number>()
 
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const stopReverse = () => {
-      if (reverseFrame.current) cancelAnimationFrame(reverseFrame.current)
-      reverseFrame.current = undefined
+    const stopWave = () => {
+      if (waveFrame.current) cancelAnimationFrame(waveFrame.current)
+      waveFrame.current = undefined
     }
-    const reverse = () => {
+    const startWave = () => {
       const element = video.current
-      if (!element || document.hidden || preference.matches || reversing.current) return
+      if (!element || document.hidden || preference.matches || !Number.isFinite(element.duration)) return
 
       const step = (now: number) => {
         const current = video.current
         if (!current || document.hidden || preference.matches) return
-        const elapsed = Math.min((now - (reverseLast.current ?? now)) / 1000, 0.05)
-        reverseLast.current = now
-        current.currentTime = Math.max(0, current.currentTime - elapsed)
-        if (current.currentTime <= 0.02) {
-          current.currentTime = 0
-          reversing.current = false
-          current.play().catch(() => {})
-          return
+        const elapsed = Math.min((now - (waveLast.current ?? now)) / 1000, 0.05)
+        waveLast.current = now
+        const duration = current.duration
+        let nextTime = current.currentTime + elapsed * waveDirection.current
+        if (nextTime >= duration) {
+          nextTime = duration
+          waveDirection.current = -1
+        } else if (nextTime <= 0) {
+          nextTime = 0
+          waveDirection.current = 1
         }
-        reverseFrame.current = requestAnimationFrame(step)
+        current.currentTime = nextTime
+        waveFrame.current = requestAnimationFrame(step)
       }
 
-      stopReverse()
-      reversing.current = true
+      stopWave()
       element.pause()
-      reverseLast.current = undefined
-      reverseFrame.current = requestAnimationFrame(step)
-    }
-    const beginReverseBeforeEnd = () => {
-      const element = video.current
-      if (element?.duration && element.currentTime >= element.duration - 0.08) reverse()
+      waveLast.current = undefined
+      waveFrame.current = requestAnimationFrame(step)
     }
     const update = () => {
       if (preference.matches || document.hidden) {
-        stopReverse()
+        stopWave()
         video.current?.pause()
-      } else if (reversing.current) {
-        reversing.current = false
-        reverse()
       } else {
-        video.current?.play().catch(() => {})
+        startWave()
       }
     }
+    video.current?.addEventListener('loadedmetadata', startWave)
     update()
     preference.addEventListener('change', update)
     document.addEventListener('visibilitychange', update)
-    video.current?.addEventListener('timeupdate', beginReverseBeforeEnd)
-    video.current?.addEventListener('ended', reverse)
     return () => {
-      stopReverse()
+      stopWave()
       preference.removeEventListener('change', update)
       document.removeEventListener('visibilitychange', update)
-      video.current?.removeEventListener('timeupdate', beginReverseBeforeEnd)
-      video.current?.removeEventListener('ended', reverse)
+      video.current?.removeEventListener('loadedmetadata', startWave)
     }
   }, [])
 

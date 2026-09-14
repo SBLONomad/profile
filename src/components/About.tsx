@@ -72,7 +72,7 @@ export default function About({ profile }: Props) {
             <p className="text-neon font-mono text-xs tracking-[0.25em] uppercase mb-4">
               {CONTENT.about.eyebrow}
             </p>
-            <h2 className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-6">
+            <h2 className="font-display font-bold text-4xl md:text-5xl text-white leading-[1.05] mb-6">
               {CONTENT.about.headline1}
               <br />
               {CONTENT.about.headline2}{' '}

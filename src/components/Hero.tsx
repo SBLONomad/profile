@@ -36,7 +36,7 @@ export default function Hero({ projects }: { projects: Project[] }) {
             <h3 className="text-white font-display font-semibold text-base md:text-lg leading-snug mb-1.5 whitespace-pre-line">
               {feature.title}
             </h3>
-            <p className="text-muted text-[13px] leading-relaxed max-w-sm">
+            <p className="text-muted text-[13px] leading-relaxed max-w-sm whitespace-pre-line">
               {feature.desc}
             </p>
           </div>

@@ -17,12 +17,14 @@ export default function AnimatedNumber({ value, duration = 1.8 }: Props) {
   const suffix = value.replace(/\d+/, '')
 
   const [current, setCurrent] = useState(0)
+  const [isRolling, setIsRolling] = useState(false)
 
   useEffect(() => {
     if (!isInView || targetNumber === 0) return
 
     let startTime: number | null = null
     let animationFrameId: number
+    setIsRolling(true)
 
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp
@@ -36,15 +38,19 @@ export default function AnimatedNumber({ value, duration = 1.8 }: Props) {
         animationFrameId = requestAnimationFrame(animate)
       } else {
         setCurrent(targetNumber)
+        setIsRolling(false)
       }
     }
 
     animationFrameId = requestAnimationFrame(animate)
-    return () => cancelAnimationFrame(animationFrameId)
+    return () => {
+      cancelAnimationFrame(animationFrameId)
+      setIsRolling(false)
+    }
   }, [isInView, targetNumber, duration])
 
   return (
-    <span ref={ref} className="tabular-nums">
+    <span ref={ref} className={`tabular-nums rolling-number${isRolling ? ' is-rolling' : ''}`}>
       {current}
       {suffix}
     </span>

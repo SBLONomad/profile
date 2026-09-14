@@ -131,5 +131,9 @@ body {
   }
 }
 
-.cursor-glow { position: fixed; top: 0; left: 0; z-index: 5000; width: 28px; height: 28px; border: 1px solid rgb(162 255 135 / .72); border-radius: 50%; pointer-events: none; opacity: 0; transform: translate3d(-100px, -100px, 0); translate: -50% -50%; transition: width .2s ease, height .2s ease, background .2s ease, border-color .2s ease, opacity .2s ease; box-shadow: 0 0 22px rgb(162 255 135 / .28); }
-@media (hover: hover) and (pointer: fine) { .cursor-glow { opacity: 1; } .cursor-glow[data-active='true'] { width: 46px; height: 46px; background: rgb(162 255 135 / .12); border-color: #a2ff87; } }
+.rolling-number.is-rolling { animation: number-roll-blur .14s linear infinite alternate; }
+@keyframes number-roll-blur { from { filter: blur(.25px); opacity: .78; transform: translateY(-1px); } to { filter: blur(1px); opacity: 1; transform: translateY(1px); } }
+.cursor-glow { position: fixed; top: 0; left: 0; z-index: 5000; width: 14px; height: 14px; border: 2px solid #d5ffcb; border-radius: 50%; pointer-events: none; opacity: 0; transform: translate3d(-100px, -100px, 0); translate: -50% -50%; transition: width .2s ease, height .2s ease, border-color .2s ease, opacity .2s ease; box-shadow: 0 0 4px #d5ffcb, 0 0 12px #a2ff87, 0 0 28px rgb(162 255 135 / .78); }
+.cursor-glow::before { content: ''; position: absolute; inset: -22px; border-radius: inherit; background: radial-gradient(circle, rgb(162 255 135 / .24), transparent 68%); filter: blur(7px); }
+.cursor-glow::after { content: ''; position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; border-radius: 50%; background: #fff; translate: -50% -50%; box-shadow: 0 0 7px #fff, 0 0 17px #a2ff87; }
+@media (hover: hover) and (pointer: fine) { .cursor-glow { opacity: 1; } .cursor-glow[data-active='true'] { width: 34px; height: 34px; border-color: #a2ff87; } }
