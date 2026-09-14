@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import AnimatedNumber from './AnimatedNumber'
 import { CONTENT } from '@/content'
 
 export default function Intro() {
@@ -18,7 +19,7 @@ export default function Intro() {
     }
     const reverse = () => {
       const element = video.current
-      if (!element || document.hidden || preference.matches) return
+      if (!element || document.hidden || preference.matches || reversing.current) return
 
       const step = (now: number) => {
         const current = video.current
@@ -41,11 +42,16 @@ export default function Intro() {
       reverseLast.current = undefined
       reverseFrame.current = requestAnimationFrame(step)
     }
+    const beginReverseBeforeEnd = () => {
+      const element = video.current
+      if (element?.duration && element.currentTime >= element.duration - 0.08) reverse()
+    }
     const update = () => {
       if (preference.matches || document.hidden) {
         stopReverse()
         video.current?.pause()
       } else if (reversing.current) {
+        reversing.current = false
         reverse()
       } else {
         video.current?.play().catch(() => {})
@@ -54,11 +60,13 @@ export default function Intro() {
     update()
     preference.addEventListener('change', update)
     document.addEventListener('visibilitychange', update)
+    video.current?.addEventListener('timeupdate', beginReverseBeforeEnd)
     video.current?.addEventListener('ended', reverse)
     return () => {
       stopReverse()
       preference.removeEventListener('change', update)
       document.removeEventListener('visibilitychange', update)
+      video.current?.removeEventListener('timeupdate', beginReverseBeforeEnd)
       video.current?.removeEventListener('ended', reverse)
     }
   }, [])
@@ -100,7 +108,7 @@ export default function Intro() {
       <div className="intro-stats">
         {CONTENT.about.stats.slice(0, 3).map((stat, index) => (
           <p key={stat.label} className="intro-appear intro-stat" style={{ animationDelay: `${1.12 + index * .16}s` }}>
-            <strong>{stat.value}</strong><span>{stat.label}</span>
+            <strong><AnimatedNumber value={stat.value} duration={1.4 + index * .15} /></strong><span>{stat.label}</span>
           </p>
         ))}
       </div>
