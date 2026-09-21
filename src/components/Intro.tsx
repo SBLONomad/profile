@@ -35,7 +35,7 @@ export default function Intro() {
 
   return (
     <div id="top" ref={root} className="portfolio-intro">
-      <video ref={wave} className="intro-wave" src="/hero-wave.mp4" muted autoPlay loop playsInline preload="auto" aria-hidden="true" />
+      <video ref={wave} className="intro-wave" src="/hero-wave-web.mp4" muted autoPlay loop playsInline preload="auto" aria-hidden="true" />
       <div className="intro-copy">
         <p className="intro-badge intro-appear intro-pop">{CONTENT.hero.eyebrow}</p>
         <h1>
