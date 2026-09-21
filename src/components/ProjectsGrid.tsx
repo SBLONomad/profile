@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import ProjectCard from './ProjectCard'
 import { CONTENT } from '@/content'
 import type { Project } from '@/lib/projects'
@@ -11,6 +11,9 @@ interface Props {
 }
 
 export default function ProjectsGrid({ projects }: Props) {
+  const sectionRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
+  const frameRotate = useTransform(scrollYProgress, [0, 1], [-10, 22])
   const [activeFilter, setActiveFilter] = useState(CONTENT.projects.filter_all)
   const [showAll, setShowAll] = useState(false)
   useEffect(() => {
@@ -31,24 +34,26 @@ export default function ProjectsGrid({ projects }: Props) {
   }
 
   return (
-    <section id="projects" className="relative py-28 md:py-36 px-6 md:px-10 max-w-7xl mx-auto">
+    <section id="projects" ref={sectionRef} className="orbit-projects">
+      <motion.div className="orbit-project-frame" style={{ rotate: frameRotate }} aria-hidden="true" />
+      <div className="orbit-projects-inner">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, margin: '-100px' }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="mb-12"
+        className="orbit-project-heading"
       >
-        <p className="text-neon font-mono text-xs tracking-[0.25em] uppercase mb-4">
+        <p className="orbit-kicker">
           {CONTENT.projects.eyebrow}
         </p>
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-          <h2 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white leading-tight max-w-xl">
+        <div className="orbit-project-heading-row">
+          <h2 className="orbit-project-title">
             {CONTENT.projects.headline1}
             <br />
             <span className="text-neon">{CONTENT.projects.highlight}</span>
           </h2>
-          <p className="text-muted text-base max-w-sm leading-relaxed whitespace-pre-line">
+          <p className="orbit-project-subtext whitespace-pre-line">
             {CONTENT.projects.subtext}
           </p>
         </div>
@@ -59,17 +64,17 @@ export default function ProjectsGrid({ projects }: Props) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false }}
         transition={{ duration: 0.5, delay: 0.15 }}
-        className="flex flex-wrap gap-2.5 mb-12"
+        className="orbit-filter-list"
       >
         {CONTENT.categories.map((cat) => (
           <button
             key={cat}
             onClick={() => selectFilter(cat)}
             aria-pressed={activeFilter === cat}
-            className={`px-5 py-2 rounded-full text-xs sm:text-sm font-body font-medium transition-all duration-300 ${
+            className={`orbit-filter ${
               activeFilter === cat
-                ? 'bg-neon text-black font-semibold shadow-[0_0_15px_rgba(57,255,20,0.4)]'
-                : 'border border-white/10 bg-white/5 text-muted hover:border-neon/40 hover:text-white'
+                ? 'is-active'
+                : ''
             }`}
           >
             {cat}
@@ -84,7 +89,7 @@ export default function ProjectsGrid({ projects }: Props) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          className="orbit-project-grid"
         >
           {visibleProjects.map((project, i) => (
             <ProjectCard key={project.slug} project={project} index={i} />
@@ -104,7 +109,7 @@ export default function ProjectsGrid({ projects }: Props) {
       </AnimatePresence>
 
       {filtered.length > 20 && (
-        <div className="mt-12 flex justify-center">
+        <div className="orbit-more-wrap">
           <button
             type="button"
             onClick={() => setShowAll((current) => !current)}
@@ -120,8 +125,9 @@ export default function ProjectsGrid({ projects }: Props) {
         whileInView={{ scaleX: 1 }}
         viewport={{ once: false }}
         transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-        className="mt-20 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent origin-left"
+        className="orbit-project-end-rule"
       />
+      </div>
     </section>
   )
 }

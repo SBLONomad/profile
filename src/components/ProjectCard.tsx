@@ -24,24 +24,25 @@ export default function ProjectCard({ project, index }: Props) {
         delay: (index % 3) * 0.1,
         ease: [0.16, 1, 0.3, 1],
       }}
+      className="orbit-project-card"
     >
       <Link
         href={`/projects/${project.slug}`}
         scroll={true}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="group relative block cursor-pointer"
+        className="orbit-project-link"
         aria-label={`${project.title} 자세히 보기`}
       >
       <div
-        className="relative overflow-hidden rounded-2xl bg-zinc-900 border border-white/10"
+        className="orbit-project-image"
         style={{ aspectRatio: project.thumbnailStyle === 'logo' ? '9/16' : index % 4 === 0 ? '4/5' : '16/11' }}
       >
         {project.thumbnailStyle === 'logo' ? <LogoBanner project={project} /> : (
         <motion.img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover"
+          className="orbit-project-photo"
           loading="lazy"
           animate={{ scale: hovered ? 1.06 : 1 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -56,13 +57,13 @@ export default function ProjectCard({ project, index }: Props) {
         )}
 
         <motion.div
-          className="absolute inset-0 bg-black/60 flex flex-col justify-end p-5"
+          className="orbit-project-overlay"
           initial={{ opacity: 0 }}
           animate={{ opacity: hovered ? 1 : 0 }}
           transition={{ duration: 0.3 }}
         >
           <motion.span
-            className="text-neon font-mono text-[11px] tracking-wider uppercase mb-1.5"
+            className="orbit-project-category"
             initial={{ y: 8, opacity: 0 }}
             animate={{ y: hovered ? 0 : 8, opacity: hovered ? 1 : 0 }}
             transition={{ duration: 0.25, delay: 0.05 }}
@@ -70,7 +71,7 @@ export default function ProjectCard({ project, index }: Props) {
             {project.category}
           </motion.span>
           <motion.p
-            className="text-white/90 text-xs sm:text-sm leading-relaxed"
+            className="orbit-project-description"
             initial={{ y: 8, opacity: 0 }}
             animate={{ y: hovered ? 0 : 8, opacity: hovered ? 1 : 0 }}
             transition={{ duration: 0.25, delay: 0.1 }}
@@ -80,7 +81,7 @@ export default function ProjectCard({ project, index }: Props) {
         </motion.div>
 
         <motion.div
-          className="absolute inset-0 rounded-2xl pointer-events-none"
+          className="orbit-project-outline"
           animate={{
             boxShadow: hovered
               ? 'inset 0 0 0 1.5px rgba(57,255,20,0.7), 0 0 25px rgba(57,255,20,0.15)'
@@ -90,14 +91,14 @@ export default function ProjectCard({ project, index }: Props) {
         />
       </div>
 
-      <div className="mt-3.5 flex items-start justify-between gap-2">
+      <div className="orbit-project-meta">
         <div>
-          <h3 className="text-white font-display font-semibold text-base leading-tight group-hover:text-neon transition-colors duration-300">
+          <h3 className="orbit-project-name">
             {project.title}
           </h3>
-          <p className="text-muted text-xs mt-1">{project.category}</p>
+          <p className="orbit-project-meta-category">{project.category}</p>
         </div>
-        {project.year && <span className="text-muted-2 font-mono text-xs mt-0.5 shrink-0 bg-white/5 px-2 py-0.5 rounded border border-white/5">
+        {project.year && <span className="orbit-project-year">
           {project.year}
         </span>}
       </div>

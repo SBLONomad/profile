@@ -13,27 +13,25 @@ interface Props {
 export default function About({ profile }: Props) {
   const sectionRef = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
-  const yImage = useTransform(scrollYProgress, [0, 1], [-30, 30])
+  const yImage = useTransform(scrollYProgress, [0, 1], [-42, 42])
+  const rotateImage = useTransform(scrollYProgress, [0, 0.5, 1], [-3, 0, 3])
+  const frameY = useTransform(scrollYProgress, [0, 1], ['-12%', '12%'])
 
   return (
-    <section id="about" ref={sectionRef} className="relative py-28 md:py-36 overflow-hidden">
-      <div
-        className="absolute -right-64 top-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(57,255,20,0.05) 0%, transparent 70%)' }}
-      />
-
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+    <section id="about" ref={sectionRef} className="orbit-about">
+      <motion.div className="orbit-about-frame" style={{ y: frameY }} aria-hidden="true" />
+      <div className="orbit-about-inner">
+        <div className="orbit-about-grid">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, margin: '-100px' }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative"
+            className="orbit-portrait-column"
           >
-            <motion.div style={{ y: yImage }} className="relative">
+            <motion.div style={{ y: yImage, rotate: rotateImage }} className="orbit-portrait-wrap">
               <div
-                className="relative w-full max-w-sm mx-auto lg:mx-0 overflow-hidden rounded-3xl border border-white/10 bg-surface shadow-2xl"
+                className="orbit-portrait"
                 style={{ aspectRatio: '3/4' }}
               >
                 <img
@@ -42,12 +40,7 @@ export default function About({ profile }: Props) {
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: 'linear-gradient(to top right, rgba(57,255,20,0.12) 0%, transparent 60%)',
-                  }}
-                />
+                <div className="orbit-portrait-overlay" />
               </div>
 
               <motion.div
@@ -55,7 +48,7 @@ export default function About({ profile }: Props) {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: false }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="absolute -bottom-5 -right-2 sm:-right-4 glass rounded-2xl px-5 py-3.5 text-center shadow-xl border border-neon/30"
+                className="orbit-badge"
               >
                 <div className="text-neon font-display font-bold text-2xl">{CONTENT.about.badge_year}</div>
                 <div className="text-white/80 text-xs font-medium mt-0.5">{CONTENT.about.badge_status}</div>
@@ -63,31 +56,31 @@ export default function About({ profile }: Props) {
             </motion.div>
           </motion.div>
 
-          <motion.div
+          <motion.div className="orbit-about-copy"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, margin: '-100px' }}
             transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p className="text-neon font-mono text-xs tracking-[0.25em] uppercase mb-4">
+            <p className="orbit-kicker">
               {CONTENT.about.eyebrow}
             </p>
-            <h2 className="font-display font-bold text-4xl md:text-5xl text-white leading-[1.05] mb-6">
+            <h2 className="orbit-about-title">
               {CONTENT.about.headline1}
               <br />
               {CONTENT.about.headline2}{' '}
-              <span className="text-neon underline decoration-neon/40 underline-offset-8">
+              <span>
                 {CONTENT.about.highlight}
               </span>
             </h2>
-            <p className="text-muted text-base leading-relaxed mb-4">
+            <p className="orbit-about-body">
               {profile?.bio || CONTENT.about.bio1}
             </p>
-            <p className="text-muted text-base leading-relaxed mb-8">
+            <p className="orbit-about-body orbit-about-body-last">
               {CONTENT.about.bio2}
             </p>
 
-            <div className="flex flex-wrap gap-2 mb-10">
+            <div className="orbit-skill-list">
               {CONTENT.about.skills.map((skill, i) => (
                 <motion.span
                   key={skill}
@@ -95,7 +88,7 @@ export default function About({ profile }: Props) {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: false }}
                   transition={{ duration: 0.4, delay: 0.2 + i * 0.04 }}
-                  className="text-xs sm:text-sm font-body text-zinc-300 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full hover:border-neon/60 hover:text-neon transition-all duration-300 cursor-default"
+                  className="orbit-skill"
                 >
                   {skill}
                 </motion.span>
@@ -103,7 +96,7 @@ export default function About({ profile }: Props) {
             </div>
 
             {/* ── 주요 지표 통계 (숫자 롤링 카운트업 효과) ── */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 border-t border-white/10 pt-8">
+            <div className="orbit-stat-grid">
               {CONTENT.about.stats.map((stat, i) => (
                 <motion.div
                   key={stat.label}
@@ -112,10 +105,10 @@ export default function About({ profile }: Props) {
                   viewport={{ once: false }}
                   transition={{ duration: 0.5, delay: 0.3 + i * 0.06 }}
                 >
-                  <div className="text-white font-display font-bold text-3xl md:text-4xl text-neon drop-shadow-[0_0_15px_rgba(57,255,20,0.3)]">
+                  <div className="orbit-stat-value">
                     <AnimatedNumber value={stat.value} duration={0.65 + i * 0.08} />
                   </div>
-                  <div className="text-muted text-xs mt-1.5 leading-tight font-medium">{stat.label}</div>
+                  <div className="orbit-stat-label">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
