@@ -106,6 +106,19 @@ section[id] { scroll-margin-top: 84px; }
 .orbit-stat-value { color: #a2ff87; font-size: clamp(29px, 3vw, 43px); font-weight: 850; line-height: 1; }
 .orbit-stat-label { margin-top: 8px; color: rgb(241 241 235 / .55); font-size: 12px; }
 
+.scroll-artwork { position: relative; height: 220vh; background: rgb(5 5 5 / .66); }
+.scroll-artwork-sticky { position: sticky; top: 0; display: grid; height: 100svh; overflow: hidden; place-items: center; isolation: isolate; }
+.scroll-artwork-sticky::before { content: ''; position: absolute; z-index: -3; inset: 0; background: radial-gradient(circle at 50% 50%, rgb(162 255 135 / .1), transparent 28%), linear-gradient(90deg, rgb(5 5 5 / .72), transparent 38%, transparent 62%, rgb(5 5 5 / .72)); }
+.scroll-artwork-ring { position: absolute; z-index: -2; left: 50%; top: 50%; border: 1px solid rgb(255 255 255 / .15); border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+.scroll-artwork-ring-large { width: min(98vw, 1250px); aspect-ratio: 1; border-style: dashed; border-color: rgb(162 255 135 / .32); }
+.scroll-artwork-ring-small { width: min(57vw, 720px); aspect-ratio: 1; border-color: rgb(255 255 255 / .2); }
+.scroll-artwork-line { position: absolute; z-index: -1; top: 9%; bottom: 9%; width: 1px; background: linear-gradient(to bottom, transparent, rgb(162 255 135 / .72), transparent); transform-origin: center; }
+.scroll-artwork-card { position: absolute; width: clamp(158px, 22vw, 318px); overflow: hidden; margin: 0; border: 1px solid rgb(255 255 255 / .34); background: #111; box-shadow: 0 24px 70px rgb(0 0 0 / .42); will-change: transform; }
+.scroll-artwork-card-core { z-index: 2; width: clamp(220px, 33vw, 480px); }
+.scroll-artwork-card img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: #111; }
+.scroll-artwork-card figcaption { padding: 10px 12px; border-top: 1px solid rgb(255 255 255 / .16); color: rgb(247 247 241 / .82); background: rgb(5 5 5 / .88); font-size: 11px; font-weight: 680; }
+.scroll-artwork-label { position: absolute; bottom: clamp(30px, 7vh, 74px); color: #a2ff87; font-size: 11px; font-weight: 720; text-transform: uppercase; }
+
 .orbit-projects { position: relative; overflow: hidden; padding: 150px 40px; background: rgb(5 5 5 / .76); }
 .orbit-project-frame { position: absolute; top: 140px; left: -20vw; width: min(62vw, 760px); aspect-ratio: 1; border: 1px solid rgb(255 255 255 / .1); border-radius: 50%; pointer-events: none; }
 .orbit-project-frame::after { content: ''; position: absolute; left: 50%; top: -20%; width: 1px; height: 140%; background: rgb(162 255 135 / .36); }
@@ -178,6 +191,9 @@ section[id] { scroll-margin-top: 84px; }
   .orbit-portrait-wrap { margin: 0 auto; }
   .orbit-badge { right: -10px; }
   .orbit-about-title { font-size: clamp(39px, 11vw, 54px); }
+  .scroll-artwork { height: 185vh; }
+  .scroll-artwork-card { width: clamp(118px, 30vw, 190px); }
+  .scroll-artwork-card-core { width: clamp(185px, 52vw, 290px); }
   .orbit-stat-grid { grid-template-columns: repeat(2, 1fr); gap: 25px 14px; }
   .orbit-project-heading-row { display: block; }
   .orbit-project-title { font-size: clamp(42px, 11.5vw, 58px); }
