@@ -32,6 +32,7 @@ export default function ProjectCard({ project, index }: Props) {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         className="orbit-project-link"
+        data-cursor-project
         aria-label={`${project.title} 자세히 보기`}
       >
       <div

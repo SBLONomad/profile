@@ -190,6 +190,7 @@ export default function Interactive3DGallery({ projects }: Props) {
             <Link
               key={`${project.slug}-${idx}`}
               href={`/projects/${project.slug}`}
+              data-cursor-project
               className="fan-card-item absolute top-0 left-0 will-change-transform group cursor-pointer"
               style={{
                 width: `${cardWidth}px`,
@@ -199,7 +200,7 @@ export default function Interactive3DGallery({ projects }: Props) {
               aria-label={`${project.title} 자세히 보기`}
             >
               <div
-                className="relative w-full h-full overflow-hidden rounded-2xl bg-[#0e0e10] border border-white/10 transition-colors duration-300 group-hover:border-neon/70 shadow-2xl"
+                className="relative w-full h-full overflow-hidden rounded-2xl bg-[#0e0e10] border border-white/10 transition-all duration-300 group-hover:border-neon group-hover:shadow-[0_0_32px_rgba(162,255,135,0.35)] shadow-2xl"
               >
                 {project.thumbnailStyle === 'logo' ? <LogoBanner project={project} /> : <img
                   src={project.image}

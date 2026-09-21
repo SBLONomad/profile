@@ -5,7 +5,6 @@ import About from '@/components/About'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import WaveBackdrop from '@/components/WaveBackdrop'
-import ScrollArtwork from '@/components/ScrollArtwork'
 import { getAllProjects } from '@/lib/projects'
 import { getSiteProfile } from '@/lib/profile'
 
@@ -23,8 +22,6 @@ export default function HomePage() {
 
         {/* About section */}
         <About profile={profile} />
-
-        <ScrollArtwork projects={projects} />
 
         {/* Projects grid with filter */}
         <ProjectsGrid projects={projects} />

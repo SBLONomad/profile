@@ -10,7 +10,9 @@ export default function CursorGlow() {
       const element = glow.current
       if (!element || event.pointerType !== 'mouse') return
       element.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`
-      element.dataset.active = String(Boolean((event.target as Element).closest('a, button, input, textarea, select')))
+      const target = event.target as Element
+      element.dataset.active = String(Boolean(target.closest('a, button, input, textarea, select')))
+      element.dataset.project = String(Boolean(target.closest('[data-cursor-project]')))
     }
     window.addEventListener('pointermove', update, { passive: true })
     return () => window.removeEventListener('pointermove', update)
