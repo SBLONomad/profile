@@ -5,7 +5,7 @@ import { CONTENT } from '@/content'
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/5 py-10 px-6 md:px-10 bg-black/40">
+    <footer className="site-footer border-t border-white/5 py-10 px-6 md:px-10 bg-black/40">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         <motion.div
           initial={{ opacity: 0 }}
