@@ -139,10 +139,6 @@ section[id] { scroll-margin-top: 84px; }
 
 .rolling-number.is-rolling { animation: number-roll-blur .1s linear infinite alternate; }
 @keyframes number-roll-blur { from { filter: blur(.4px); opacity: .72; transform: translateY(-2px) scaleY(1.08); } to { filter: blur(1.3px); opacity: 1; transform: translateY(2px) scaleY(.92); } }
-.cursor-glow { position: fixed; z-index: 5000; top: 0; left: 0; width: 1px; height: 1px; pointer-events: none; opacity: 0; transform: translate3d(-100px, -100px, 0); translate: -50% -50%; }
-.cursor-glow::before { content: ''; position: absolute; inset: -34px; border-radius: 50%; background: radial-gradient(circle, rgb(235 255 226 / .66), rgb(162 255 135 / .26) 30%, transparent 72%); filter: blur(7px); }
-@media (hover: hover) and (pointer: fine) { .cursor-glow { opacity: 1; } .cursor-glow[data-active='true']::before { inset: -50px; } }
-
 @media (max-width: 900px) {
   .portfolio-header { padding: 16px 20px; }
   .portfolio-header.is-scrolled { padding-block: 13px; }

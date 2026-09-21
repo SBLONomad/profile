@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import CursorGlow from '@/components/CursorGlow'
 
 export const metadata: Metadata = {
   title: '김동형 포트폴리오',
@@ -24,7 +23,6 @@ export default function RootLayout({
         <link rel="preload" href="/SUIT-Variable.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
       <body className="bg-[#080808] text-white antialiased">
-        <CursorGlow />
         {children}
       </body>
     </html>
