@@ -6,8 +6,14 @@ import { CONTENT } from '@/content'
 
 export default function Intro() {
   const root = useRef<HTMLDivElement>(null)
+  const wave = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
+    const video = wave.current
+    const startVideo = () => { void video?.play().catch(() => undefined) }
+    startVideo()
+    video?.addEventListener('canplay', startVideo, { once: true })
+
     const elements = root.current?.querySelectorAll<HTMLElement>('.intro-appear')
     const finish = (event: Event) => {
       if (event.target instanceof HTMLElement) event.target.classList.add('is-in')
@@ -20,6 +26,7 @@ export default function Intro() {
       }))
     })
     return () => {
+      video?.removeEventListener('canplay', startVideo)
       cancelAnimationFrame(first)
       cancelAnimationFrame(second)
       elements?.forEach(el => el.removeEventListener('animationend', finish))
@@ -28,7 +35,7 @@ export default function Intro() {
 
   return (
     <div id="top" ref={root} className="portfolio-intro">
-      <video className="intro-wave" src="/hero-wave.mp4" muted autoPlay loop playsInline preload="auto" aria-hidden="true" />
+      <video ref={wave} className="intro-wave" src="/hero-wave.mp4" muted autoPlay loop playsInline preload="auto" aria-hidden="true" />
       <div className="intro-copy">
         <p className="intro-badge intro-appear intro-pop">{CONTENT.hero.eyebrow}</p>
         <h1>

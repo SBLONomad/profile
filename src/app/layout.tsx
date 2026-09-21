@@ -21,6 +21,7 @@ export default function RootLayout({
     <html lang="ko" className="scroll-smooth">
       <head>
         <link rel="preload" href="/SUIT-Variable.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/hero-wave.mp4" as="video" type="video/mp4" />
       </head>
       <body className="bg-[#080808] text-white antialiased">
         {children}
