@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import AnimatedNumber from './AnimatedNumber'
+import SplitReveal from './SplitReveal'
 import { CONTENT } from '@/content'
 
 export default function Intro() {
@@ -31,8 +32,8 @@ export default function Intro() {
       <div className="intro-copy">
         <p className="intro-badge intro-appear intro-pop">{CONTENT.hero.eyebrow}</p>
         <h1>
-          <span className="intro-mask"><span className="intro-appear intro-line">{CONTENT.hero.headline1}</span></span>
-          <span className="intro-mask"><span className="intro-appear intro-line intro-accent">{CONTENT.hero.headline2}</span></span>
+          <span className="intro-mask"><SplitReveal text={CONTENT.hero.headline1} delay={0.2} /></span>
+          <span className="intro-mask"><SplitReveal text={CONTENT.hero.headline2} delay={0.47} /></span>
         </h1>
         <p className="intro-lede intro-appear intro-soft">{CONTENT.hero.subtext1}<br />{CONTENT.hero.subtext2}</p>
         <div className="intro-actions">

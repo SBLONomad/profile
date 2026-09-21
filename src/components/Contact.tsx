@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { CONTENT } from '@/content'
+import SplitReveal from './SplitReveal'
 import type { SiteProfile } from '@/lib/profile'
 
 interface Props {
@@ -49,9 +50,9 @@ export default function Contact({ profile }: Props) {
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="font-display font-bold text-4xl md:text-6xl lg:text-7xl text-white leading-tight mb-6"
         >
-          {CONTENT.contact.headline1}
+          <SplitReveal text={CONTENT.contact.headline1} triggerOnView />
           <br />
-          {CONTENT.contact.headline2}
+          <SplitReveal text={CONTENT.contact.headline2} triggerOnView />
         </motion.h2>
 
         <motion.p

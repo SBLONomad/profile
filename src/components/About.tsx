@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import AnimatedNumber from './AnimatedNumber'
+import SplitReveal from './SplitReveal'
 import { CONTENT } from '@/content'
 import type { SiteProfile } from '@/lib/profile'
 
@@ -66,11 +67,11 @@ export default function About({ profile }: Props) {
               {CONTENT.about.eyebrow}
             </p>
             <h2 className="orbit-about-title">
-              {CONTENT.about.headline1}
+              <SplitReveal text={CONTENT.about.headline1} triggerOnView />
               <br />
-              {CONTENT.about.headline2}{' '}
+              <SplitReveal text={`${CONTENT.about.headline2} `} triggerOnView />
               <span>
-                {CONTENT.about.highlight}
+                <SplitReveal text={CONTENT.about.highlight} accent triggerOnView />
               </span>
             </h2>
             <p className="orbit-about-body">

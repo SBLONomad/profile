@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import ProjectCard from './ProjectCard'
+import SplitReveal from './SplitReveal'
 import { CONTENT } from '@/content'
 import type { Project } from '@/lib/projects'
 
@@ -49,9 +50,9 @@ export default function ProjectsGrid({ projects }: Props) {
         </p>
         <div className="orbit-project-heading-row">
           <h2 className="orbit-project-title">
-            {CONTENT.projects.headline1}
+            <SplitReveal text={CONTENT.projects.headline1} triggerOnView />
             <br />
-            <span className="text-neon">{CONTENT.projects.highlight}</span>
+            <SplitReveal text={CONTENT.projects.highlight} accent triggerOnView />
           </h2>
           <p className="orbit-project-subtext whitespace-pre-line">
             {CONTENT.projects.subtext}
