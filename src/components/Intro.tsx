@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react'
 import AnimatedNumber from './AnimatedNumber'
-import PointerBloom from './PointerBloom'
 import { CONTENT } from '@/content'
 
 export default function Intro() {
@@ -30,7 +29,6 @@ export default function Intro() {
   return (
     <div id="top" ref={root} className="portfolio-intro">
       <video className="intro-wave" src="/hero-wave.mp4" muted autoPlay loop playsInline preload="auto" aria-hidden="true" />
-      <PointerBloom hostRef={root} />
       <div className="intro-copy">
         <p className="intro-badge intro-appear intro-pop">{CONTENT.hero.eyebrow}</p>
         <h1>

@@ -13,22 +13,25 @@ export default function Hero({ projects }: { projects: Project[] }) {
     target: heroRef,
     offset: ['start start', 'end end'],
   })
-  const introY = useTransform(scrollYProgress, [0, 0.42, 0.72], ['0%', '-4%', '-18%'])
-  const introScale = useTransform(scrollYProgress, [0, 0.52, 0.8], [1, 0.985, 0.94])
-  const introOpacity = useTransform(scrollYProgress, [0, 0.5, 0.78], [1, 1, 0])
-  const galleryY = useTransform(scrollYProgress, [0.24, 0.56, 0.94], ['90vh', '4vh', '-5vh'])
-  const galleryScale = useTransform(scrollYProgress, [0.24, 0.56, 0.94], [0.82, 1, 1])
-  const galleryOpacity = useTransform(scrollYProgress, [0.24, 0.48, 0.94], [0, 1, 1])
+  const introY = useTransform(scrollYProgress, [0, 0.36, 0.72], ['0%', '-6%', '-24%'])
+  const introScale = useTransform(scrollYProgress, [0, 0.48, 0.8], [1, 0.96, 0.9])
+  const introOpacity = useTransform(scrollYProgress, [0, 0.56, 0.82], [1, 1, 0])
+  const galleryY = useTransform(scrollYProgress, [0.18, 0.52, 0.9], ['72vh', '5vh', '-7vh'])
+  const galleryOpacity = useTransform(scrollYProgress, [0.2, 0.45, 0.9], [0, 1, 1])
+  const orbitRotate = useTransform(scrollYProgress, [0, 1], [0, 135])
+  const orbitRotateReverse = useTransform(scrollYProgress, [0, 1], [0, -85])
 
   return (
     <>
-      <section ref={heroRef} className="poster-hero">
-        <div className="poster-stage">
-          <div className="poster-frame" aria-hidden="true" />
-          <motion.div className="poster-intro-stage" style={{ y: introY, scale: introScale, opacity: introOpacity }}>
+      <section ref={heroRef} className="orbit-hero">
+        <div className="orbit-hero-sticky">
+          <motion.div className="orbit-ring orbit-ring-a" style={{ rotate: orbitRotate }} aria-hidden="true" />
+          <motion.div className="orbit-ring orbit-ring-b" style={{ rotate: orbitRotateReverse }} aria-hidden="true" />
+          <div className="orbit-axis" aria-hidden="true" />
+          <motion.div className="orbit-intro-stage" style={{ y: introY, scale: introScale, opacity: introOpacity }}>
             <Intro />
           </motion.div>
-          <motion.div className="poster-gallery-stage" style={{ y: galleryY, scale: galleryScale, opacity: galleryOpacity }}>
+          <motion.div className="orbit-gallery-stage" style={{ y: galleryY, opacity: galleryOpacity }}>
             <Interactive3DGallery projects={projects} />
           </motion.div>
         </div>
