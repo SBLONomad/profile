@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import CursorGlow from '@/components/CursorGlow'
 
 export const metadata: Metadata = {
   title: '김동형 포트폴리오',
@@ -24,6 +25,7 @@ export default function RootLayout({
         <link rel="preload" href="/hero-wave.mp4" as="video" type="video/mp4" />
       </head>
       <body className="bg-[#080808] text-white antialiased">
+        <CursorGlow />
         {children}
       </body>
     </html>
