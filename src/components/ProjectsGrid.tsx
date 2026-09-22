@@ -17,7 +17,6 @@ export default function ProjectsGrid({ projects }: Props) {
   const frameRotate = useTransform(scrollYProgress, [0, 1], [-10, 22])
   const [activeFilter, setActiveFilter] = useState(CONTENT.projects.filter_all)
   const [showAll, setShowAll] = useState(false)
-  const [grid, setGrid] = useState(1)
   useEffect(() => {
     const saved = sessionStorage.getItem('portfolio-filter')
     if (saved && CONTENT.categories.includes(saved)) setActiveFilter(saved)
@@ -29,16 +28,9 @@ export default function ProjectsGrid({ projects }: Props) {
       : projects.filter((p) => p.category === activeFilter)
   const visibleProjects = showAll ? filtered : filtered.slice(0, 20)
 
-  useEffect(() => {
-    if (filtered.length < 4) return
-    const interval = window.setInterval(() => setGrid((current) => (current % 4) + 1), 4600)
-    return () => window.clearInterval(interval)
-  }, [filtered.length])
-
   const selectFilter = (category: string) => {
     setActiveFilter(category)
     setShowAll(false)
-    setGrid(1)
     sessionStorage.setItem('portfolio-filter', category)
   }
 
@@ -58,7 +50,7 @@ export default function ProjectsGrid({ projects }: Props) {
         </p>
         <div className="orbit-project-heading-row">
           <h2 className="orbit-project-title">
-            <span className="orbit-project-title-outline"><SplitReveal text={CONTENT.projects.headline1} triggerOnView /></span>
+            <SplitReveal text={CONTENT.projects.headline1} triggerOnView />
             <br />
             <SplitReveal text={CONTENT.projects.highlight} accent triggerOnView />
           </h2>
@@ -99,7 +91,6 @@ export default function ProjectsGrid({ projects }: Props) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="orbit-project-grid"
-          data-grid={grid}
         >
           {visibleProjects.map((project, i) => (
             <ProjectCard key={project.slug} project={project} index={i} />

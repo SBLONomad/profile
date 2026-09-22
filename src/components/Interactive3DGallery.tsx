@@ -200,7 +200,7 @@ export default function Interactive3DGallery({ projects }: Props) {
               aria-label={`${project.title} 자세히 보기`}
             >
               <div
-                className="relative w-full h-full overflow-hidden rounded-2xl bg-[#0e0e10] border border-white/10 transition-all duration-300 group-hover:border-neon group-hover:shadow-[0_0_32px_rgba(162,255,135,0.35)] shadow-2xl"
+                className="relative w-full h-full overflow-hidden rounded-2xl bg-[#0e0e10] border border-white/10 transition-colors duration-300 shadow-2xl"
               >
                 {project.thumbnailStyle === 'logo' ? <LogoBanner project={project} /> : <img
                   src={project.image}
@@ -221,13 +221,6 @@ export default function Interactive3DGallery({ projects }: Props) {
                   className="absolute inset-0 pointer-events-none"
                   style={{
                     background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.2) 50%, transparent 80%)',
-                  }}
-                />
-
-                <div
-                  className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{
-                    boxShadow: 'inset 0 0 0 1.5px rgba(57,255,20,0.9), 0 0 25px rgba(57,255,20,0.25)',
                   }}
                 />
 

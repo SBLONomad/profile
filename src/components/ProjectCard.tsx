@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, type PointerEvent } from 'react'
 import Link from 'next/link'
 import LogoBanner from './LogoBanner'
 import type { Project } from '@/lib/projects'
@@ -14,10 +14,16 @@ interface Props {
 export default function ProjectCard({ project, index }: Props) {
   const [hovered, setHovered] = useState(false)
 
+  const moveSpotlight = (event: PointerEvent<HTMLAnchorElement>) => {
+    const image = event.currentTarget.querySelector<HTMLElement>('.orbit-project-image')
+    if (!image) return
+    const bounds = image.getBoundingClientRect()
+    image.style.setProperty('--pointer-x', `${event.clientX - bounds.left}px`)
+    image.style.setProperty('--pointer-y', `${event.clientY - bounds.top}px`)
+  }
+
   return (
     <motion.article
-      layout
-      layoutId={`project-${project.slug}`}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, margin: '-60px' }}
@@ -33,6 +39,7 @@ export default function ProjectCard({ project, index }: Props) {
         scroll={true}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        onPointerMove={moveSpotlight}
         className="orbit-project-link"
         data-cursor-project
         aria-label={`${project.title} 자세히 보기`}
@@ -84,13 +91,9 @@ export default function ProjectCard({ project, index }: Props) {
         </motion.div>
 
         <motion.div
-          className="orbit-project-outline"
-          animate={{
-            boxShadow: hovered
-              ? 'inset 0 0 0 1.5px rgba(57,255,20,0.7), 0 0 25px rgba(57,255,20,0.15)'
-              : 'inset 0 0 0 1px rgba(255,255,255,0.05)',
-          }}
-          transition={{ duration: 0.3 }}
+          className="orbit-project-spotlight"
+          animate={{ opacity: hovered ? 1 : 0 }}
+          transition={{ duration: 0.2 }}
         />
       </div>
 
