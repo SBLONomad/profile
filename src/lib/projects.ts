@@ -71,7 +71,15 @@ export function getAllProjects(): Project[] {
     return allProjectsData.sort((first, second) => {
       const firstPriority = categoryPriority[first.category] ?? 2
       const secondPriority = categoryPriority[second.category] ?? 2
-      return firstPriority - secondPriority
+      if (firstPriority !== secondPriority) {
+        return firstPriority - secondPriority
+      }
+
+      if (first.category === '데상트' && second.category === '데상트') {
+        return first.slug.localeCompare(second.slug)
+      }
+
+      return 0
     })
   } catch (e) {
     return getSampleProjects()
