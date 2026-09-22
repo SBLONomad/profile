@@ -61,7 +61,18 @@ export function getAllProjects(): Project[] {
         } as Project
       })
 
-    return allProjectsData.length > 0 ? allProjectsData : getSampleProjects()
+    if (allProjectsData.length === 0) return getSampleProjects()
+
+    const categoryPriority: Record<string, number> = {
+      '데상트': 0,
+      '이랜드월드': 1,
+    }
+
+    return allProjectsData.sort((first, second) => {
+      const firstPriority = categoryPriority[first.category] ?? 2
+      const secondPriority = categoryPriority[second.category] ?? 2
+      return firstPriority - secondPriority
+    })
   } catch (e) {
     return getSampleProjects()
   }
