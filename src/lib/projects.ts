@@ -68,11 +68,13 @@ export function getAllProjects(): Project[] {
     const categoryPriority: Record<string, number> = {
       '데상트': 0,
       '이랜드월드': 1,
+      '발렌라이프': 2,
+      'CTTD(G마켓)': 3,
     }
 
     return allProjectsData.sort((first, second) => {
-      const firstPriority = categoryPriority[first.category] ?? 2
-      const secondPriority = categoryPriority[second.category] ?? 2
+      const firstPriority = categoryPriority[first.category] ?? 4
+      const secondPriority = categoryPriority[second.category] ?? 4
       if (firstPriority !== secondPriority) {
         return firstPriority - secondPriority
       }

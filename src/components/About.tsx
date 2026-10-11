@@ -77,8 +77,11 @@ export default function About({ profile }: Props) {
             <p className="orbit-about-body">
               {profile?.bio || CONTENT.about.bio1}
             </p>
-            <p className="orbit-about-body orbit-about-body-last">
+            <p className="orbit-about-body">
               {CONTENT.about.bio2}
+            </p>
+            <p className="orbit-about-body orbit-about-body-last">
+              {CONTENT.about.bio3}
             </p>
 
             <div className="orbit-skill-list">

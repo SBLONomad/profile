@@ -41,7 +41,7 @@ export default function Intro() {
           <a className="liquid-button intro-appear intro-side" href="#contact">{CONTENT.hero.cta_secondary}</a>
         </div>
       </div>
-      <div className="intro-stats">
+      <div className="intro-stats" style={{ gridTemplateColumns: `repeat(${Math.min(CONTENT.about.stats.length, 3)}, 1fr)` }}>
         {CONTENT.about.stats.slice(0, 3).map((stat, index) => (
           <p key={stat.label} className="intro-stat">
             <strong><AnimatedNumber value={stat.value} duration={.55 + index * .06} /></strong><span>{stat.label}</span>

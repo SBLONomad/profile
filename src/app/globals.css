@@ -98,7 +98,7 @@ section[id] { scroll-margin-top: 84px; }
 .orbit-about-title { margin-bottom: 30px; color: #f8f8f3; font-size: clamp(40px, 5vw, 66px); font-weight: 750; line-height: 1.18; word-break: keep-all; }
 .orbit-about-title span { color: #a2ff87; }
 .orbit-about-body { color: rgb(240 240 234 / .72); font-size: 15px; line-height: 1.85; word-break: keep-all; }
-.orbit-about-body-last { margin-top: 14px; }
+.orbit-about-body + .orbit-about-body { margin-top: 14px; }
 .orbit-skill-list { display: flex; flex-wrap: wrap; gap: 7px; margin: 32px 0 36px; }
 .orbit-skill { padding: 7px 11px; border: 1px solid rgb(255 255 255 / .2); color: rgb(244 244 239 / .76); font-size: 13px; transition: color .2s, border-color .2s; }
 .orbit-skill:hover { color: #a2ff87; border-color: #a2ff87; }
