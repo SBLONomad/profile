@@ -20,6 +20,7 @@ export default function Interactive3DGallery({ projects }: Props) {
   const lastX = useRef(0)
   const velocity = useRef(0)
   const offsetRef = useRef(0)
+  const dragDistance = useRef(0)
 
   const cardWidth = 205
   const cardGap = 20
@@ -28,12 +29,16 @@ export default function Interactive3DGallery({ projects }: Props) {
   useEffect(() => {
     let animationFrameId: number
     const baseSpeed = -0.6
+    let lastTime = performance.now()
 
-    const tick = () => {
+    const tick = (now: number) => {
+      // 화면 주사율이나 끊김과 상관없이 같은 속도로 흐르도록 60fps 기준 프레임 수로 환산합니다.
+      const frames = Math.min(Math.max((now - lastTime) / (1000 / 60), 0), 6)
+      lastTime = now
       if (!isDragging.current) {
-        velocity.current *= 0.94
+        velocity.current *= Math.pow(0.94, frames)
         if (Math.abs(velocity.current) < 0.05) velocity.current = 0
-        offsetRef.current += velocity.current + baseSpeed
+        offsetRef.current += (velocity.current + baseSpeed) * frames
       }
 
       const loopWidth = baseList.length * stride
@@ -54,6 +59,12 @@ export default function Interactive3DGallery({ projects }: Props) {
         const cardElements = container.querySelectorAll<HTMLElement>('.fan-card-item')
         cardElements.forEach((el, index) => {
           const cardX = offsetRef.current + index * stride + cardWidth / 2
+          // 화면 밖 카드는 그리지 않아 움직임이 끊기지 않게 합니다.
+          if (cardX < -cardWidth * 2 || cardX > rect.width + cardWidth * 2) {
+            el.style.visibility = 'hidden'
+            return
+          }
+          el.style.visibility = 'visible'
           const distFromCenter = cardX - centerX
           const normX = distFromCenter / radius
           const absNorm = Math.min(Math.abs(normX), 1.8)
@@ -88,9 +99,7 @@ export default function Interactive3DGallery({ projects }: Props) {
     startX.current = e.clientX
     lastX.current = e.clientX
     velocity.current = 0
-    if (containerRef.current) {
-      containerRef.current.setPointerCapture(e.pointerId)
-    }
+    dragDistance.current = 0
   }
 
   const handlePointerMove = (e: React.PointerEvent) => {
@@ -98,6 +107,11 @@ export default function Interactive3DGallery({ projects }: Props) {
     const currentX = e.clientX
     const delta = currentX - lastX.current
     lastX.current = currentX
+    dragDistance.current += Math.abs(delta)
+    // 실제로 끌기 시작한 뒤에만 포인터를 붙잡아, 단순 클릭은 카드 링크로 이동합니다.
+    if (dragDistance.current > 6 && containerRef.current && !containerRef.current.hasPointerCapture(e.pointerId)) {
+      containerRef.current.setPointerCapture(e.pointerId)
+    }
 
     offsetRef.current += delta
     velocity.current = delta * 1.4
@@ -127,6 +141,13 @@ export default function Interactive3DGallery({ projects }: Props) {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
         onWheel={handleWheel}
+        onDragStart={(e) => e.preventDefault()}
+        onClickCapture={(e) => {
+          if (dragDistance.current > 6) {
+            e.preventDefault()
+            e.stopPropagation()
+          }
+        }}
         className="relative w-screen left-1/2 -translate-x-1/2 h-[440px] md:h-[500px] cursor-grab active:cursor-grabbing overflow-hidden flex items-center justify-center"
         style={{
           perspective: '850px',
@@ -191,6 +212,7 @@ export default function Interactive3DGallery({ projects }: Props) {
               key={`${project.slug}-${idx}`}
               href={`/projects/${project.slug}`}
               data-cursor-project
+              draggable={false}
               className="fan-card-item absolute top-0 left-0 will-change-transform group cursor-pointer"
               style={{
                 width: `${cardWidth}px`,

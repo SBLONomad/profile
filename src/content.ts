@@ -70,7 +70,9 @@ export const CONTENT = {
     ],
     stats: [
       { value: '7+',  label: '실무 경력' },
-      { value: '70%+',  label: 'AI 활용 소재' },
+      { value: '25%', label: '클릭률 상승' },
+      { value: '13%', label: '이탈률 감소' },
+      { value: '90%+',  label: 'AI 활용 광고 소재' },
     ],
   },
 

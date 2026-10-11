@@ -69,7 +69,7 @@ export default function About({ profile }: Props) {
             <h2 className="orbit-about-title">
               <SplitReveal text={CONTENT.about.headline1} triggerOnView />
               <br />
-              <SplitReveal text={`${CONTENT.about.headline2} `} triggerOnView />
+              <SplitReveal text={`${CONTENT.about.headline2} `} accent triggerOnView />
               <span>
                 <SplitReveal text={CONTENT.about.highlight} accent triggerOnView />
               </span>
