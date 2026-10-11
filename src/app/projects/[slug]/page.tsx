@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import BackToWorksButton from '@/components/BackToWorksButton'
+import LivePreview from '@/components/LivePreview'
 import { getAllProjects, getProjectBySlug } from '@/lib/projects'
 
 interface Props {
@@ -66,6 +67,8 @@ export default function ProjectDetailPage({ params }: Props) {
               {project.description}
             </p>
           </header>
+
+          {project.liveUrl && <LivePreview url={project.liveUrl} title={project.title} />}
 
           <section className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-10 lg:gap-14 items-start">
             <div className="space-y-8">

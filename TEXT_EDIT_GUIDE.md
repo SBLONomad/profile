@@ -24,6 +24,9 @@ VS Code에서 아래 파일을 열어 문구를 직접 수정하시면 됩니다
 
 작업물별 `.md` 파일을 수정하거나 새로 만들 수 있습니다.
 
+직접 퍼블리싱한 HTML을 함께 보여주려면 폴더째 `public/publishing/이름/`에 넣고,
+작업물 `.md`에 `liveUrl: /publishing/이름/index.html`을 추가합니다. 상세 페이지 상단에 실제 페이지 미리보기가 표시됩니다.
+
 관리자 페이지에서도 작업물과 이미지를 수정할 수 있습니다.
 
 `/admin`
@@ -31,10 +34,10 @@ VS Code에서 아래 파일을 열어 문구를 직접 수정하시면 됩니다
 ## 상단 물결과 글꼴
 
 - 상단 문구와 버튼: `src/content.ts`의 `hero`
-- 물결 영상: `public/hero-wave.mp4`
+- 물결 영상: `public/hero-wave-pingpong.mp4`
 - 물결 색감과 밝기: `src/app/globals.css`의 `.intro-wave`에서 `filter`
 - 상단 배치와 효과: `src/components/Intro.tsx`
-- 프리텐다드: `public/PretendardVariable.woff2` (사이트에 포함되어 별도 설치 불필요)
+- 글꼴(SUIT): `public/SUIT-Variable.woff2` (사이트에 포함되어 별도 설치 불필요)
 
 ## 발렌라이프 로고 배너
 

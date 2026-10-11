@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>DESCENTE | ENGINEERED FOR MOTION</title>
+<meta name="description" content="ENGINEERED FOR MOTION - DESCENTE ENGINEERED RUN">
+<meta property="og:title" content="DESCENTE | ENGINEERED FOR MOTION">
+<meta property="og:image" content="img/pc/02-1_descente_pc.jpg">
+<!-- ===================================================================
+     이미지 경로를 CDN 등으로 바꿀 때는  src="img/  를 한 번에 치환하세요.
+     예) img/pc/  →  https://cdn.도메인/descente/pc/
+     =================================================================== -->
+<style>
+/* ===================================================================
+   DESCENTE / ENGINEERED FOR MOTION
+   레이어 좌표는 원본 시안(00_descente_pc.png / 00_descente_mo.png)과
+   픽셀 대조해 산출한 값입니다. 임의 수정 시 정렬이 틀어집니다.
+   =================================================================== */
+
+/* ---------- reset ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html,body,div,span,h1,h2,p,a,img,section,video{
+  margin:0;padding:0;border:0;font-size:100%;vertical-align:baseline}
+section{display:block}
+html{-webkit-text-size-adjust:100%}
+body{background:#16181d;color:#fff;line-height:1;
+  font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto;border:0;-webkit-user-drag:none;user-select:none}
+
+/* ---------- layout ---------- */
+#wrap{position:relative;margin:0 auto;overflow:hidden}
+.sec{position:relative;width:100%;overflow:hidden}
+.sec > .lay{position:absolute;display:block;height:auto}
+
+/* ===================================================================
+   SCROLL EFFECT
+   배경은 페이드, 사진은 놓인 위치에 따라 좌·우·아래·위에서 들어옵니다.
+   이동 거리는 32~40px 로 짧게, 지속시간·이징은 한 세트로 통일해
+   여러 방향이어도 화면이 들뜨지 않습니다.
+   화면에 들어오면 .is-in 부여 / 벗어나면 제거 → 효과가 매번 반복됩니다.
+   =================================================================== */
+[data-fx]{
+  opacity:0;
+  transition:opacity 1.1s cubic-bezier(.22,.61,.36,1),
+             transform 1.1s cubic-bezier(.22,.61,.36,1);
+  transition-delay:var(--d,0s);
+}
+[data-fx="rise"] {transform:translateY(32px)}   /* 아래에서 */
+[data-fx="drop"] {transform:translateY(-32px)}  /* 위에서 */
+[data-fx="left"] {transform:translateX(-40px)}  /* 왼쪽에서 */
+[data-fx="right"]{transform:translateX(40px)}   /* 오른쪽에서 */
+[data-fx="soft"] {transform:translateY(12px)}   /* 카피·로고 */
+[data-fx="fade"] {}                             /* 배경 : 움직임 없음 */
+[data-fx].is-in{opacity:1;transform:none}
+
+/* ---------- 04 : 롤링 밴드 (오른쪽 → 왼쪽 무한) ----------
+   이미지는 세로에 맞춰 원래 비율대로 흐르므로, 소스가 960px 폭이든
+   1920px 폭이든 잘리지 않고 그대로 지나갑니다. */
+.roll{position:absolute;inset:0;overflow:hidden}
+.roll__track{display:flex;width:max-content;height:100%;
+  animation:dscRoll 34s linear infinite}
+.roll__track img{display:block;flex:none;height:100%;width:auto;max-width:none}
+@keyframes dscRoll{
+  from{transform:translate3d(0,0,0)}
+  to  {transform:translate3d(-50%,0,0)}
+}
+.sec04:not(.is-view) .roll__track{animation-play-state:paused}
+
+/* ---------- 07 : 영상 (PC 1920x1080 / MO 960x540 · 둘 다 16:9) ---------- */
+.movie{position:absolute;inset:0;background:#000;overflow:hidden}
+.movie video{width:100%;height:100%;display:block;object-fit:cover;background:#000}
+
+/* ---------- 모션 최소화 설정 ---------- */
+@media (prefers-reduced-motion:reduce){
+  [data-fx]{opacity:1!important;transform:none!important;transition:none!important}
+  .roll__track{animation:none}
+}
+
+/* ================= PC : 1920px 아트보드 ================= */
+#wrap.pc{max-width:1920px}
+
+/* sec01 : TOP LOGO (1920 x 90) */
+.pc .sec01{aspect-ratio:1920/90;background:#1a1b20}
+.pc .sec01 .l-bar{left:0%;top:0%;width:100%}
+
+/* sec02 : KEY VISUAL (1920 x 1080) */
+.pc .sec02{aspect-ratio:1920/1080;background:#464140}
+.pc .sec02 .l-kv{left:0%;top:0%;width:100%}
+.pc .sec02 .l-hl{left:24.0625%;top:16.2037%;width:68.9062%}
+
+/* sec03 : ENGINEERED RUN (1920 x 180) */
+.pc .sec03{aspect-ratio:1920/180;background:#1a1b20}
+.pc .sec03 .l-tit{left:0%;top:0%;width:100%}
+
+/* sec04 : ROLLING BAND (1920 x 600) */
+.pc .sec04{aspect-ratio:1920/600;background:#4f6b74}
+.pc .sec04 .l-roll{left:0%;top:0%;width:100%}
+
+/* sec05 : AIR FLOW (1920 x 1000) */
+.pc .sec05{aspect-ratio:1920/1000;background:#24262a}
+.pc .sec05 .l-bg{left:0%;top:0%;width:100%}
+.pc .sec05 .l-img01{left:35.15625%;top:10.3%;width:29.6875%}
+.pc .sec05 .l-txt{left:10.5208%;top:43.1%;width:80.625%}
+
+/* sec06 : ENGINEERED RUN (1920 x 720) */
+.pc .sec06{aspect-ratio:1920/720;background:#3de7e2}
+.pc .sec06 .l-bg{left:0%;top:0%;width:100%}
+.pc .sec06 .l-img01{left:15.625%;top:0%;width:68.75%}
+.pc .sec06 .l-txt{left:7.6563%;top:18.3333%;width:84.8958%}
+
+/* sec07 : MOVIE (1920 x 1080) */
+.pc .sec07{aspect-ratio:1920/1080;background:#000000}
+
+/* sec08 : FOCUS ON ME (1920 x 2502) */
+.pc .sec08{aspect-ratio:1920/2502;background:#2a2d32}
+.pc .sec08 .l-bg{left:0%;top:0%;width:100%}
+.pc .sec08 .l-img01{left:36.3021%;top:6.3949%;width:63.6979%}
+.pc .sec08 .l-img02{left:0%;top:21.1031%;width:31.7708%}
+.pc .sec08 .l-img03{left:36.3021%;top:38.3693%;width:42.5%}
+.pc .sec08 .l-motion{left:10.4167%;top:88.3693%;width:19.8438%}
+.pc .sec08 .l-txt{left:20.8854%;top:11.5907%;width:11.25%}
+
+/* sec09 : ATHLETIC ORIGINALS (1920 x 2752) */
+.pc .sec09{aspect-ratio:1920/2752;background:#3de7e2}
+.pc .sec09 .l-bg{left:0%;top:0%;width:100%}
+.pc .sec09 .l-img01{left:9.375%;top:7.2674%;width:41.6667%}
+.pc .sec09 .l-img02{left:48.9062%;top:20.8576%;width:41.7188%}
+.pc .sec09 .l-img03{left:9.375%;top:66.6424%;width:54.5833%}
+.pc .sec09 .l-img04{left:66.3542%;top:66.6424%;width:24.2708%}
+.pc .sec09 .l-motion{left:10.5208%;top:52.3256%;width:19.8438%}
+.pc .sec09 .l-txt{left:55.2604%;top:16.3154%;width:16.3542%}
+
+/* sec10 : NIGHT RUN (1920 x 2640) */
+.pc .sec10{aspect-ratio:1920/2640;background:#292c31}
+.pc .sec10 .l-bg{left:0%;top:0%;width:100%}
+.pc .sec10 .l-img01{left:0%;top:0%;width:69.375%}
+.pc .sec10 .l-img02{left:69.1667%;top:0%;width:30.8333%}
+.pc .sec10 .l-img03{left:6.7708%;top:38.5606%;width:24.4792%}
+.pc .sec10 .l-img04{left:31.25%;top:38.5606%;width:24.4792%}
+.pc .sec10 .l-img05{left:46.8229%;top:65.303%;width:53.1771%}
+.pc .sec10 .l-txt{left:68.0208%;top:47.2727%;width:19.4792%}
+
+/* ================= MO : 960px 아트보드 ================= */
+#wrap.mo{max-width:960px}
+
+/* sec01 : TOP LOGO (960 x 120) */
+.mo .sec01{aspect-ratio:960/120;background:#1a1b20}
+.mo .sec01 .l-bar{left:0%;top:0%;width:100%}
+
+/* sec02 : KEY VISUAL (960 x 1120) */
+.mo .sec02{aspect-ratio:960/1120;background:#3e3735}
+.mo .sec02 .l-kv{left:0%;top:0%;width:100%}
+.mo .sec02 .l-hl{left:5.20833%;top:24.73214%;width:89.1667%}
+
+/* sec03 : ENGINEERED RUN (960 x 180) */
+.mo .sec03{aspect-ratio:960/180;background:#1a1b20}
+.mo .sec03 .l-tit{left:0%;top:0%;width:100%}
+
+/* sec04 : ROLLING BAND (960 x 600) */
+.mo .sec04{aspect-ratio:960/600;background:#4f6b74}
+.mo .sec04 .l-roll{left:0%;top:0%;width:100%}
+
+/* sec05 : AIR FLOW (960 x 1400) */
+.mo .sec05{aspect-ratio:960/1400;background:#24262a}
+.mo .sec05 .l-bg{left:0%;top:0%;width:100%}
+.mo .sec05 .l-img01{left:19.79167%;top:21.78571%;width:60.4167%}
+.mo .sec05 .l-txt{left:23.125%;top:11%;width:53.6458%}
+
+/* sec06 : ENGINEERED RUN (960 x 720) */
+.mo .sec06{aspect-ratio:960/720;background:#3de7e2}
+.mo .sec06 .l-bg{left:0%;top:0%;width:100%}
+.mo .sec06 .l-img01{left:20.3125%;top:0%;width:79.6875%}
+.mo .sec06 .l-txt{left:12.8125%;top:18.3333%;width:2.0833%}
+
+/* sec07 : MOVIE (960 x 540) */
+.mo .sec07{aspect-ratio:960/540;background:#000000}
+
+/* sec08 : FOCUS ON ME (960 x 2500) */
+.mo .sec08{aspect-ratio:960/2500;background:#2c2f33}
+.mo .sec08 .l-bg{left:0%;top:0%;width:100%}
+.mo .sec08 .l-img01{left:0%;top:0%;width:100%}
+.mo .sec08 .l-img02{left:6.25%;top:25%;width:44.5833%}
+.mo .sec08 .l-img03{left:34.0625%;top:52.28%;width:59.6875%}
+.mo .sec08 .l-motion{left:29.0625%;top:70.08%;width:2.5%}
+.mo .sec08 .l-txt{left:54.1667%;top:28.08%;width:27.3958%}
+
+/* sec09 : ATHLETIC ORIGINALS (960 x 2470) */
+.mo .sec09{aspect-ratio:960/2470;background:#3de7e2}
+.mo .sec09 .l-bg{left:0%;top:0%;width:100%}
+.mo .sec09 .l-img01{left:5.7292%;top:9.7166%;width:43.6458%}
+.mo .sec09 .l-img02{left:38.6458%;top:27.4899%;width:61.3542%}
+.mo .sec09 .l-img03{left:0%;top:69.4332%;width:63.75%}
+.mo .sec09 .l-img04{left:63.75%;top:66.0729%;width:30%}
+.mo .sec09 .l-motion{left:32.0833%;top:47.8138%;width:2.5%}
+.mo .sec09 .l-txt{left:54.6875%;top:20.4049%;width:31.6667%}
+
+/* sec10 : NIGHT RUN (960 x 2860) */
+.mo .sec10{aspect-ratio:960/2860;background:#2a2d32}
+.mo .sec10 .l-bg{left:0%;top:0%;width:100%}
+.mo .sec10 .l-img01{left:0%;top:4.1958%;width:100%}
+.mo .sec10 .l-img02{left:6.25%;top:23.3566%;width:42.5%}
+.mo .sec10 .l-img03{left:17.5%;top:47.2028%;width:65%}
+.mo .sec10 .l-img04{left:0%;top:73.042%;width:100%}
+.mo .sec10 .l-txt{left:52.6042%;top:28.0769%;width:27.1875%}
+.mo .sec10 .l-txt2{left:26.3542%;top:66.8881%;width:47.2917%}
+</style>
+<noscript><style>
+[data-fx]{opacity:1!important;transform:none!important}
+</style></noscript>
+
+</head>
+
+<body>
+<div id="wrap"></div>
+
+<!-- PC / MOBILE 마크업. <template> 안의 이미지는 다운로드되지 않으므로
+     실제로 사용하는 쪽만 로드됩니다. -->
+<template id="tpl-pc">
+  <!-- sec01 : TOP LOGO -->
+  <section class="sec sec01">
+    <img class="lay l-bar" data-fx="fade" src="img/pc/01_descente_pc.jpg" width="1920" height="90" alt="" decoding="async" fetchpriority="high">
+  </section>
+
+  <!-- sec02 : KEY VISUAL -->
+  <section class="sec sec02">
+    <img class="lay l-kv" data-fx="fade" src="img/pc/02-1_descente_pc.jpg" width="1920" height="1080" alt="" decoding="async" fetchpriority="high">
+    <img class="lay l-hl" data-fx="soft" style="--d:0.15s" src="img/pc/02-2_descente_pc.png" width="1323" height="589" alt="" decoding="async" fetchpriority="high">
+  </section>
+
+  <!-- sec03 : ENGINEERED RUN -->
+  <section class="sec sec03">
+    <img class="lay l-tit" data-fx="fade" src="img/pc/03_descente_pc.jpg" width="1920" height="180" alt="" decoding="async">
+  </section>
+
+  <!-- sec04 : ROLLING BAND -->
+  <section class="sec sec04">
+    <div class="roll"><div class="roll__track">
+      <img src="img/pc/04_descente_pc.jpg" alt="" decoding="async">
+      <img src="img/pc/04_descente_pc.jpg" alt="" aria-hidden="true" decoding="async">
+    </div></div>
+  </section>
+
+  <!-- sec05 : AIR FLOW -->
+  <section class="sec sec05">
+    <img class="lay l-bg" data-fx="fade" src="img/pc/05_descente_bg_pc.jpg" width="1920" height="1000" alt="" decoding="async">
+    <img class="lay l-img01" data-fx="rise" src="img/pc/05_descente_img_pc.jpg" width="570" height="790" alt="" decoding="async">
+    <img class="lay l-txt" data-fx="soft" style="--d:0.15s" src="img/pc/05_descente_txt_pc.png" width="1548" height="126" alt="" decoding="async">
+  </section>
+
+  <!-- sec06 : ENGINEERED RUN -->
+  <section class="sec sec06">
+    <img class="lay l-bg" data-fx="fade" src="img/pc/06_descente_bg_pc.jpg" width="1920" height="720" alt="" decoding="async">
+    <img class="lay l-img01" data-fx="rise" src="img/pc/06_descente_img_pc.jpg" width="1320" height="720" alt="" decoding="async">
+    <img class="lay l-txt" data-fx="soft" style="--d:0.15s" src="img/pc/06_descente_txt_pc.png" width="1630" height="456" alt="" decoding="async">
+  </section>
+
+  <!-- sec07 : MOVIE -->
+  <section class="sec sec07">
+    <div class="movie">
+      <video src="video/07_descente_video.mp4" poster="img/pc/07_poster.jpg"
+             muted loop playsinline autoplay preload="metadata"></video>
+    </div>
+  </section>
+
+  <!-- sec08 : FOCUS ON ME -->
+  <section class="sec sec08">
+    <img class="lay l-bg" data-fx="fade" src="img/pc/08_descente_bg_pc.jpg" width="1920" height="2502" alt="" decoding="async">
+    <img class="lay l-img01" data-fx="right" src="img/pc/08_descente_img01_pc.jpg" width="1223" height="719" alt="" decoding="async">
+    <img class="lay l-img02" data-fx="left" style="--d:0.08s" src="img/pc/08_descente_img02_pc.jpg" width="610" height="915" alt="" decoding="async">
+    <img class="lay l-img03" data-fx="rise" style="--d:0.16s" src="img/pc/08_descente_img03_pc.jpg" width="816" height="1223" alt="" decoding="async">
+    <img class="lay l-motion" data-fx="soft" style="--d:0.15s" src="img/pc/08_descente_motion_pc.png" width="381" height="24" alt="" decoding="async">
+    <img class="lay l-txt" data-fx="soft" style="--d:0.15s" src="img/pc/08_descente_txt_pc.png" width="216" height="114" alt="" decoding="async">
+  </section>
+
+  <!-- sec09 : ATHLETIC ORIGINALS -->
+  <section class="sec sec09">
+    <img class="lay l-bg" data-fx="fade" src="img/pc/09_descente_bg_pc.jpg" width="1920" height="2752" alt="" decoding="async">
+    <img class="lay l-img01" data-fx="left" src="img/pc/09_descente_img01_pc.jpg" width="800" height="1200" alt="" decoding="async">
+    <img class="lay l-img02" data-fx="right" style="--d:0.08s" src="img/pc/09_descente_img02_pc.png" width="801" height="1200" alt="" decoding="async">
+    <img class="lay l-img03" data-fx="left" style="--d:0.16s" src="img/pc/09_descente_img03_pc.jpg" width="1048" height="699" alt="" decoding="async">
+    <img class="lay l-img04" data-fx="right" style="--d:0.24s" src="img/pc/09_descente_img01_pc-1.jpg" width="466" height="699" alt="" decoding="async">
+    <img class="lay l-motion" data-fx="soft" style="--d:0.15s" src="img/pc/09_descente_img01_pc-2.png" width="381" height="24" alt="" decoding="async">
+    <img class="lay l-txt" data-fx="soft" style="--d:0.15s" src="img/pc/09_descente_text_pc.png" width="314" height="59" alt="" decoding="async">
+  </section>
+
+  <!-- sec10 : NIGHT RUN -->
+  <section class="sec sec10">
+    <img class="lay l-bg" data-fx="fade" src="img/pc/10_descente_bg_pc.jpg" width="1920" height="2640" alt="" decoding="async">
+    <img class="lay l-img01" data-fx="left" src="img/pc/10_descente_img01_pc.jpg" width="1332" height="888" alt="" decoding="async">
+    <img class="lay l-img02" data-fx="right" style="--d:0.08s" src="img/pc/10_descente_img02_pc.jpg" width="592" height="888" alt="" decoding="async">
+    <img class="lay l-img03" data-fx="left" style="--d:0.16s" src="img/pc/10_descente_img03_pc.jpg" width="470" height="706" alt="" decoding="async">
+    <img class="lay l-img04" data-fx="drop" style="--d:0.24s" src="img/pc/10_descente_img04_pc.jpg" width="470" height="706" alt="" decoding="async">
+    <img class="lay l-img05" data-fx="right" style="--d:0.24s" src="img/pc/10_descente_img05_pc.jpg" width="1021" height="716" alt="" decoding="async">
+    <img class="lay l-txt" data-fx="soft" style="--d:0.15s" src="img/pc/10_descente_txt_pc.png" width="374" height="148" alt="" decoding="async">
+  </section>
+</template>
+
+<template id="tpl-mo">
+  <!-- sec01 : TOP LOGO -->
+  <section class="sec sec01">
+    <img class="lay l-bar" data-fx="fade" src="img/mo/01-1_descente_mo.jpg" width="960" height="120" alt="" decoding="async" fetchpriority="high">
+  </section>
+
+  <!-- sec02 : KEY VISUAL -->
+  <section class="sec sec02">
+    <img class="lay l-kv" data-fx="fade" src="img/mo/02-1_descente_pc.jpg" width="960" height="1120" alt="" decoding="async" fetchpriority="high">
+    <img class="lay l-hl" data-fx="soft" style="--d:0.15s" src="img/mo/02-2_descente_pc.png" width="856" height="427" alt="" decoding="async" fetchpriority="high">
+  </section>
+
+  <!-- sec03 : ENGINEERED RUN -->
+  <section class="sec sec03">
+    <img class="lay l-tit" data-fx="fade" src="img/mo/03_descente_mo.jpg" width="960" height="180" alt="" decoding="async">
+  </section>
+
+  <!-- sec04 : ROLLING BAND -->
+  <section class="sec sec04">
+    <div class="roll"><div class="roll__track">
+      <img src="img/mo/04_descente_mo.jpg" alt="" decoding="async">
+      <img src="img/mo/04_descente_mo.jpg" alt="" aria-hidden="true" decoding="async">
+    </div></div>
+  </section>
+
+  <!-- sec05 : AIR FLOW -->
+  <section class="sec sec05">
+    <img class="lay l-bg" data-fx="fade" src="img/mo/05_descente_bg_mo.jpg" width="960" height="1400" alt="" decoding="async">
+    <img class="lay l-img01" data-fx="rise" src="img/mo/05_descente_img_mo.png" width="580" height="790" alt="" decoding="async">
+    <img class="lay l-txt" data-fx="soft" style="--d:0.15s" src="img/mo/05_descente_txt_mo.png" width="515" height="1126" alt="" decoding="async">
+  </section>
+
+  <!-- sec06 : ENGINEERED RUN -->
+  <section class="sec sec06">
+    <img class="lay l-bg" data-fx="fade" src="img/mo/05_descente_bg_mo-1.jpg" width="960" height="720" alt="" decoding="async">
+    <img class="lay l-img01" data-fx="rise" src="img/mo/06_descente_img_mo.png" width="765" height="720" alt="" decoding="async">
+    <img class="lay l-txt" data-fx="soft" style="--d:0.15s" src="img/mo/06_descente_txt_mo.png" width="20" height="456" alt="" decoding="async">
+  </section>
+
+  <!-- sec07 : MOVIE -->
+  <section class="sec sec07">
+    <div class="movie">
+      <video src="video/07_descente_video.mp4" poster="img/mo/07_poster.jpg"
+             muted loop playsinline autoplay preload="metadata"></video>
+    </div>
+  </section>
+
+  <!-- sec08 : FOCUS ON ME -->
+  <section class="sec sec08">
+    <img class="lay l-bg" data-fx="fade" src="img/mo/08_descente_bg_mo.jpg" width="960" height="2500" alt="" decoding="async">
+    <img class="lay l-img01" data-fx="rise" src="img/mo/08_descente_img01_mo.jpg" width="960" height="565" alt="" decoding="async">
+    <img class="lay l-img02" data-fx="left" style="--d:0.08s" src="img/mo/08_descente_img02_mo.jpg" width="428" height="642" alt="" decoding="async">
+    <img class="lay l-img03" data-fx="right" style="--d:0.16s" src="img/mo/08_descente_img03_mo.png" width="573" height="858" alt="" decoding="async">
+    <img class="lay l-motion" data-fx="soft" style="--d:0.15s" src="img/mo/08_descente_motion_mo.png" width="24" height="381" alt="" decoding="async">
+    <img class="lay l-txt" data-fx="soft" style="--d:0.15s" src="img/mo/08_descente_text_mo.png" width="263" height="136" alt="" decoding="async">
+  </section>
+
+  <!-- sec09 : ATHLETIC ORIGINALS -->
+  <section class="sec sec09">
+    <img class="lay l-bg" data-fx="fade" src="img/mo/09_descente_bg_mo.jpg" width="960" height="2470" alt="" decoding="async">
+    <img class="lay l-img01" data-fx="left" src="img/mo/09_descente_img01_mo.jpg" width="419" height="628" alt="" decoding="async">
+    <img class="lay l-img02" data-fx="right" style="--d:0.08s" src="img/mo/09_descente_img02_mo.png" width="589" height="883" alt="" decoding="async">
+    <img class="lay l-img03" data-fx="left" style="--d:0.16s" src="img/mo/09_descente_img03_mo.png" width="612" height="382" alt="" decoding="async">
+    <img class="lay l-img04" data-fx="right" style="--d:0.24s" src="img/mo/09_descente_img04_mo.jpg" width="288" height="548" alt="" decoding="async">
+    <img class="lay l-motion" data-fx="soft" style="--d:0.15s" src="img/mo/09_descente_motion_mo.png" width="24" height="381" alt="" decoding="async">
+    <img class="lay l-txt" data-fx="soft" style="--d:0.15s" src="img/mo/09_descente_text_mo.png" width="304" height="119" alt="" decoding="async">
+  </section>
+
+  <!-- sec10 : NIGHT RUN -->
+  <section class="sec sec10">
+    <img class="lay l-bg" data-fx="fade" src="img/mo/09_descente_bg_mo-1.jpg" width="960" height="2860" alt="" decoding="async">
+    <img class="lay l-img01" data-fx="rise" src="img/mo/09_descente_img01_mo-1.jpg" width="960" height="640" alt="" decoding="async">
+    <img class="lay l-img02" data-fx="left" style="--d:0.08s" src="img/mo/09_descente_img02_mo-1.jpg" width="408" height="612" alt="" decoding="async">
+    <img class="lay l-img03" data-fx="drop" style="--d:0.16s" src="img/mo/09_descente_img03_mo-1.jpg" width="624" height="469" alt="" decoding="async">
+    <img class="lay l-img04" data-fx="rise" style="--d:0.24s" src="img/mo/09_descente_img04_mo-1.jpg" width="960" height="524" alt="" decoding="async">
+    <img class="lay l-txt" data-fx="soft" style="--d:0.15s" src="img/mo/09_descente_text01_mo.png" width="261" height="90" alt="" decoding="async">
+    <img class="lay l-txt2" data-fx="soft" style="--d:0.15s" src="img/mo/09_descente_text02_mo.png" width="454" height="90" alt="" decoding="async">
+  </section>
+</template>
+
+<script>
+(function(){
+  var wrap=document.getElementById('wrap'), cur='';
+  function pick(){
+    return (/Android|iPhone|iPod|IEMobile|BlackBerry|Opera Mini|Windows Phone/i
+            .test(navigator.userAgent) || window.innerWidth<=768) ? 'mo' : 'pc';
+  }
+  function apply(){
+    var m=pick(); if(m===cur)return; cur=m;
+    wrap.className=m;
+    wrap.innerHTML=document.getElementById('tpl-'+m).innerHTML;
+    if(window.DESCENTE_INIT)window.DESCENTE_INIT();
+  }
+  apply();
+  var t; window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(apply,200)});
+})();
+</script>
+<script>
+/* ===================================================================
+   스크롤 리빌 : 들어오면 .is-in / 나가면 제거 → 효과 반복
+   섹션 in-view : 롤링 밴드 재생·정지, 영상 재생·정지
+   =================================================================== */
+(function () {
+  'use strict';
+  var ROOT = document.getElementById('wrap');
+  if (!ROOT) return;
+  var reduce = window.matchMedia &&
+               window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var targets, secs, io, io2;
+
+  function setSection(sec, inView) {
+    sec.classList.toggle('is-view', inView);
+    var v = sec.querySelector('video');
+    if (!v) return;
+    if (inView) { var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+    else if (!v.paused) { v.pause(); }
+  }
+  /* 수동 1회 검사 - 일부 인앱 브라우저에서 IO 첫 콜백이 늦게 오는 경우 대비 */
+  function sync() {
+    var vh = window.innerHeight, edge = vh * 0.06, i, r;
+    for (i = 0; i < targets.length; i++) {
+      r = targets[i].getBoundingClientRect();
+      targets[i].classList.toggle('is-in', r.top < vh - edge && r.bottom > 0);
+    }
+    for (i = 0; i < secs.length; i++) {
+      r = secs[i].getBoundingClientRect();
+      setSection(secs[i], r.top < vh && r.bottom > 0);
+    }
+  }
+  function init() {
+    if (io)  io.disconnect();
+    if (io2) io2.disconnect();
+    var root = document.getElementById('wrap');
+    if (!root) return;
+    targets = root.querySelectorAll('[data-fx]');
+    secs    = root.querySelectorAll('.sec');
+    if (!('IntersectionObserver' in window) || reduce) {
+      for (var i = 0; i < targets.length; i++) targets[i].classList.add('is-in');
+      for (var s = 0; s < secs.length; s++) setSection(secs[s], true);
+      return;
+    }
+    io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.target.classList.toggle('is-in', e.isIntersecting); });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0 });
+    for (var j = 0; j < targets.length; j++) io.observe(targets[j]);
+    io2 = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { setSection(e.target, e.isIntersecting); });
+    }, { threshold: 0.15 });
+    for (var k = 0; k < secs.length; k++) io2.observe(secs[k]);
+    sync();
+  }
+  window.DESCENTE_INIT = init;
+  init();
+  window.addEventListener('load', function(){ if(targets) sync(); });
+  window.addEventListener('pageshow', function(){ if(targets) sync(); });
+  document.addEventListener('visibilitychange', function(){
+    if(!document.hidden && targets) sync(); });
+})();
+</script>
+</body>
+</html>

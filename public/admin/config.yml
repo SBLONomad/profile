@@ -102,6 +102,12 @@ collections:
           name: "image"
           widget: "image"
 
+      - label: "퍼블리싱 페이지 주소"
+        name: "liveUrl"
+        widget: "string"
+        required: false
+        hint: "직접 퍼블리싱한 HTML이 있으면 주소를 입력하세요 (예: /publishing/eastlogue/index.html)"
+
       - label: "대표 노출 여부"
         name: "featured"
         widget: "boolean"

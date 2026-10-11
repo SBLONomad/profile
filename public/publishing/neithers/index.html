@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>DESCENTE × NEITHERS</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box} html{background:#020202;scroll-behavior:smooth} body{margin:0;background:#020202;overflow-x:hidden}.campaign{width:100%;max-width:2240px;margin:auto;background:#000;overflow:hidden}.section{position:relative;width:100%;isolation:isolate;line-height:0}.layer{display:block;width:100%;height:auto}.overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.reveal{opacity:0;transform:translate3d(0,5.5vw,0);filter:blur(5px);transition:opacity .55s ease,transform .7s cubic-bezier(.2,.7,.2,1),filter .55s ease}.reveal.is-visible{opacity:1;transform:none;filter:none}.reveal>picture,.reveal>.sequence,.reveal>.glitch-pair{opacity:0;transform:translate3d(0,2.2vw,0) scale(.985);filter:blur(3px);transition:opacity .7s ease,transform .85s cubic-bezier(.16,.8,.2,1),filter .65s ease}.reveal.is-visible>picture,.reveal.is-visible>.sequence,.reveal.is-visible>.glitch-pair{opacity:1;transform:none;filter:none}.reveal.is-visible>:nth-child(1){transition-delay:.04s}.reveal.is-visible>:nth-child(2){transition-delay:.14s}.reveal.is-visible>:nth-child(3){transition-delay:.24s}.reveal.is-visible>:nth-child(4){transition-delay:.34s}.reveal.is-visible>:nth-child(5){transition-delay:.44s}.hero .logo{animation:hero-logo 1.15s .15s both cubic-bezier(.15,.8,.2,1)}.hero .copy{animation:hero-copy .9s .6s both ease-out}@keyframes hero-logo{from{opacity:0;transform:scale(1.12);filter:blur(14px)}to{opacity:1;transform:none;filter:none}}@keyframes hero-copy{from{opacity:0;transform:translateY(3vw)}to{opacity:1;transform:none}}
+    .sequence{position:absolute;inset:0;z-index:2;overflow:hidden;isolation:isolate}.sequence picture{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);opacity:0;z-index:1;outline:0;border:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;animation:none;transition:opacity .6s cubic-bezier(.45,0,.55,1)}.sequence picture.active{opacity:1;z-index:2}.sequence img{display:block;width:100%;height:100%;object-fit:fill;outline:0;border:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}.static-scene{display:none}.sequence+picture:last-child{z-index:4}
+    .glitch-pair{position:absolute;inset:0;z-index:1;overflow:hidden;background:transparent}.glitch>picture:nth-child(2){z-index:0}.glitch-pair picture{position:absolute;inset:0}.glitch-pair img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;object-position:center}.glitch-pair .base{opacity:1;animation:glitch-base 5.8s infinite}.glitch-pair .alt{opacity:0;animation:glitch-flash 5.8s infinite;mix-blend-mode:screen}@keyframes glitch-flash{0%,34%,100%{opacity:0;transform:none;clip-path:none;filter:none}35%{opacity:.9;transform:translate(-1.8%,.7%);clip-path:inset(6% 0 73% 0);filter:drop-shadow(9px 0 #00e5ff) drop-shadow(-9px 0 #ff1744)}37%{opacity:.3;transform:translate(2.6%,-.6%);clip-path:inset(48% 0 26% 0)}39%{opacity:.95;transform:translate(-1.2%,.35%);clip-path:inset(79% 0 5% 0)}41%,65%{opacity:0;transform:none;clip-path:none;filter:none}66%{opacity:.6;transform:translate(2.2%,0);clip-path:inset(16% 0 57% 0);filter:drop-shadow(7px 0 #00e5ff) drop-shadow(-7px 0 #ff1744)}68%{opacity:0;transform:translate(-1.5%,0);clip-path:inset(68% 0 10% 0)}}@keyframes glitch-base{0%,34%,41%,65%,68%,100%{opacity:1;transform:none;filter:none}35%{opacity:.7;transform:translate(1.4%,0);filter:hue-rotate(115deg) saturate(2.5)}37%{opacity:1;transform:translate(-2%,.5%);filter:hue-rotate(-100deg) contrast(1.6)}39%{opacity:.35;transform:translate(1%,0);filter:hue-rotate(75deg) saturate(2)}}
+    .glitch::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 11px,rgba(255,255,255,.28) 12px,transparent 14px),linear-gradient(90deg,rgba(0,229,255,.25),transparent 30%,transparent 70%,rgba(255,23,68,.25));mix-blend-mode:screen;pointer-events:none;opacity:0;animation:scan 5.8s infinite}@keyframes scan{0%,35%,100%{opacity:0;transform:translateX(0)}36%{opacity:.95;transform:translateX(-1.4%)}38%{opacity:.75;transform:translateX(2%)}40%{opacity:.5;transform:translateX(-.7%)}42%,84%{opacity:0}85%{opacity:.85;transform:translateX(1.5%)}87%{opacity:0}}
+    /* Updated equal-size source canvases: keep both glitch frames in the exact same plane. */
+    .glitch-pair .base{animation:glitch-base-loop 5.8s infinite}.glitch-pair .alt{animation:glitch-swap-loop 5.8s infinite;mix-blend-mode:normal}@keyframes glitch-swap-loop{0%,34%,100%{opacity:0;transform:none;clip-path:none;filter:none}35%{opacity:.9;transform:translate(-1.8%,.7%);clip-path:inset(7% 0 70% 0);filter:drop-shadow(9px 0 #00e5ff) drop-shadow(-9px 0 #ff1744)}37%{opacity:.25;transform:translate(2.4%,-.6%);clip-path:inset(49% 0 24% 0)}39%{opacity:1;transform:translate(-1.1%,.3%);clip-path:inset(78% 0 7% 0)}41%,83%{opacity:1;transform:none;clip-path:none;filter:none}84%{opacity:.6;transform:translate(1.9%,0);clip-path:inset(16% 0 56% 0);filter:drop-shadow(7px 0 #00e5ff) drop-shadow(-7px 0 #ff1744)}87%{opacity:0;transform:none;clip-path:none;filter:none}}@keyframes glitch-base-loop{0%,34%,87%,100%{opacity:1;transform:none;filter:none}35%{opacity:.7;transform:translate(1.4%,0);filter:hue-rotate(115deg) saturate(2.5)}37%{opacity:1;transform:translate(-2%,.5%);filter:hue-rotate(-100deg) contrast(1.6)}39%{opacity:.25;transform:translate(1%,0);filter:hue-rotate(75deg) saturate(2)}41%,83%{opacity:0}84%{opacity:.75;transform:translate(-1.6%,0);filter:hue-rotate(95deg) saturate(2.5)}}
+    .bolt{position:absolute;z-index:4;left:0;width:100%;height:2px;background:#fff;mix-blend-mode:screen;opacity:0;pointer-events:none;animation:bolt 8s infinite}@keyframes bolt{0%,79%,100%{opacity:0;transform:scaleX(.2)}80%{opacity:.82;transform:scaleX(1)}81%{opacity:0;transform:scaleX(.65)}82%{opacity:.35;transform:scaleX(1)}}
+    @media (min-width:961px){.mo{display:none}.sequence picture{animation-duration:7.2s}.sequence picture:nth-child(2){animation-delay:2.4s}.sequence picture:nth-child(3){animation-delay:4.8s}.section:nth-child(4) .bolt{top:32%}.section:nth-child(7) .bolt{top:68%}}
+    .section:nth-child(4).reveal.is-visible>:nth-child(1){transition-delay:.05s}.section:nth-child(4).reveal.is-visible>:nth-child(2){transition-delay:.2s}.section:nth-child(4).reveal.is-visible>:nth-child(3){transition-delay:.5s}.section:nth-child(4).reveal.is-visible>:nth-child(4){transition-delay:.75s}.section:nth-child(6).reveal.is-visible>:nth-child(2){transition-delay:.15s}.section:nth-child(6).reveal.is-visible>:nth-child(3){transition-delay:.45s}
+    .glitch-pair .base{animation:glitch-base-fast 4s infinite;animation-play-state:paused}.glitch-pair .alt{animation:glitch-swap-fast 4s infinite;animation-play-state:paused}.glitch::after{animation:scan-fast 4s infinite;animation-play-state:paused}.reveal.is-visible .glitch-pair .base,.reveal.is-visible .glitch-pair .alt,.reveal.is-visible.glitch::after{animation-play-state:running}@keyframes glitch-swap-fast{0%,4%,100%{opacity:0;transform:none;clip-path:none;filter:none}6%{opacity:.9;transform:translate(-1.8%,.7%);clip-path:inset(7% 0 70% 0);filter:drop-shadow(9px 0 #00e5ff) drop-shadow(-9px 0 #ff1744)}8%{opacity:.25;transform:translate(2.4%,-.6%);clip-path:inset(49% 0 24% 0)}10%,76%{opacity:1;transform:none;clip-path:none;filter:none}78%{opacity:.6;transform:translate(1.9%,0);clip-path:inset(16% 0 56% 0);filter:drop-shadow(7px 0 #00e5ff) drop-shadow(-7px 0 #ff1744)}81%{opacity:0;transform:none;clip-path:none;filter:none}}@keyframes glitch-base-fast{0%,4%,81%,100%{opacity:1;transform:none;filter:none}6%{opacity:.7;transform:translate(1.4%,0);filter:hue-rotate(115deg) saturate(2.5)}8%{opacity:1;transform:translate(-2%,.5%);filter:hue-rotate(-100deg) contrast(1.6)}10%,76%{opacity:0}78%{opacity:.75;transform:translate(-1.6%,0);filter:hue-rotate(95deg) saturate(2.5)}}@keyframes scan-fast{0%,4%,100%{opacity:0;transform:translateX(0)}6%{opacity:.95;transform:translateX(-1.4%)}8%{opacity:.75;transform:translateX(2%)}10%,76%{opacity:0}78%{opacity:.85;transform:translateX(1.5%)}81%{opacity:0}}
+    @media (max-width:960px){.pc{display:none}.campaign{max-width:960px}.reveal{transform:translate3d(0,9vw,0)}.sequence picture{animation-duration:10.5s}.sequence picture:nth-child(2){animation-delay:3.5s}.sequence picture:nth-child(3){animation-delay:7s}.section:nth-child(4) .bolt{top:43%}.section:nth-child(7) .bolt{top:71%}}
+  </style>
+  <noscript>
+    <style>
+      .reveal,.reveal>picture,.reveal>.sequence,.reveal>.glitch-pair{opacity:1!important;transform:none!important;filter:none!important}
+      .sequence picture:first-child{opacity:1!important}
+    </style>
+  </noscript>
+</head>
+<body>
+  <main class="campaign" aria-label="DESCENTE와 NEITHERS 협업 기획전">
+    <section class="section hero"><picture><source media="(max-width:960px)" srcset="MO/00_top_img_mo.webp"><img class="layer" src="PC/00_top_img_pc.webp" alt=""></picture><picture class="overlay logo"><source media="(max-width:960px)" srcset="MO/00_top_logo_mo.webp"><img class="layer" src="PC/00_top_logo_pc.webp" alt="DESCENTE × NEITHERS"></picture><picture class="overlay copy"><source media="(max-width:960px)" srcset="MO/00_top_txt_mo.webp"><img class="layer" src="PC/00_top_txt_pc.webp" alt=""></picture></section>
+    <section class="section reveal"><picture><source media="(max-width:960px)" srcset="MO/01_img_bg_mo.webp"><img class="layer" src="PC/01_img_bg_pc.webp" alt=""></picture><picture class="overlay static-scene"><source media="(max-width:960px)" srcset="MO/01_img_mo.webp"><img class="layer" src="PC/01_img_pc.webp" alt=""></picture><div class="sequence"><picture><source media="(max-width:960px)" srcset="MO/01_img_01_mo.webp"><img src="PC/01_img_01_pc.webp" alt=""></picture><picture><source media="(max-width:960px)" srcset="MO/01_img_02_mo.webp"><img src="PC/01_img_02_pc.webp" alt=""></picture><picture><source media="(max-width:960px)" srcset="MO/01_img_03_mo.webp"><img src="PC/01_img_03_pc.webp" alt=""></picture></div><picture class="overlay pc"><img class="layer" src="PC/01_img_logo_pc.webp" alt=""></picture></section>
+    <section class="section reveal glitch"><picture><source media="(max-width:960px)" srcset="MO/02_img_bg_mo.webp"><img class="layer" src="PC/02_img_bg_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/02_img_01_mo.webp"><img class="layer" src="PC/02_img_01_pc.webp" alt=""></picture><div class="glitch-pair"><picture class="base"><source media="(max-width:960px)" srcset="MO/02_img_02-1_mo.webp"><img src="PC/02_img_02-1_pc.webp" alt=""></picture><picture class="alt"><source media="(max-width:960px)" srcset="MO/02_img_02-2_mo.webp"><img src="PC/02_img_02-2_pc.webp" alt=""></picture></div><picture class="overlay"><source media="(max-width:960px)" srcset="MO/02_img_logo_mo.webp"><img class="layer" src="PC/02_img_logo_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/02_img_txt_mo.webp"><img class="layer" src="PC/02_img_txt_pc.webp" alt=""></picture></section>
+    <section class="section reveal"><picture><source media="(max-width:960px)" srcset="MO/03_img_bg_mo.webp"><img class="layer" src="PC/03_img_bg_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/03_img_mo.webp"><img class="layer" src="PC/03_img_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/03_img_txt01_mo.webp"><img class="layer" src="PC/03_img_txt01_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/03_img_txt02_mo.webp"><img class="layer" src="PC/03_img_txt02_pc.webp" alt=""></picture><i class="bolt"></i></section>
+    <section class="section reveal"><picture><source media="(max-width:960px)" srcset="MO/04_img_bg_mo.webp"><img class="layer" src="PC/04_img_bg_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/04_img_mo.webp"><img class="layer" src="PC/04_img_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/04_img_txt_mo.webp"><img class="layer" src="PC/04_img_txt_pc.webp" alt=""></picture></section>
+    <section class="section reveal"><picture><source media="(max-width:960px)" srcset="MO/05_img_bg_mo.webp"><img class="layer" src="PC/05_img_bg_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/05_img_mo.webp"><img class="layer" src="PC/05_img_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/05_img_txt_mo.webp"><img class="layer" src="PC/05_img_txt_pc.webp" alt=""></picture></section>
+    <section class="section reveal glitch"><picture><source media="(max-width:960px)" srcset="MO/06_img_bg_mo.webp"><img class="layer" src="PC/06_img_bg_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/06_img_01_mo.webp"><img class="layer" src="PC/06_img_01_pc.webp" alt=""></picture><div class="glitch-pair"><picture class="base"><source media="(max-width:960px)" srcset="MO/06_img_02_mo.webp"><img src="PC/06_img_02-1_pc.webp" alt=""></picture><picture class="alt"><source media="(max-width:960px)" srcset="MO/06_img_02_mo.webp"><img src="PC/06_img_02-2_pc.webp" alt=""></picture></div><picture class="overlay"><source media="(max-width:960px)" srcset="MO/06_txt_01_mo.webp"><img class="layer" src="PC/06_txt_01_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/06_txt_02_mo.webp"><img class="layer" src="PC/06_txt_02_pc.webp" alt=""></picture><i class="bolt"></i></section>
+    <section class="section reveal"><picture><source media="(max-width:960px)" srcset="MO/07_img_bg_mo.webp"><img class="layer" src="PC/07_img_bg_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/07_img_mo.webp"><img class="layer" src="PC/07_img_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/07_img_logo_mo.webp"><img class="layer" src="PC/07_img_logo_pc.webp" alt=""></picture><picture class="overlay"><source media="(max-width:960px)" srcset="MO/07_img_txt_mo.webp"><img class="layer" src="PC/07_img_txt_pc.webp" alt=""></picture></section>
+  </main>
+  <script>
+    (function () {
+      var sections = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+      var sequenceRoot = document.querySelector('.sequence');
+      var sequenceSlides = Array.prototype.slice.call(document.querySelectorAll('.sequence picture'));
+      var activeSlide = 0;
+      var slideTimer = null;
+
+      function showAllSections() {
+        sections.forEach(function (section) {
+          section.classList.add('is-visible');
+        });
+      }
+
+      function showSlide(index) {
+        if (!sequenceSlides.length) return;
+        sequenceSlides.forEach(function (slide, i) {
+          if (i === index) slide.classList.add('active');
+          else slide.classList.remove('active');
+        });
+        activeSlide = index;
+      }
+
+      function stopSequence() {
+        if (slideTimer !== null) {
+          clearInterval(slideTimer);
+          slideTimer = null;
+        }
+      }
+
+      function runSequence() {
+        if (!sequenceSlides.length) return;
+        stopSequence();
+        showSlide(0);
+
+        if (sequenceSlides.length > 1) {
+          slideTimer = setInterval(function () {
+            showSlide((activeSlide + 1) % sequenceSlides.length);
+          }, 1800);
+        }
+      }
+
+      // Scroll reveal.
+      // If IntersectionObserver is unavailable or fails, show everything rather
+      // than leaving sections permanently hidden.
+      if ('IntersectionObserver' in window) {
+        try {
+          var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) entry.target.classList.add('is-visible');
+              else entry.target.classList.remove('is-visible');
+            });
+          }, {
+            threshold: 0.14,
+            rootMargin: '0px 0px -4% 0px'
+          });
+
+          sections.forEach(function (section) {
+            observer.observe(section);
+          });
+        } catch (error) {
+          showAllSections();
+        }
+      } else {
+        showAllSections();
+      }
+
+      // Image sequence.
+      if (sequenceRoot && sequenceSlides.length) {
+        showSlide(0);
+
+        if ('IntersectionObserver' in window) {
+          try {
+            var sequenceObserver = new IntersectionObserver(function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) runSequence();
+                else stopSequence();
+              });
+            }, {
+              threshold: 0.35
+            });
+
+            sequenceObserver.observe(sequenceRoot);
+          } catch (error) {
+            runSequence();
+          }
+        } else {
+          runSequence();
+        }
+      }
+
+      // Resume safely when returning to the tab/page.
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+          stopSequence();
+        } else if (sequenceRoot && sequenceSlides.length) {
+          var rect = sequenceRoot.getBoundingClientRect();
+          if (rect.bottom > 0 && rect.top < window.innerHeight) {
+            runSequence();
+          }
+        }
+      });
+
+      window.addEventListener('pageshow', function () {
+        if (!('IntersectionObserver' in window)) {
+          showAllSections();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

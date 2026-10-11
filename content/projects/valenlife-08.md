@@ -3,13 +3,13 @@ title: 해피문데이 광고 소재
 description: 해피문데이 광고 소재 작업 모음입니다.
 category: 발렌라이프
 image: /images/projects/valenlife-08/logo-banner.png
-fullImage: /images/projects/valenlife-08/detail-001.png
+fullImage: /images/projects/valenlife-08/detail-001.jpg
 images:
   - /images/projects/valenlife-08/detail-002.png
   - /images/projects/valenlife-08/detail-003.png
-  - /images/projects/valenlife-08/detail-004.png
-  - /images/projects/valenlife-08/detail-005.png
-  - /images/projects/valenlife-08/detail-006.png
+  - /images/projects/valenlife-08/detail-004.jpg
+  - /images/projects/valenlife-08/detail-005.jpg
+  - /images/projects/valenlife-08/detail-006.jpg
 featured: true
 thumbnailStyle: image
 ---

@@ -4,7 +4,7 @@ import './globals.css'
 export const metadata: Metadata = {
   title: '김동형 포트폴리오',
   description: '웹, 커머스 캠페인, 광고 소재, 상세페이지 작업을 정리한 김동형 포트폴리오입니다.',
-  metadataBase: new URL('https://yoursite.netlify.app'),
+  metadataBase: new URL('https://portfolio-dxh.netlify.app'),
   openGraph: {
     title: '김동형 포트폴리오',
     description: '웹, 커머스 캠페인, 광고 소재, 상세페이지 작업을 정리한 김동형 포트폴리오입니다.',

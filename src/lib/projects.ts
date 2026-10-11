@@ -14,6 +14,7 @@ export interface Project {
   year: string
   featured: boolean
   thumbnailStyle?: 'logo'
+  liveUrl?: string
   logoBounds?: { x: number; y: number; width: number; height: number; sourceWidth: number; sourceHeight: number }
 }
 
@@ -58,6 +59,7 @@ export function getAllProjects(): Project[] {
           featured: data.featured !== undefined ? data.featured : true,
           thumbnailStyle: data.thumbnailStyle,
           logoBounds: data.logoBounds,
+          liveUrl: data.liveUrl,
         } as Project
       })
 

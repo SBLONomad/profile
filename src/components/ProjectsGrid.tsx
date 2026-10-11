@@ -17,6 +17,13 @@ export default function ProjectsGrid({ projects }: Props) {
   const frameRotate = useTransform(scrollYProgress, [0, 1], [-10, 22])
   const [activeFilter, setActiveFilter] = useState(CONTENT.projects.filter_all)
   const [showAll, setShowAll] = useState(false)
+  const [columnCount, setColumnCount] = useState(3)
+  useEffect(() => {
+    const update = () => setColumnCount(window.innerWidth <= 520 ? 1 : window.innerWidth <= 900 ? 2 : 3)
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [])
   useEffect(() => {
     const saved = sessionStorage.getItem('portfolio-filter')
     if (saved && CONTENT.categories.includes(saved)) setActiveFilter(saved)
@@ -27,6 +34,12 @@ export default function ProjectsGrid({ projects }: Props) {
       ? projects
       : projects.filter((p) => p.category === activeFilter)
   const visibleProjects = showAll ? filtered : filtered.slice(0, 20)
+  // 가로 방향으로 순서대로 채워서 앞쪽 작업물이 맨 윗줄에 오도록 합니다.
+  const columns = Array.from({ length: columnCount }, (_, column) =>
+    visibleProjects
+      .map((project, index) => ({ project, index }))
+      .filter(({ index }) => index % columnCount === column)
+  )
 
   const selectFilter = (category: string) => {
     setActiveFilter(category)
@@ -92,15 +105,19 @@ export default function ProjectsGrid({ projects }: Props) {
           transition={{ duration: 0.3 }}
           className="orbit-project-grid"
         >
-          {visibleProjects.map((project, i) => (
-            <ProjectCard key={project.slug} project={project} index={i} />
+          {filtered.length > 0 && columns.map((items, column) => (
+            <div key={column} className="orbit-project-column">
+              {items.map(({ project, index }) => (
+                <ProjectCard key={project.slug} project={project} index={index} />
+              ))}
+            </div>
           ))}
 
           {filtered.length === 0 && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="col-span-full text-center py-20 text-muted"
+              className="w-full text-center py-20 text-muted"
             >
               <p className="text-3xl mb-3 text-neon">✦</p>
               <p className="font-display text-base text-zinc-400">{CONTENT.projects.empty_state}</p>

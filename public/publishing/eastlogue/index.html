@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DESCENTE × EASTLOGUE</title>
+<meta name="description" content="데상트 아카이브의 라인감과 기능성이 이스트로그의 밀리터리 요소와 만나, 현대적인 스포츠웨어로 재해석된 프리미엄 어반 테크웨어">
+<link rel="preload" as="image" href="img/pc/01_title_bg_PC.webp" media="(min-width:769px)" fetchpriority="high">
+<link rel="preload" as="image" href="img/mo/01_title_bg_MO.webp" media="(max-width:768px)" fetchpriority="high">
+<script>document.documentElement.classList.add('el-js')</script>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#000;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+.el{--ease:cubic-bezier(.16,1,.3,1);--ease-wipe:cubic-bezier(.3,.7,.1,1);position:relative;width:100%;background:#000}
+.el img{display:block;max-width:none;border:0;-webkit-user-drag:none;user-select:none}
+.el-view--pc{--u:calc(100vw / 1920)}
+.el-view--mo{--u:calc(100vw / 960);display:none}
+@media (max-width:768px){.el-view--pc{display:none}.el-view--mo{display:block}}
+
+/* ---------- section / layer ---------- */
+.el-sec{position:relative;width:100%;overflow:hidden;isolation:isolate}
+.ly{position:absolute;margin:0;--d:0s;--dd:calc(var(--d) * .55);translate:0 var(--fy,0px)}
+.ly__mask,.ly__in{position:absolute;inset:0}
+.ly img{width:100%;height:100%;object-fit:cover}
+.ly[data-par]{overflow:hidden}
+.ly[data-par] .ly__in{inset:-6% 0;transform:translate3d(0,var(--py,0px),0)}
+
+/* ---------- reveal (initial states only when JS is on) ---------- */
+.el-js .ly{transition:opacity .8s var(--ease) var(--dd),transform 1.1s var(--ease) var(--dd),filter .9s var(--ease) var(--dd)}
+.el-js .ly__mask{transition:clip-path 1.05s var(--ease-wipe) var(--dd),-webkit-clip-path 1.05s var(--ease-wipe) var(--dd)}
+.el-js .ly img{transition:transform 1.6s var(--ease) var(--dd),filter 1.4s cubic-bezier(.33,0,.2,1) var(--dd)}
+
+.el-js .ly[data-fx=fade]{opacity:0}
+.el-js .ly[data-fx=rise]{opacity:0;transform:translate3d(0,calc(var(--u) * 48),0)}
+.el-js .ly[data-fx=blur]{opacity:0;filter:blur(10px);transform:scale(1.04)}
+.el-js .ly[data-fx=kb]{opacity:0}
+.el-js .ly[data-fx=kb] img{transform:scale(1.1);filter:brightness(.55)}
+.el-js .ly[data-fx=kb] img{transition:transform 3s cubic-bezier(.2,.7,.2,1) var(--dd),filter 1.4s ease-out var(--dd)}
+.el-js .ly[data-fx=zoom]{opacity:0}
+.el-js .ly[data-fx=zoom] img{transform:scale(1.16)}
+.el-js .ly[data-fx=dark] img{filter:brightness(.08) contrast(1.15);transform:scale(1.08)}
+.el-js .ly[data-fx=dark] img{transition:transform 2s var(--ease) var(--dd),filter 1.8s cubic-bezier(.3,0,.2,1) var(--dd)}
+.el-js .ly[data-fx^=wipe] img,.el-js .ly[data-fx=open] img{transform:scale(1.12)}
+.el-js .ly[data-fx=wipe-up] .ly__mask{-webkit-clip-path:inset(100% 0 0 0);clip-path:inset(100% 0 0 0)}
+.el-js .ly[data-fx=wipe-down] .ly__mask{-webkit-clip-path:inset(0 0 100% 0);clip-path:inset(0 0 100% 0)}
+.el-js .ly[data-fx=wipe-left] .ly__mask{-webkit-clip-path:inset(0 100% 0 0);clip-path:inset(0 100% 0 0)}
+.el-js .ly[data-fx=wipe-right] .ly__mask{-webkit-clip-path:inset(0 0 0 100%);clip-path:inset(0 0 0 100%)}
+.el-js .ly[data-fx=open] .ly__mask{-webkit-clip-path:inset(0 50% 0 50%);clip-path:inset(0 50% 0 50%)}
+
+.el-js .ly.is-in{opacity:1;transform:none;filter:none}
+.el-js .ly.is-in .ly__mask{-webkit-clip-path:inset(0 0 0 0);clip-path:inset(0 0 0 0)}
+.el-js .ly.is-in img{transform:none;filter:none}
+
+/* retract (scrolling back up): quick, no stagger */
+.el-js .ly.is-out,.el-js .ly.is-out .ly__mask,.el-js .ly.is-out img{transition-duration:.45s !important;transition-delay:0s !important}
+
+/* 05 — crossfade pair (slow drift) */
+.ly[data-xf]{overflow:hidden}
+.ly[data-xf="1"]{opacity:0;transition:opacity 1.8s cubic-bezier(.4,0,.2,1) !important}
+.xfade.is-alt .ly[data-xf="1"]{opacity:1}
+.xfade.is-live .ly[data-xf] .ly__in{animation:elDrift 9s ease-in-out infinite alternate}
+@keyframes elDrift{from{transform:scale(1)}to{transform:scale(1.07)}}
+
+/* 07 — rolling type */
+.ly--roll{mix-blend-mode:overlay}
+.roll{position:absolute;inset:0;overflow:hidden}
+.roll__track{display:flex;height:100%;width:calc(var(--tw) * 4%);animation:elRoll var(--rs,26s) linear infinite}
+.roll__track img{flex:none;width:25%;height:100%;object-fit:fill}
+.el-sec:not(.is-vis) .roll__track{animation-play-state:paused}
+@keyframes elRoll{from{transform:translate3d(0,0,0)}to{transform:translate3d(-25%,0,0)}}
+
+/* 11 — scroll-linked slow fade */
+.el-js .ly[data-fx=slow]{opacity:var(--p,0);transition:none}
+.el-js .ly[data-fx=slow] img{transform:scale(calc(1.1 - .1 * var(--p,0)));filter:brightness(calc(.3 + .7 * var(--p,0)));transition:none}
+
+/* 03 — movie (inline, muted autoplay while in view) */
+.movie .mv{position:absolute;inset:0;width:100%;height:100%;display:block;border:0;background:#000;object-fit:cover}
+.mv__snd{position:absolute;right:calc(var(--u) * 32);bottom:calc(var(--u) * 32);width:calc(var(--u) * 56);min-width:36px;aspect-ratio:1;padding:0;border:1px solid rgba(255,255,255,.5);border-radius:50%;background:rgba(0,0,0,.35);color:#fff;cursor:pointer;z-index:3;display:grid;place-items:center;transition:background .25s ease,border-color .25s ease}
+.el-view--mo .mv__snd{right:calc(var(--u) * 28);bottom:calc(var(--u) * 28)}
+.mv__snd:hover{background:rgba(0,0,0,.6);border-color:#fff}
+.mv__snd:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.mv__snd svg{width:46%;height:46%;display:block}
+.mv__snd .on,.mv__snd[aria-pressed=true] .off{display:none}
+.mv__snd[aria-pressed=true] .on{display:block}
+
+/* 08 — day → sunset → night : day-to-night-embed-preview.html 원본 그대로 */
+/* Isolated, drop-in scroll transition. Contains NO global body/html/h1 styles. */
+.dn-transition {
+  --dn-scroll-length: 350svh;
+  --dn-object-position: center center;
+  position: relative;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: var(--dn-scroll-length);
+  margin: 0;
+  padding: 0;
+  isolation: isolate;
+}
+.dn-transition *, .dn-transition *::before, .dn-transition *::after { box-sizing: border-box; }
+.dn-transition__stage {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: #14253a;
+}
+.dn-transition__image {
+  position: absolute;
+  display: block;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  object-fit: cover;
+  object-position: var(--dn-object-position);
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.dn-transition__image--day { z-index: 1; }
+.dn-transition__image--sunset { z-index: 2; opacity: 0; }
+.dn-transition__image--night { z-index: 3; opacity: 0; }
+.dn-transition__a11y {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+@media (max-width: 720px) {
+  .dn-transition {
+    --dn-scroll-length: 300svh;
+    --dn-object-position: 62% center;
+  }
+}
+/* 이 페이지의 MO 뷰 전환점(768px)에 원본의 모바일 값(≤720px)을 맞춤 */
+.el-view--mo .dn-transition{--dn-scroll-length:300svh;--dn-object-position:62% center}
+
+/* ---------- reduced motion ---------- */
+/* 기기의 '동작 줄이기' 설정을 따를 때만 적용 (effects.respectReducedMotion: true) */
+@media (prefers-reduced-motion:reduce){
+ .el-rm.el-js .ly,.el-rm.el-js .ly__mask,.el-rm.el-js .ly img{opacity:1 !important;transform:none !important;filter:none !important;-webkit-clip-path:none !important;clip-path:none !important;transition:none !important;translate:none !important}
+ .el-rm .roll__track,.el-rm .xfade .ly__in{animation:none !important}
+ .el-rm .ly[data-par] .ly__in{transform:none !important}
+}
+</style>
+</head>
+<body>
+<!--
+  DESCENTE × EASTLOGUE 2nd Collaboration — promotion page
+  · HTML / CSS / JSON(layout + effect settings) / JS 가 이 파일 하나에 모두 들어있습니다.
+  · 이미지는 img/pc, img/mo, img/common 폴더, 영상은 video 폴더를 같은 위치에 두세요.
+  · PC(769px~) / MO(~768px) 자동 전환. 레이어 좌표는 시안 기준 % 값입니다.
+  · 효과 설정값은 아래 <script type="application/json" id="eastlogue-data"> 의 "effects" 에서 조정합니다.
+-->
+<noscript><p style="margin:0;padding:14px 16px;background:#111;color:#fff;font:14px/1.5 -apple-system,'Malgun Gothic',sans-serif;text-align:center">이 화면은 미리보기라서 스크롤 효과와 영상이 보이지 않습니다. 파일을 크롬·사파리·엣지 등 <b>브라우저로 열어</b> 주세요.</p></noscript>
+<main id="eastlogue" class="el">
+<div class="el-view el-view--pc">
+ <section class="el-sec hero" id="s01-pc" style="aspect-ratio:1920/1000;background:#32393f">
+   <div class="ly" data-fx="kb" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/01_title_bg_PC.webp" alt="EASTLOGUE" width="1920" height="1000" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="blur" style="left:40.3125%;top:43.6%;width:21.9271%;height:7.5%;--d:0.55s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/01_title_logo_PC.webp" alt="DESCENTE | EASTLOGUE" width="421" height="75" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec" id="s02-pc" style="aspect-ratio:1920/2400;background:#bcbac4">
+   <div class="ly" data-fx="none" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/02_img_bg_PC.webp" alt="" width="1920" height="2400" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-down" data-par="0.05" style="left:2.0833%;top:1.6667%;width:95.8333%;height:33.0833%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/02_img_01_PC.webp" alt="" width="1840" height="794" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-left" style="left:2.0833%;top:34.75%;width:95.8333%;height:11.9167%;--d:0.1s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/02_img_02_PC.webp" alt="" width="1840" height="286" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="zoom" data-par="0.04" style="left:2.0833%;top:46.6667%;width:95.8333%;height:51.6667%;--d:0.05s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/02_img_03_PC.webp" alt="" width="1840" height="1240" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="rise" data-float="0.04" style="left:66.7708%;top:66.5%;width:29.5833%;height:8.9167%;--d:0.7s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/02_img_03txt_PC.webp" alt="DESCENTE X EASTLOGUE 2nd COLLABORATION" width="568" height="214" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec movie" id="s03-pc" style="aspect-ratio:1920/1080;background:#000000">
+   <video class="mv" muted loop playsinline webkit-playsinline preload="none" data-src="video/eastlogue_film_1080.mp4" data-poster="video/eastlogue_film_poster.jpg" aria-label="DESCENTE × EASTLOGUE 필름"></video>
+   <button type="button" class="mv__snd" aria-label="영상 소리 켜기" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"/><g class="off"><path d="M16 9.5l5 5M21 9.5l-5 5"/></g><g class="on"><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11"/></g></svg></button>
+ </section>
+ <section class="el-sec" id="s04-pc" style="aspect-ratio:1920/1260;background:#989494">
+   <div class="ly" data-fx="fade" data-par="0.06" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/04_bg_PC.webp" alt="" width="1920" height="1260" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="blur" style="left:8.9583%;top:47.0635%;width:20.8854%;height:5.7143%;--d:0.2s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/04_logo_PC.webp" alt="DESCENTE | EASTLOGUE" width="401" height="72" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="rise" style="left:53.6979%;top:11.9841%;width:16.4062%;height:4.4444%;--d:0.15s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/04_txt_01_PC.webp" alt="데상트 아카이브의 라인감과 기능성이 이스트로그의 밀리터리 요소와 만나," width="315" height="56" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-up" style="left:37.5%;top:19.8413%;width:28.6458%;height:60.3175%;--d:0.1s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/04_img_01_PC.webp" alt="" width="550" height="760" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-up" style="left:66.1458%;top:19.8413%;width:28.6458%;height:60.3175%;--d:0.28s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/04_img_02_PC.webp" alt="" width="550" height="760" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="rise" style="left:80.2083%;top:83.9683%;width:14.4792%;height:4.2063%;--d:0.4s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/04_txt_01_PC-1.webp" alt="현대적인 스포츠웨어로 재해석된 프리미엄 어반 테크웨어" width="278" height="53" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec xfade" id="s05-pc" style="aspect-ratio:1920/900;background:#585c5b">
+   <div class="ly" data-fx="fade" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/05_bg_PC.webp" alt="" width="1920" height="900" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="open" data-xf="0" style="left:31.7708%;top:0%;width:36.4583%;height:100%;--d:0.1s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/05_img_01_PC.webp" alt="" width="700" height="900" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="xf" data-xf="1" style="left:31.7708%;top:0%;width:36.4583%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/05_img_02_PC.webp" alt="" width="700" height="900" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec" id="s06-pc" style="aspect-ratio:1920/1260;background:#bcbac4">
+   <div class="ly" data-fx="none" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/06_bg_PC.webp" alt="" width="1920" height="1260" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-right" data-par="0.05" style="left:46.875%;top:3.1746%;width:53.125%;height:93.6508%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/06_img_01_PC.webp" alt="" width="1020" height="1180" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="rise" data-float="0.07" style="left:5.2083%;top:19.8413%;width:47.9167%;height:60.3175%;--d:0.3s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/06_img_02_PC.webp" alt="" width="920" height="760" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec rolling" id="s07-pc" style="aspect-ratio:1920/2100;background:#4d4845">
+   <div class="ly" data-fx="fade" data-par="0.06" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/07_bg_PC.webp" alt="" width="1920" height="2100" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly ly--roll" data-fx="fade" style="left:0;top:43.5714%;width:100%;height:7.619%;--d:0.2s" aria-hidden="true"><div class="roll" style="--tw:66.5104"><div class="roll__track"><img src="img/pc/07_txt_lolling_PC.webp" alt="" loading="lazy" decoding="async"><img src="img/pc/07_txt_lolling_PC.webp" alt="" loading="lazy" decoding="async"><img src="img/pc/07_txt_lolling_PC.webp" alt="" loading="lazy" decoding="async"><img src="img/pc/07_txt_lolling_PC.webp" alt="" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="zoom" style="left:20.2083%;top:8.5714%;width:59.375%;height:76.6667%;--d:0.1s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/07_img_PC.webp" alt="" width="1140" height="1610" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="blur" style="left:37.9688%;top:88.4286%;width:24.0625%;height:4.2857%;--d:0.25s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/07_txt_PC.webp" alt="삭막한 도심의 출퇴근길을 &#x27;일상의 탐험&#x27;으로 정의하고, 주말에는 설산이나 거친 아웃도어로 떠나는 것을 즐기는 Urban Explorer를 위한 컬렉션" width="462" height="90" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="dn-transition" id="s08-pc" aria-label="낮에서 붉은 노을을 거쳐 밤으로 변화하는 이미지">
+   <div class="dn-transition__stage">
+     <img class="dn-transition__image dn-transition__image--day" src="img/common/dn_day.webp" alt="밝은 낮의 풍경 속에 서 있는 인물" width="1448" height="1086" loading="lazy" decoding="async">
+     <img class="dn-transition__image dn-transition__image--sunset" src="img/common/dn_sunset.webp" alt="" width="1448" height="1086" loading="lazy" decoding="async" aria-hidden="true">
+     <img class="dn-transition__image dn-transition__image--night" src="img/common/dn_night.webp" alt="" width="1448" height="1086" loading="lazy" decoding="async" aria-hidden="true">
+     <span class="dn-transition__a11y" aria-live="polite">현재 시간대: 낮</span>
+   </div>
+ </section>
+ <section class="el-sec" id="s09-pc" style="aspect-ratio:1920/900;background:#030303">
+   <div class="ly" data-fx="dark" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/09_img_PC.webp" alt="DESCENTE | EASTLOGUE" width="1920" height="900" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec" id="s10-pc" style="aspect-ratio:1920/1630;background:#000000">
+   <div class="ly" data-fx="none" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/10_img_bg_PC.webp" alt="" width="1920" height="1630" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="dark" style="left:2.0833%;top:2.454%;width:95.8333%;height:48.4663%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/10_img_01_PC.webp" alt="" width="1840" height="790" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="blur" style="left:2.0833%;top:50.9202%;width:95.8333%;height:13.4969%;--d:0.2s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/10_img_02_PC.webp" alt="Alta Serpentine Hooded Light Down" width="1840" height="220" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-left" style="left:2.0833%;top:64.4172%;width:95.8333%;height:33.1288%;--d:0.1s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/10_img_03_PC.webp" alt="" width="1840" height="540" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec slow" id="s11-pc" style="aspect-ratio:1920/2100;background:#605c53">
+   <div class="ly" data-fx="slow" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/11_img_PC.webp" alt="" width="1920" height="2100" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec" id="s12-pc" style="aspect-ratio:1920/2400;background:#101010">
+   <div class="ly" data-fx="none" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/12_descente_bg_PC.webp" alt="" width="1920" height="2400" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-up" data-float="-0.05" style="left:10.4167%;top:8.3333%;width:31.7708%;height:38.3333%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/12_img01_PC.webp" alt="" width="610" height="920" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-up" data-float="0.05" style="left:46.875%;top:13.0833%;width:42.7083%;height:50.8333%;--d:0.2s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/12_img02_PC.webp" alt="" width="820" height="1220" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-left" style="left:0%;top:61.6667%;width:64.0625%;height:30%;--d:0.1s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/12_img03_PC.webp" alt="" width="1230" height="720" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="rise" style="left:10.4167%;top:56.125%;width:17.5521%;height:3.2083%;--d:0.3s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/12_txt_PC.webp" alt="Alta Serpentine Hooded Light Down" width="337" height="77" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec outro" id="s13-pc" style="aspect-ratio:1920/840;background:#2f271e">
+   <div class="ly" data-fx="zoom" data-par="0.05" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/pc/13_bg_PC.webp" alt="" width="1920" height="840" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="blur" style="left:36.9792%;top:41.0714%;width:25.9896%;height:10.5952%;--d:0.5s"><div class="ly__mask"><div class="ly__in"><img src="img/pc/13_logo_PC.webp" alt="DESCENTE | EASTLOGUE" width="499" height="89" loading="lazy" decoding="async"></div></div></div>
+ </section>
+</div>
+<div class="el-view el-view--mo">
+ <section class="el-sec hero" id="s01-mo" style="aspect-ratio:960/1280;background:#333231">
+   <div class="ly" data-fx="kb" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/01_title_bg_MO.webp" alt="EASTLOGUE" width="960" height="1280" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="blur" style="left:26.0417%;top:46.0938%;width:46.7708%;height:6.25%;--d:0.55s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/01_title_logo_MO.webp" alt="DESCENTE | EASTLOGUE" width="449" height="80" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec" id="s02-mo" style="aspect-ratio:960/1820;background:#bcbac4">
+   <div class="ly" data-fx="none" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/02_img_bg_MO.webp" alt="" width="960" height="1820" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-down" data-par="0.05" style="left:4.1667%;top:2.1978%;width:91.6667%;height:32.967%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/02_img_01_MO.webp" alt="" width="880" height="600" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-left" style="left:4.1667%;top:35.1648%;width:91.6667%;height:11.5385%;--d:0.1s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/02_img_02_MO.webp" alt="" width="880" height="210" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="zoom" data-par="0.04" style="left:4.1667%;top:46.7033%;width:91.6667%;height:51.0989%;--d:0.05s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/02_img_03_MO.webp" alt="" width="880" height="930" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="rise" data-float="0.04" style="left:53.4375%;top:69.1758%;width:36.875%;height:3.8462%;--d:0.7s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/02_img_03txt_MO.webp" alt="DESCENTE X EASTLOGUE 2nd COLLABORATION" width="354" height="70" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec movie" id="s03-mo" style="aspect-ratio:960/540;background:#000000">
+   <video class="mv" muted loop playsinline webkit-playsinline preload="none" data-src="video/eastlogue_film_720.mp4" data-poster="video/eastlogue_film_poster.jpg" aria-label="DESCENTE × EASTLOGUE 필름"></video>
+   <button type="button" class="mv__snd" aria-label="영상 소리 켜기" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"/><g class="off"><path d="M16 9.5l5 5M21 9.5l-5 5"/></g><g class="on"><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11"/></g></svg></button>
+ </section>
+ <section class="el-sec" id="s04-mo" style="aspect-ratio:960/1944;background:#bcbac4">
+   <div class="ly" data-fx="none" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/04_bg_MO.webp" alt="" width="960" height="1944" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="fade" data-par="0.06" style="left:0%;top:0%;width:100%;height:73.5597%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/04_bgimg_MO.webp" alt="" width="960" height="1430" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="blur" style="left:31.0417%;top:11.3169%;width:37.8125%;height:3.3436%;--d:0.2s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/04_logo_MO.webp" alt="DESCENTE | EASTLOGUE" width="363" height="65" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="rise" style="left:29.0625%;top:53.6523%;width:41.7708%;height:10.4424%;--d:0.2s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/04_txt_MO.webp" alt="데상트 아카이브의 라인감과 기능성이 이스트로그의 밀리터리 요소와 만나, 현대적인 스포츠웨어로 재해석된 프리미엄 어반 테크웨어" width="401" height="203" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-up" style="left:7.2917%;top:71.1934%;width:42.7083%;height:25.7202%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/04_img_01_MO.webp" alt="" width="410" height="500" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-up" style="left:50%;top:71.1934%;width:42.7083%;height:25.7202%;--d:0.18s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/04_img_02_MO.webp" alt="" width="410" height="500" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec xfade" id="s05-mo" style="aspect-ratio:960/700;background:#55595a">
+   <div class="ly" data-fx="fade" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/05_bg_MO.webp" alt="" width="960" height="700" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="open" data-xf="0" style="left:28.125%;top:0%;width:43.75%;height:100%;--d:0.1s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/05_img_01_MO.webp" alt="" width="420" height="700" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="xf" data-xf="1" style="left:28.125%;top:0%;width:43.75%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/05_img_02_MO.webp" alt="" width="420" height="700" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec" id="s06-mo" style="aspect-ratio:960/2460;background:#494c4c">
+   <div class="ly" data-fx="fade" data-par="0.05" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/06_img_01_MO.webp" alt="" width="960" height="2460" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="rise" data-float="0.06" style="left:14.5833%;top:54.7967%;width:70.8333%;height:40.3252%;--d:0.2s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/06_img_02_MO.webp" alt="" width="680" height="992" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec rolling" id="s07-mo" style="aspect-ratio:960/1080;background:#4d4845">
+   <div class="ly" data-fx="fade" data-par="0.06" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/07_bg_MO.webp" alt="" width="960" height="1080" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly ly--roll" data-fx="fade" style="left:0;top:39.6296%;width:100%;height:7.5%;--d:0.2s" aria-hidden="true"><div class="roll" style="--tw:68.5417"><div class="roll__track"><img src="img/mo/07_txt_lolling_MO.webp" alt="" loading="lazy" decoding="async"><img src="img/mo/07_txt_lolling_MO.webp" alt="" loading="lazy" decoding="async"><img src="img/mo/07_txt_lolling_MO.webp" alt="" loading="lazy" decoding="async"><img src="img/mo/07_txt_lolling_MO.webp" alt="" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="zoom" style="left:24.8958%;top:12.037%;width:50%;height:61.6667%;--d:0.1s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/07_img_MO.webp" alt="" width="480" height="666" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="blur" style="left:19.375%;top:79.2593%;width:61.3542%;height:10.7407%;--d:0.25s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/07_txt_MO.webp" alt="삭막한 도심의 출퇴근길을 &#x27;일상의 탐험&#x27;으로 정의하고, 주말에는 설산이나 거친 아웃도어로 떠나는 것을 즐기는 Urban Explorer를 위한 컬렉션" width="589" height="116" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="dn-transition" id="s08-mo" aria-label="낮에서 붉은 노을을 거쳐 밤으로 변화하는 이미지">
+   <div class="dn-transition__stage">
+     <img class="dn-transition__image dn-transition__image--day" src="img/common/dn_day.webp" alt="밝은 낮의 풍경 속에 서 있는 인물" width="1448" height="1086" loading="lazy" decoding="async">
+     <img class="dn-transition__image dn-transition__image--sunset" src="img/common/dn_sunset.webp" alt="" width="1448" height="1086" loading="lazy" decoding="async" aria-hidden="true">
+     <img class="dn-transition__image dn-transition__image--night" src="img/common/dn_night.webp" alt="" width="1448" height="1086" loading="lazy" decoding="async" aria-hidden="true">
+     <span class="dn-transition__a11y" aria-live="polite">현재 시간대: 낮</span>
+   </div>
+ </section>
+ <section class="el-sec" id="s09-mo" style="aspect-ratio:960/620;background:#030303">
+   <div class="ly" data-fx="dark" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/09_img_MO.webp" alt="DESCENTE | EASTLOGUE" width="960" height="620" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec" id="s10-mo" style="aspect-ratio:960/1820;background:#030303">
+   <div class="ly" data-fx="none" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/10_img_bg_MO.webp" alt="" width="960" height="1820" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="dark" style="left:4.1667%;top:2.1978%;width:91.6667%;height:51.0989%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/10_img_01_MO.webp" alt="" width="880" height="930" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="blur" style="left:4.1667%;top:53.2967%;width:91.6667%;height:11.5385%;--d:0.2s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/10_img_02_MO.webp" alt="Alta Serpentine Hooded Light Down" width="880" height="210" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-left" style="left:4.1667%;top:64.8352%;width:91.6667%;height:32.967%;--d:0.1s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/10_img_03_MO.webp" alt="" width="880" height="600" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec slow" id="s11-mo" style="aspect-ratio:960/1050;background:#605c53">
+   <div class="ly" data-fx="slow" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/11_img_MO.webp" alt="" width="960" height="1050" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec" id="s12-mo" style="aspect-ratio:960/2120;background:#101010">
+   <div class="ly" data-fx="none" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/12_descente_bg_MO.webp" alt="" width="960" height="2120" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-up" data-float="-0.05" style="left:6.25%;top:7.5472%;width:41.6667%;height:26.4151%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/12_img01_MO.webp" alt="" width="400" height="560" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-up" data-float="0.05" style="left:44.7917%;top:16.6981%;width:55.2083%;height:39.9057%;--d:0.2s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/12_img02_MO.webp" alt="" width="530" height="846" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="wipe-left" style="left:0%;top:59.434%;width:91.6667%;height:22.6415%;--d:0.1s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/12_img03_MO.webp" alt="" width="880" height="480" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="rise" style="left:50%;top:85.3302%;width:41.6667%;height:4.1038%;--d:0.3s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/12_txt_MO.webp" alt="Alta Serpentine Hooded Light Down" width="400" height="87" loading="lazy" decoding="async"></div></div></div>
+ </section>
+ <section class="el-sec outro" id="s13-mo" style="aspect-ratio:960/1041;background:#363028">
+   <div class="ly" data-fx="zoom" data-par="0.05" style="left:0%;top:0%;width:100%;height:100%"><div class="ly__mask"><div class="ly__in"><img src="img/mo/13_bg_MO.webp" alt="" width="960" height="1041" loading="lazy" decoding="async"></div></div></div>
+   <div class="ly" data-fx="blur" style="left:29.5833%;top:41.3064%;width:40.9375%;height:6.7243%;--d:0.5s"><div class="ly__mask"><div class="ly__in"><img src="img/mo/13_logo_MO.webp" alt="DESCENTE | EASTLOGUE" width="393" height="70" loading="lazy" decoding="async"></div></div></div>
+ </section>
+</div>
+</main>
+<script type="application/json" id="eastlogue-data">
+{
+  "project": "DESCENTE × EASTLOGUE — 2nd Collaboration",
+  "breakpoint": 768,
+  "video": {
+    "pc": "video/eastlogue_film_1080.mp4",
+    "mo": "video/eastlogue_film_720.mp4",
+    "poster": "video/eastlogue_film_poster.jpg",
+    "_help": "03 영상 섹션: 화면에 들어오면 음소거 자동재생(반복), 우측 하단 버튼으로 소리 on/off. 파일 경로는 HTML 의 <video data-src> 에서 바꿉니다."
+  },
+  "effects": {
+    "reveal": {
+      "threshold": 0,
+      "rootMargin": "0px 0px -5% 0px",
+      "preload": "250%",
+      "_help": "rootMargin 의 -5% 를 키우면 더 늦게, 0 에 가까울수록 더 빨리 나타납니다. preload: 화면 밖 이 거리 안의 이미지를 미리 받아둠 replay: true 면 스크롤을 올려 요소가 화면 아래로 빠질 때 효과가 거둬지고, 다시 내려오면 재생됩니다 (false = 한 번만).",
+      "replay": true
+    },
+    "crossfade": {
+      "interval": 3800
+    },
+    "roll": {
+      "pc": 26,
+      "mo": 16,
+      "_unit": "seconds per loop",
+      "_help": "07 롤링 텍스트: 한 바퀴 도는 시간(초). 작을수록 빠름. 배경 위에 overlay 블렌드로 올라갑니다."
+    },
+    "dayNight": {
+      "_help": "08 섹션은 day-to-night-embed-preview.html 의 CSS/JS 를 그대로 사용합니다 (하단 별도 <script>)."
+    },
+    "slowFade": {
+      "from": 1.0,
+      "to": 0.5,
+      "_help": "11 섹션: 섹션 상단이 화면 높이의 from → to 지점까지 올라오는 동안 서서히 나타남"
+    },
+    "parallaxLimit": 0.06,
+    "respectReducedMotion": false,
+    "_respectReducedMotion_help": "false: 받는 사람 기기에 '동작 줄이기/애니메이션 끄기'가 켜져 있어도 효과를 그대로 보여줌. true: 그 설정을 따라 효과를 끔 (실서비스 권장)."
+  },
+  "layout": {
+    "pc": {
+      "w": 1920,
+      "sections": [
+        {"id": "s01", "w": 1920, "h": 1000, "cls": "hero", "bg": "#32393f", "layers": [
+          {"id": "01_title_bg_PC", "src": "img/pc/01_title_bg_PC.webp", "fx": "kb", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 1920, "ph": 1000},
+          {"id": "01_title_logo_PC", "src": "img/pc/01_title_logo_PC.webp", "fx": "blur", "d": 0.55, "x": 40.3125, "y": 43.6, "w": 21.9271, "h": 7.5, "pw": 421, "ph": 75}
+        ]},
+        {"id": "s02", "w": 1920, "h": 2400, "cls": "", "bg": "#bcbac4", "layers": [
+          {"id": "02_img_bg_PC", "src": "img/pc/02_img_bg_PC.webp", "fx": "none", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 1920, "ph": 2400},
+          {"id": "02_img_01_PC", "src": "img/pc/02_img_01_PC.webp", "fx": "wipe-down", "d": 0, "x": 2.0833, "y": 1.6667, "w": 95.8333, "h": 33.0833, "pw": 1840, "ph": 794, "par": 0.05},
+          {"id": "02_img_02_PC", "src": "img/pc/02_img_02_PC.webp", "fx": "wipe-left", "d": 0.1, "x": 2.0833, "y": 34.75, "w": 95.8333, "h": 11.9167, "pw": 1840, "ph": 286},
+          {"id": "02_img_03_PC", "src": "img/pc/02_img_03_PC.webp", "fx": "zoom", "d": 0.05, "x": 2.0833, "y": 46.6667, "w": 95.8333, "h": 51.6667, "pw": 1840, "ph": 1240, "par": 0.04},
+          {"id": "02_img_03txt_PC", "src": "img/pc/02_img_03txt_PC.webp", "fx": "rise", "d": 0.7, "x": 66.7708, "y": 66.5, "w": 29.5833, "h": 8.9167, "pw": 568, "ph": 214, "float": 0.04}
+        ]},
+        {"id": "s03", "w": 1920, "h": 1080, "cls": "movie", "bg": "#000000", "play": {"x": 50.8333, "y": 50.0, "s": 10.4167}, "layers": [
+          {"id": "03_movie_PC", "src": "img/pc/03_movie_PC.webp", "fx": "fade", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 1920, "ph": 1080}
+        ]},
+        {"id": "s04", "w": 1920, "h": 1260, "cls": "", "bg": "#989494", "layers": [
+          {"id": "04_bg_PC", "src": "img/pc/04_bg_PC.webp", "fx": "fade", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 1920, "ph": 1260, "par": 0.06},
+          {"id": "04_logo_PC", "src": "img/pc/04_logo_PC.webp", "fx": "blur", "d": 0.2, "x": 8.9583, "y": 47.0635, "w": 20.8854, "h": 5.7143, "pw": 401, "ph": 72},
+          {"id": "04_txt_01_PC", "src": "img/pc/04_txt_01_PC.webp", "fx": "rise", "d": 0.15, "x": 53.6979, "y": 11.9841, "w": 16.4062, "h": 4.4444, "pw": 315, "ph": 56},
+          {"id": "04_img_01_PC", "src": "img/pc/04_img_01_PC.webp", "fx": "wipe-up", "d": 0.1, "x": 37.5, "y": 19.8413, "w": 28.6458, "h": 60.3175, "pw": 550, "ph": 760},
+          {"id": "04_img_02_PC", "src": "img/pc/04_img_02_PC.webp", "fx": "wipe-up", "d": 0.28, "x": 66.1458, "y": 19.8413, "w": 28.6458, "h": 60.3175, "pw": 550, "ph": 760},
+          {"id": "04_txt_01_PC-1", "src": "img/pc/04_txt_01_PC-1.webp", "fx": "rise", "d": 0.4, "x": 80.2083, "y": 83.9683, "w": 14.4792, "h": 4.2063, "pw": 278, "ph": 53}
+        ]},
+        {"id": "s05", "w": 1920, "h": 900, "cls": "xfade", "bg": "#585c5b", "layers": [
+          {"id": "05_bg_PC", "src": "img/pc/05_bg_PC.webp", "fx": "fade", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 1920, "ph": 900},
+          {"id": "05_img_01_PC", "src": "img/pc/05_img_01_PC.webp", "fx": "open", "d": 0.1, "x": 31.7708, "y": 0.0, "w": 36.4583, "h": 100.0, "pw": 700, "ph": 900, "xf": 0},
+          {"id": "05_img_02_PC", "src": "img/pc/05_img_02_PC.webp", "fx": "xf", "d": 0, "x": 31.7708, "y": 0.0, "w": 36.4583, "h": 100.0, "pw": 700, "ph": 900, "xf": 1}
+        ]},
+        {"id": "s06", "w": 1920, "h": 1260, "cls": "", "bg": "#bcbac4", "layers": [
+          {"id": "06_bg_PC", "src": "img/pc/06_bg_PC.webp", "fx": "none", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 1920, "ph": 1260},
+          {"id": "06_img_01_PC", "src": "img/pc/06_img_01_PC.webp", "fx": "wipe-right", "d": 0, "x": 46.875, "y": 3.1746, "w": 53.125, "h": 93.6508, "pw": 1020, "ph": 1180, "par": 0.05},
+          {"id": "06_img_02_PC", "src": "img/pc/06_img_02_PC.webp", "fx": "rise", "d": 0.3, "x": 5.2083, "y": 19.8413, "w": 47.9167, "h": 60.3175, "pw": 920, "ph": 760, "float": 0.07}
+        ]},
+        {"id": "s07", "w": 1920, "h": 2100, "cls": "rolling", "bg": "#4d4845", "layers": [
+          {"id": "07_bg_PC", "src": "img/pc/07_bg_PC.webp", "fx": "fade", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 1920, "ph": 2100, "par": 0.06},
+          {"id": "07_txt_lolling_PC", "src": "img/pc/07_txt_lolling_PC.webp", "fx": "roll", "d": 0.2, "y": 43.5714, "h": 7.619, "tw": 66.5104},
+          {"id": "07_img_PC", "src": "img/pc/07_img_PC.webp", "fx": "zoom", "d": 0.1, "x": 20.2083, "y": 8.5714, "w": 59.375, "h": 76.6667, "pw": 1140, "ph": 1610},
+          {"id": "07_txt_PC", "src": "img/pc/07_txt_PC.webp", "fx": "blur", "d": 0.25, "x": 37.9688, "y": 88.4286, "w": 24.0625, "h": 4.2857, "pw": 462, "ph": 90}
+        ]},
+        {"id": "s08", "w": 1920, "h": 1440, "cls": "dn", "bg": "#000000", "layers": [
+        ]},
+        {"id": "s09", "w": 1920, "h": 900, "cls": "", "bg": "#030303", "layers": [
+          {"id": "09_img_PC", "src": "img/pc/09_img_PC.webp", "fx": "dark", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 1920, "ph": 900}
+        ]},
+        {"id": "s10", "w": 1920, "h": 1630, "cls": "", "bg": "#000000", "layers": [
+          {"id": "10_img_bg_PC", "src": "img/pc/10_img_bg_PC.webp", "fx": "none", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 1920, "ph": 1630},
+          {"id": "10_img_01_PC", "src": "img/pc/10_img_01_PC.webp", "fx": "dark", "d": 0, "x": 2.0833, "y": 2.454, "w": 95.8333, "h": 48.4663, "pw": 1840, "ph": 790},
+          {"id": "10_img_02_PC", "src": "img/pc/10_img_02_PC.webp", "fx": "blur", "d": 0.2, "x": 2.0833, "y": 50.9202, "w": 95.8333, "h": 13.4969, "pw": 1840, "ph": 220},
+          {"id": "10_img_03_PC", "src": "img/pc/10_img_03_PC.webp", "fx": "wipe-left", "d": 0.1, "x": 2.0833, "y": 64.4172, "w": 95.8333, "h": 33.1288, "pw": 1840, "ph": 540}
+        ]},
+        {"id": "s11", "w": 1920, "h": 2100, "cls": "slow", "bg": "#605c53", "layers": [
+          {"id": "11_img_PC", "src": "img/pc/11_img_PC.webp", "fx": "slow", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 1920, "ph": 2100}
+        ]},
+        {"id": "s12", "w": 1920, "h": 2400, "cls": "", "bg": "#101010", "layers": [
+          {"id": "12_descente_bg_PC", "src": "img/pc/12_descente_bg_PC.webp", "fx": "none", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 1920, "ph": 2400},
+          {"id": "12_img01_PC", "src": "img/pc/12_img01_PC.webp", "fx": "wipe-up", "d": 0, "x": 10.4167, "y": 8.3333, "w": 31.7708, "h": 38.3333, "pw": 610, "ph": 920, "float": -0.05},
+          {"id": "12_img02_PC", "src": "img/pc/12_img02_PC.webp", "fx": "wipe-up", "d": 0.2, "x": 46.875, "y": 13.0833, "w": 42.7083, "h": 50.8333, "pw": 820, "ph": 1220, "float": 0.05},
+          {"id": "12_img03_PC", "src": "img/pc/12_img03_PC.webp", "fx": "wipe-left", "d": 0.1, "x": 0.0, "y": 61.6667, "w": 64.0625, "h": 30.0, "pw": 1230, "ph": 720},
+          {"id": "12_txt_PC", "src": "img/pc/12_txt_PC.webp", "fx": "rise", "d": 0.3, "x": 10.4167, "y": 56.125, "w": 17.5521, "h": 3.2083, "pw": 337, "ph": 77}
+        ]},
+        {"id": "s13", "w": 1920, "h": 840, "cls": "outro", "bg": "#2f271e", "layers": [
+          {"id": "13_bg_PC", "src": "img/pc/13_bg_PC.webp", "fx": "zoom", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 1920, "ph": 840, "par": 0.05},
+          {"id": "13_logo_PC", "src": "img/pc/13_logo_PC.webp", "fx": "blur", "d": 0.5, "x": 36.9792, "y": 41.0714, "w": 25.9896, "h": 10.5952, "pw": 499, "ph": 89}
+        ]}
+      ]
+    },
+    "mo": {
+      "w": 960,
+      "sections": [
+        {"id": "s01", "w": 960, "h": 1280, "cls": "hero", "bg": "#333231", "layers": [
+          {"id": "01_title_bg_MO", "src": "img/mo/01_title_bg_MO.webp", "fx": "kb", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 960, "ph": 1280},
+          {"id": "01_title_logo_MO", "src": "img/mo/01_title_logo_MO.webp", "fx": "blur", "d": 0.55, "x": 26.0417, "y": 46.0938, "w": 46.7708, "h": 6.25, "pw": 449, "ph": 80}
+        ]},
+        {"id": "s02", "w": 960, "h": 1820, "cls": "", "bg": "#bcbac4", "layers": [
+          {"id": "02_img_bg_MO", "src": "img/mo/02_img_bg_MO.webp", "fx": "none", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 960, "ph": 1820},
+          {"id": "02_img_01_MO", "src": "img/mo/02_img_01_MO.webp", "fx": "wipe-down", "d": 0, "x": 4.1667, "y": 2.1978, "w": 91.6667, "h": 32.967, "pw": 880, "ph": 600, "par": 0.05},
+          {"id": "02_img_02_MO", "src": "img/mo/02_img_02_MO.webp", "fx": "wipe-left", "d": 0.1, "x": 4.1667, "y": 35.1648, "w": 91.6667, "h": 11.5385, "pw": 880, "ph": 210},
+          {"id": "02_img_03_MO", "src": "img/mo/02_img_03_MO.webp", "fx": "zoom", "d": 0.05, "x": 4.1667, "y": 46.7033, "w": 91.6667, "h": 51.0989, "pw": 880, "ph": 930, "par": 0.04},
+          {"id": "02_img_03txt_MO", "src": "img/mo/02_img_03txt_MO.webp", "fx": "rise", "d": 0.7, "x": 53.4375, "y": 69.1758, "w": 36.875, "h": 3.8462, "pw": 354, "ph": 70, "float": 0.04}
+        ]},
+        {"id": "s03", "w": 960, "h": 540, "cls": "movie", "bg": "#000000", "play": {"x": 50.8333, "y": 50.0, "s": 11.4583}, "layers": [
+          {"id": "03_movie_MO", "src": "img/mo/03_movie_MO.webp", "fx": "fade", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 960, "ph": 540}
+        ]},
+        {"id": "s04", "w": 960, "h": 1944, "cls": "", "bg": "#bcbac4", "layers": [
+          {"id": "04_bg_MO", "src": "img/mo/04_bg_MO.webp", "fx": "none", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 960, "ph": 1944},
+          {"id": "04_bgimg_MO", "src": "img/mo/04_bgimg_MO.webp", "fx": "fade", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 73.5597, "pw": 960, "ph": 1430, "par": 0.06},
+          {"id": "04_logo_MO", "src": "img/mo/04_logo_MO.webp", "fx": "blur", "d": 0.2, "x": 31.0417, "y": 11.3169, "w": 37.8125, "h": 3.3436, "pw": 363, "ph": 65},
+          {"id": "04_txt_MO", "src": "img/mo/04_txt_MO.webp", "fx": "rise", "d": 0.2, "x": 29.0625, "y": 53.6523, "w": 41.7708, "h": 10.4424, "pw": 401, "ph": 203},
+          {"id": "04_img_01_MO", "src": "img/mo/04_img_01_MO.webp", "fx": "wipe-up", "d": 0, "x": 7.2917, "y": 71.1934, "w": 42.7083, "h": 25.7202, "pw": 410, "ph": 500},
+          {"id": "04_img_02_MO", "src": "img/mo/04_img_02_MO.webp", "fx": "wipe-up", "d": 0.18, "x": 50.0, "y": 71.1934, "w": 42.7083, "h": 25.7202, "pw": 410, "ph": 500}
+        ]},
+        {"id": "s05", "w": 960, "h": 700, "cls": "xfade", "bg": "#55595a", "layers": [
+          {"id": "05_bg_MO", "src": "img/mo/05_bg_MO.webp", "fx": "fade", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 960, "ph": 700},
+          {"id": "05_img_01_MO", "src": "img/mo/05_img_01_MO.webp", "fx": "open", "d": 0.1, "x": 28.125, "y": 0.0, "w": 43.75, "h": 100.0, "pw": 420, "ph": 700, "xf": 0},
+          {"id": "05_img_02_MO", "src": "img/mo/05_img_02_MO.webp", "fx": "xf", "d": 0, "x": 28.125, "y": 0.0, "w": 43.75, "h": 100.0, "pw": 420, "ph": 700, "xf": 1}
+        ]},
+        {"id": "s06", "w": 960, "h": 2460, "cls": "", "bg": "#494c4c", "layers": [
+          {"id": "06_img_01_MO", "src": "img/mo/06_img_01_MO.webp", "fx": "fade", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 960, "ph": 2460, "par": 0.05},
+          {"id": "06_img_02_MO", "src": "img/mo/06_img_02_MO.webp", "fx": "rise", "d": 0.2, "x": 14.5833, "y": 54.7967, "w": 70.8333, "h": 40.3252, "pw": 680, "ph": 992, "float": 0.06}
+        ]},
+        {"id": "s07", "w": 960, "h": 1080, "cls": "rolling", "bg": "#4d4845", "layers": [
+          {"id": "07_bg_MO", "src": "img/mo/07_bg_MO.webp", "fx": "fade", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 960, "ph": 1080, "par": 0.06},
+          {"id": "07_txt_lolling_MO", "src": "img/mo/07_txt_lolling_MO.webp", "fx": "roll", "d": 0.2, "y": 39.6296, "h": 7.5, "tw": 68.5417},
+          {"id": "07_img_MO", "src": "img/mo/07_img_MO.webp", "fx": "zoom", "d": 0.1, "x": 24.8958, "y": 12.037, "w": 50.0, "h": 61.6667, "pw": 480, "ph": 666},
+          {"id": "07_txt_MO", "src": "img/mo/07_txt_MO.webp", "fx": "blur", "d": 0.25, "x": 19.375, "y": 79.2593, "w": 61.3542, "h": 10.7407, "pw": 589, "ph": 116}
+        ]},
+        {"id": "s08", "w": 960, "h": 725, "cls": "dn", "bg": "#000000", "layers": [
+        ]},
+        {"id": "s09", "w": 960, "h": 620, "cls": "", "bg": "#030303", "layers": [
+          {"id": "09_img_MO", "src": "img/mo/09_img_MO.webp", "fx": "dark", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 960, "ph": 620}
+        ]},
+        {"id": "s10", "w": 960, "h": 1820, "cls": "", "bg": "#030303", "layers": [
+          {"id": "10_img_bg_MO", "src": "img/mo/10_img_bg_MO.webp", "fx": "none", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 960, "ph": 1820},
+          {"id": "10_img_01_MO", "src": "img/mo/10_img_01_MO.webp", "fx": "dark", "d": 0, "x": 4.1667, "y": 2.1978, "w": 91.6667, "h": 51.0989, "pw": 880, "ph": 930},
+          {"id": "10_img_02_MO", "src": "img/mo/10_img_02_MO.webp", "fx": "blur", "d": 0.2, "x": 4.1667, "y": 53.2967, "w": 91.6667, "h": 11.5385, "pw": 880, "ph": 210},
+          {"id": "10_img_03_MO", "src": "img/mo/10_img_03_MO.webp", "fx": "wipe-left", "d": 0.1, "x": 4.1667, "y": 64.8352, "w": 91.6667, "h": 32.967, "pw": 880, "ph": 600}
+        ]},
+        {"id": "s11", "w": 960, "h": 1050, "cls": "slow", "bg": "#605c53", "layers": [
+          {"id": "11_img_MO", "src": "img/mo/11_img_MO.webp", "fx": "slow", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 960, "ph": 1050}
+        ]},
+        {"id": "s12", "w": 960, "h": 2120, "cls": "", "bg": "#101010", "layers": [
+          {"id": "12_descente_bg_MO", "src": "img/mo/12_descente_bg_MO.webp", "fx": "none", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 960, "ph": 2120},
+          {"id": "12_img01_MO", "src": "img/mo/12_img01_MO.webp", "fx": "wipe-up", "d": 0, "x": 6.25, "y": 7.5472, "w": 41.6667, "h": 26.4151, "pw": 400, "ph": 560, "float": -0.05},
+          {"id": "12_img02_MO", "src": "img/mo/12_img02_MO.webp", "fx": "wipe-up", "d": 0.2, "x": 44.7917, "y": 16.6981, "w": 55.2083, "h": 39.9057, "pw": 530, "ph": 846, "float": 0.05},
+          {"id": "12_img03_MO", "src": "img/mo/12_img03_MO.webp", "fx": "wipe-left", "d": 0.1, "x": 0.0, "y": 59.434, "w": 91.6667, "h": 22.6415, "pw": 880, "ph": 480},
+          {"id": "12_txt_MO", "src": "img/mo/12_txt_MO.webp", "fx": "rise", "d": 0.3, "x": 50.0, "y": 85.3302, "w": 41.6667, "h": 4.1038, "pw": 400, "ph": 87}
+        ]},
+        {"id": "s13", "w": 960, "h": 1041, "cls": "outro", "bg": "#363028", "layers": [
+          {"id": "13_bg_MO", "src": "img/mo/13_bg_MO.webp", "fx": "zoom", "d": 0, "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "pw": 960, "ph": 1041, "par": 0.05},
+          {"id": "13_logo_MO", "src": "img/mo/13_logo_MO.webp", "fx": "blur", "d": 0.5, "x": 29.5833, "y": 41.3064, "w": 40.9375, "h": 6.7243, "pw": 393, "ph": 70}
+        ]}
+      ]
+    }
+  }
+}
+</script>
+<script>
+(function(){
+'use strict';
+var root=document.getElementById('eastlogue');
+if(!root)return;
+var CFG={};try{CFG=JSON.parse(document.getElementById('eastlogue-data').textContent)}catch(e){}
+var FX=CFG.effects||{};
+var mqReduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+var respectRM=FX.respectReducedMotion===true;window.__elRespectRM=respectRM;
+if(respectRM)document.documentElement.classList.add('el-rm');
+var reduced=function(){return respectRM&&mqReduce.matches};
+var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
+var smooth=function(a,b,v){var x=clamp((v-a)/(b-a),0,1);return x*x*(3-2*x)};
+var visible=function(el){return el.offsetParent!==null||getComputedStyle(el).position==='fixed'};
+
+/* roll speed */
+root.querySelectorAll('.el-view--pc .roll__track').forEach(function(t){t.style.setProperty('--rs',((FX.roll&&FX.roll.pc)||26)+'s')});
+root.querySelectorAll('.el-view--mo .roll__track').forEach(function(t){t.style.setProperty('--rs',((FX.roll&&FX.roll.mo)||16)+'s')});
+
+/* clipped layers: lazy-load can't see them, so load eagerly in the active view */
+function eagerClipped(){root.querySelectorAll('.el-view').forEach(function(v){if(!visible(v))return;
+  v.querySelectorAll('.ly[data-fx^=wipe] img,.ly[data-fx=open] img,.ly[data-xf] img').forEach(function(im){if(im.loading!=='eager')im.loading='eager'})})}
+eagerClipped();window.addEventListener('resize',eagerClipped,{passive:true});
+/* preload images well before their section scrolls in, so reveals never wait on the network */
+var rv=FX.reveal||{};
+if('IntersectionObserver' in window){
+  var pm=rv.preload||'250%';
+  var pre=new IntersectionObserver(function(ents){ents.forEach(function(e){
+    if(!e.isIntersecting)return;pre.unobserve(e.target);
+    e.target.querySelectorAll('img[loading=lazy]').forEach(function(im){im.loading='eager'});
+  })},{rootMargin:pm+' 0px '+pm+' 0px'});
+  root.querySelectorAll('.el-sec,.dn-transition').forEach(function(s){pre.observe(s)});
+}
+/* ---------- reveal ---------- */
+var revealSel='.ly[data-fx]:not([data-fx=none]):not([data-fx=xf]):not([data-fx=slow])';
+var layers=[].slice.call(root.querySelectorAll(revealSel));
+function ready(el){
+  var imgs=[].slice.call(el.querySelectorAll('img'));
+  return Promise.all(imgs.map(function(im){
+    if(im.complete&&im.naturalWidth)return im.decode?im.decode().catch(function(){}):0;
+    return new Promise(function(r){im.addEventListener('load',r,{once:true});im.addEventListener('error',r,{once:true});setTimeout(r,700)});
+  }));
+}
+function show(el){
+  el._on=true;
+  ready(el).then(function(){requestAnimationFrame(function(){
+    if(!el._on)return;
+    el.classList.remove('is-out');el.classList.add('is-in');
+    var sec=el.closest('.xfade');if(sec&&el.hasAttribute('data-xf'))startXfade(sec);});});
+}
+/* scrolled back up past it (left through the bottom edge) → retract, so it replays on the way down */
+function hide(el){
+  if(!el._on)return;el._on=false;
+  el.classList.add('is-out');el.classList.remove('is-in');
+  var sec=el.closest('.xfade');if(sec&&el.hasAttribute('data-xf'))stopXfade(sec);
+}
+if('IntersectionObserver' in window){
+  var replay=rv.replay!==false;
+  var io=new IntersectionObserver(function(ents){ents.forEach(function(e){
+    if(e.isIntersecting){if(!replay)io.unobserve(e.target);show(e.target)}
+    else if(replay&&e.boundingClientRect.top>0)hide(e.target);
+  })},{threshold:rv.threshold||0,rootMargin:rv.rootMargin||'0px 0px -5% 0px'});
+  layers.forEach(function(l){io.observe(l)});
+}else{layers.forEach(function(l){l.classList.add('is-in')})}
+
+/* ---------- section visibility (drives rAF work / rolling pause) ---------- */
+var secs=[].slice.call(root.querySelectorAll('.el-sec'));
+var live=new Set();
+if('IntersectionObserver' in window){
+  var vo=new IntersectionObserver(function(ents){ents.forEach(function(e){
+    e.target.classList.toggle('is-vis',e.isIntersecting);
+    if(e.isIntersecting)live.add(e.target);else live.delete(e.target);
+  });req()},{rootMargin:'15% 0px 15% 0px'});
+  secs.forEach(function(s){vo.observe(s)});
+}else{secs.forEach(function(s){s.classList.add('is-vis');live.add(s)})}
+
+/* ---------- 05 crossfade ---------- */
+function startXfade(sec){
+  if(sec._xf||reduced())return;
+  sec.classList.add('is-live');
+  sec._xf=setInterval(function(){if(sec.classList.contains('is-vis')&&!document.hidden)sec.classList.toggle('is-alt')},(FX.crossfade&&FX.crossfade.interval)||3800);
+}
+function stopXfade(sec){
+  if(!sec._xf)return;clearInterval(sec._xf);sec._xf=0;
+  sec.classList.remove('is-alt','is-live');
+}
+
+/* ---------- scroll-linked: parallax / float / slow fade ---------- */
+var parLim=FX.parallaxLimit||0.06;
+var sfCfg=FX.slowFade||{from:1,to:.5};
+var raf=0;
+function req(){if(!raf)raf=requestAnimationFrame(tick)}
+function tick(){
+  raf=0;
+  var vh=window.innerHeight,red=reduced(),again=false;
+  live.forEach(function(sec){
+    if(!visible(sec))return;
+    var r=sec.getBoundingClientRect();
+    sec.querySelectorAll('.ly[data-par]').forEach(function(l){
+      if(red){l.querySelector('.ly__in').style.setProperty('--py','0px');return}
+      var b=l.getBoundingClientRect(),k=parseFloat(l.dataset.par);
+      var off=(b.top+b.height/2-vh/2)*-k, lim=b.height*parLim;
+      l.querySelector('.ly__in').style.setProperty('--py',clamp(off,-lim,lim).toFixed(2)+'px');
+    });
+    sec.querySelectorAll('.ly[data-float]').forEach(function(l){
+      if(red){l.style.setProperty('--fy','0px');return}
+      var b=l.getBoundingClientRect(),k=parseFloat(l.dataset.float);
+      var cur=parseFloat(l.style.getPropertyValue('--fy'))||0;
+      var off=(b.top-cur+b.height/2-vh/2)*k;
+      l.style.setProperty('--fy',off.toFixed(2)+'px');
+    });
+    sec.querySelectorAll('.ly[data-fx=slow]').forEach(function(l){
+      var target=red?1:smooth(vh*sfCfg.from,vh*sfCfg.to,r.top);
+      var cur=l._p==null?target*0:l._p;
+      var next=cur+(target-cur)*0.2;
+      if(Math.abs(target-next)<0.002)next=target;else again=true;
+      l._p=next;l.style.setProperty('--p',next.toFixed(4));
+    });
+  });
+  if(again)req();
+}
+window.addEventListener('scroll',req,{passive:true});
+window.addEventListener('resize',req,{passive:true});
+if(mqReduce.addEventListener)mqReduce.addEventListener('change',req);
+req();
+
+/* ---------- 03 movie ---------- */
+root.querySelectorAll('.movie').forEach(function(sec){
+  var vd=sec.querySelector('video.mv'),btn=sec.querySelector('.mv__snd');if(!vd)return;
+  function load(){if(vd.getAttribute('src'))return;vd.poster=vd.dataset.poster||'';vd.preload='auto';vd.src=vd.dataset.src}
+  if(reduced()){load();vd.controls=true;vd.loop=false;if(btn)btn.hidden=true;return}
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(e){if(e[0].isIntersecting)load()},{rootMargin:'150% 0px 150% 0px'}).observe(sec);
+    new IntersectionObserver(function(e){
+      if(e[0].isIntersecting){load();var p=vd.play();if(p&&p.catch)p.catch(function(){})}else vd.pause();
+    },{threshold:0.2}).observe(sec);
+  }else{load();vd.controls=true}
+  if(btn)btn.addEventListener('click',function(){
+    vd.muted=!vd.muted;
+    btn.setAttribute('aria-pressed',String(!vd.muted));
+    btn.setAttribute('aria-label',vd.muted?'영상 소리 켜기':'영상 소리 끄기');
+    if(!vd.muted&&vd.paused){var p=vd.play();if(p&&p.catch)p.catch(function(){})}
+  });
+});
+})();
+</script>
+<script>
+/* Day → sunset → night. Uses native position:sticky; no libraries required.
+   Add the section from fragment.html, link day-night.css, and defer this JS.
+   Supports multiple instances and scrolling both directions. */
+(() => {
+  'use strict';
+
+  const scenes = Array.from(document.querySelectorAll('.dn-transition')).map((section) => ({
+    section,
+    stage: section.querySelector('.dn-transition__stage'),
+    sunset: section.querySelector('.dn-transition__image--sunset'),
+    night: section.querySelector('.dn-transition__image--night'),
+    announcer: section.querySelector('.dn-transition__a11y'),
+    phase: ''
+  })).filter((scene) => scene.stage && scene.sunset && scene.night);
+  if (!scenes.length) return;
+
+  const reducedMotion = window.__elRespectRM === false ? { matches: false } : window.matchMedia('(prefers-reduced-motion: reduce)');
+  const clamp = (value) => Math.max(0, Math.min(1, value));
+  function smoothstep(start, end, value) {
+    const x = clamp((value - start) / (end - start));
+    return x * x * (3 - 2 * x);
+  }
+  let raf = 0;
+
+  function update() {
+    raf = 0;
+    for (const scene of scenes) {
+      const length = Math.max(1, scene.section.offsetHeight - scene.stage.offsetHeight);
+      const progress = clamp(-scene.section.getBoundingClientRect().top / length);
+      const sunsetOpacity = reducedMotion.matches
+        ? Number(progress >= 0.43)
+        : smoothstep(0.06, 0.43, progress);
+      const nightOpacity = reducedMotion.matches
+        ? Number(progress >= 0.79)
+        : smoothstep(0.59, 0.97, progress);
+      scene.sunset.style.opacity = String(sunsetOpacity);
+      scene.night.style.opacity = String(nightOpacity);
+
+      const phase = progress < 0.32 ? '낮' : progress < 0.73 ? '붉은 노을' : '밤';
+      if (phase !== scene.phase) {
+        scene.phase = phase;
+        if (scene.announcer) scene.announcer.textContent = `현재 시간대: ${phase}`;
+      }
+    }
+  }
+  function requestUpdate() {
+    if (!raf) raf = window.requestAnimationFrame(update);
+  }
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate, { passive: true });
+  if (reducedMotion.addEventListener) reducedMotion.addEventListener('change', requestUpdate);
+  requestUpdate();
+})();
+</script>
+</body>
+</html>
