@@ -15,7 +15,6 @@ export const CONTENT = {
       about: 'About',
       projects: 'Work',
       contact: 'Contact',
-      admin: 'Admin',
     },
   },
 
